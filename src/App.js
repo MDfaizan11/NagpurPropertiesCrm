@@ -7,7 +7,8 @@ import Home from "./Components/Home/Home";
 import Login from "./Components/login/Login";
 import Protected from "./Components/protected/Protected";
 import LeadProject from "./Pages/Lead/LeadProject";
-
+import Stationary from "./Pages/stationary/Stationary";
+import Office from "./Pages/office/Office";
 function App() {
   return (
     <>
@@ -21,6 +22,8 @@ function App() {
                 <Route path="lead/:ProjectId/:ProjectName" element={<Lead />} />
                 <Route path="land" element={<Land />} />
                 <Route path="leadProject" element={<LeadProject />} />
+                <Route path="stationary" element={<Stationary />} />
+                <Route path="office" element={<Office />} />
               </Route>
             </Route>
           </Routes>

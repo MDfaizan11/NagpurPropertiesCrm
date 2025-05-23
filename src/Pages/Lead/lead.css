@@ -1235,3 +1235,111 @@ body {
     font-size: 0.95rem;
   }
 }
+
+/* leadlog edit  */
+
+/* Overlay Background */
+.leadlogupdateform-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.leadlogupdateform-container {
+  background: #fff;
+  padding: 2rem;
+  width: 90%;
+  max-width: 700px;
+  border-radius: 10px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  scrollbar-width: none;
+}
+
+/* Title */
+.leadlogupdateform-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* Close Button */
+.leadlogupdateform-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Input Fields & Selects */
+.leadlogupdateform-container input,
+.leadlogupdateform-container select,
+.leadlogupdateform-container textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+/* Textarea */
+.leadlogupdateform-container textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Section Title */
+.leadlogupdateform-container h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* Lead Log Entry */
+.leadlogupdateform-container .log-entry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.leadlogupdateform-container .log-entry input,
+.leadlogupdateform-container .log-entry select {
+  flex: 1 1 30%;
+  min-width: 100px;
+}
+
+/* Submit Button */
+.leadlogupdateform-submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.leadlogupdateform-submit-button:hover {
+  background-color: #0056b3;
+}

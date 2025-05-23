@@ -34,7 +34,9 @@ const Lead = () => {
   const [leadLogDate, setLeadLogDate] = useState("");
   const [leadLogStatus, setLeadLogStatus] = useState("");
   const [leadLogRemark, setLeadLogRemark] = useState("");
-
+  const [updateLeadId, setUpdateLeadId] = useState("");
+  const [showUpdateLeadForm, setShowUpdateLeadForm] = useState(false);
+  const [selectedLead, setSelectedLead] = useState(null);
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
@@ -203,6 +205,30 @@ const Lead = () => {
       console.log(error);
     }
   }
+
+  async function handleUpdateLead(id) {
+    setUpdateLeadId(id);
+
+    try {
+      const response = await axiosInstance.get(
+        `${BASE_URL}/AllLeadById/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data) {
+        setSelectedLead(response.data); // ✅ Set lead data for the form
+        setShowUpdateLeadForm(true); // ✅ Open the form
+      }
+    } catch (error) {
+      console.log("Error fetching lead by ID:", error);
+    }
+  }
+
   async function handleDeleteLead(id) {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this lead?"
@@ -227,6 +253,66 @@ const Lead = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async function handleupdateLeadLog(e) {
+    e.preventDefault();
+
+    // Use selectedLead.id as ProjectId, fallback or update accordingly
+    const parsedProjectId = Number(ProjectId);
+    if (!parsedProjectId) {
+      alert("Invalid Project ID");
+      return;
+    }
+
+    const validLogs =
+      selectedLead.leadLogs?.map((log) => ({
+        id: log.id, // optional, backend may ignore or use
+        logDate: log.logDate,
+        status: log.status,
+        remark: log.remark,
+      })) || [];
+
+    const updatedLead = {
+      id: parsedProjectId,
+      name: selectedLead.name,
+      phone: selectedLead.phone,
+      city: selectedLead.city,
+      date: selectedLead.date,
+      area: selectedLead.area,
+      executedName: selectedLead.executedName,
+      status: selectedLead.status,
+      leadStatus: selectedLead.leadStatus,
+      siteName: selectedLead.siteName,
+      budget: Number(selectedLead.budget) || 0,
+      remark: selectedLead.remark,
+      leadLogs: validLogs,
+    };
+
+    console.log("Updated Lead Data:", updatedLead);
+
+    try {
+      const response = await axiosInstance.put(
+        `${BASE_URL}/updateLead/${parsedProjectId}`,
+        updatedLead,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        alert("Lead updated successfully");
+        setRefreshKey((prevKey) => prevKey + 1);
+        setShowUpdateLeadForm(false);
+        setSelectedLead(null);
+      }
+    } catch (error) {
+      console.error("Error updating lead:", error);
+      alert("Failed to update lead");
     }
   }
   return (
@@ -466,7 +552,12 @@ const Lead = () => {
                       >
                         Add Lead Log
                       </button>
-                      <button className="card-action-btn edit-btn">Edit</button>
+                      <button
+                        className="card-action-btn edit-btn"
+                        onClick={() => handleUpdateLead(lead.id)}
+                      >
+                        Edit
+                      </button>
                       <button
                         className="card-action-btn delete-btn"
                         onClick={() => handleDeleteLead(lead.id)}
@@ -732,6 +823,216 @@ const Lead = () => {
                   Submit
                 </button>
               </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {showUpdateLeadForm && selectedLead && (
+        <div className="leadlogupdateform-overlay">
+          <div className="leadlogupdateform-container">
+            <h2 className="leadlogupdateform-title">Update Lead</h2>
+            <button
+              type="button"
+              className="leadlogupdateform-close-btn"
+              onClick={() => setShowUpdateLeadForm(false)}
+            >
+              ×
+            </button>
+
+            <form onSubmit={handleupdateLeadLog}>
+              <input
+                name="name"
+                type="text"
+                placeholder="Name"
+                className="leadlogupdateform-input"
+                value={selectedLead.name}
+                onChange={(e) =>
+                  setSelectedLead({ ...selectedLead, name: e.target.value })
+                }
+              />
+              <input
+                name="phone"
+                type="text"
+                placeholder="Phone"
+                className="leadlogupdateform-input"
+                value={selectedLead.phone}
+                onChange={(e) =>
+                  setSelectedLead({ ...selectedLead, phone: e.target.value })
+                }
+              />
+              <input
+                name="city"
+                type="text"
+                placeholder="City"
+                className="leadlogupdateform-input"
+                value={selectedLead.city}
+                onChange={(e) =>
+                  setSelectedLead({ ...selectedLead, city: e.target.value })
+                }
+              />
+              <input
+                name="date"
+                type="date"
+                className="leadlogupdateform-input"
+                value={selectedLead.date}
+                onChange={(e) =>
+                  setSelectedLead({ ...selectedLead, date: e.target.value })
+                }
+              />
+              <input
+                name="area"
+                type="text"
+                placeholder="Area"
+                className="leadlogupdateform-input"
+                value={selectedLead.area}
+                onChange={(e) =>
+                  setSelectedLead({ ...selectedLead, area: e.target.value })
+                }
+              />
+              <input
+                name="budget"
+                type="number"
+                placeholder="Budget"
+                className="leadlogupdateform-input"
+                value={selectedLead.budget || ""}
+                onChange={(e) =>
+                  setSelectedLead({ ...selectedLead, budget: e.target.value })
+                }
+              />
+              <input
+                name="executedName"
+                type="text"
+                placeholder="Executed Name"
+                className="leadlogupdateform-input"
+                value={selectedLead.executedName}
+                onChange={(e) =>
+                  setSelectedLead({
+                    ...selectedLead,
+                    executedName: e.target.value,
+                  })
+                }
+              />
+              <input
+                name="siteName"
+                type="text"
+                placeholder="Site Name"
+                className="leadlogupdateform-input"
+                value={selectedLead.siteName}
+                onChange={(e) =>
+                  setSelectedLead({ ...selectedLead, siteName: e.target.value })
+                }
+              />
+
+              <select
+                name="status"
+                className="leadlogupdateform-select"
+                value={selectedLead.status}
+                onChange={(e) =>
+                  setSelectedLead({ ...selectedLead, status: e.target.value })
+                }
+                required
+              >
+                <option value="">Select Status</option>
+                <option value="NEW_LEAD">New Lead</option>
+                <option value="FOLLOW_UP">Follow Up</option>
+                <option value="UNDER_REVIEW">Under Review</option>
+                <option value="DEMO">Demo</option>
+                <option value="NEGOTIATION">Negotiation</option>
+                <option value="SUCCESS">Success</option>
+                <option value="INACTIVE">Inactive</option>
+                <option value="FAILED">Failed</option>
+              </select>
+
+              <select
+                name="leadStatus"
+                className="leadlogupdateform-select"
+                value={selectedLead.leadStatus}
+                onChange={(e) =>
+                  setSelectedLead({
+                    ...selectedLead,
+                    leadStatus: e.target.value,
+                  })
+                }
+                required
+              >
+                <option value="">Select Lead Status</option>
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
+              </select>
+
+              <textarea
+                name="remark"
+                className="leadlogupdateform-textarea"
+                placeholder="Remark"
+                value={selectedLead.remark}
+                onChange={(e) =>
+                  setSelectedLead({ ...selectedLead, remark: e.target.value })
+                }
+              />
+
+              <h3 className="leadlogupdateform-subtitle">Lead Logs</h3>
+              {selectedLead.leadLogs?.map((log, index) => (
+                <div key={log.id} className="leadlogupdateform-log-entry">
+                  <input
+                    name="logDate"
+                    type="date"
+                    className="leadlogupdateform-input"
+                    value={log.logDate}
+                    onChange={(e) => {
+                      const updatedLogs = [...selectedLead.leadLogs];
+                      updatedLogs[index].logDate = e.target.value;
+                      setSelectedLead({
+                        ...selectedLead,
+                        leadLogs: updatedLogs,
+                      });
+                    }}
+                  />
+                  <select
+                    name="status"
+                    className="leadlogupdateform-select"
+                    value={log.status}
+                    onChange={(e) => {
+                      const updatedLogs = [...selectedLead.leadLogs];
+                      updatedLogs[index].status = e.target.value;
+                      setSelectedLead({
+                        ...selectedLead,
+                        leadLogs: updatedLogs,
+                      });
+                    }}
+                    required
+                  >
+                    <option value="">Select status</option>
+                    <option value="NEW_LEAD">New Lead</option>
+                    <option value="FOLLOW_UP">Follow Up</option>
+                    <option value="UNDER_REVIEW">Under Review</option>
+                    <option value="DEMO">Demo</option>
+                    <option value="NEGOTIATION">Negotiation</option>
+                    <option value="SUCCESS">Success</option>
+                    <option value="INACTIVE">Inactive</option>
+                    <option value="FAILED">Failed</option>
+                  </select>
+                  <input
+                    name="remark"
+                    type="text"
+                    placeholder="Remark"
+                    className="leadlogupdateform-input"
+                    value={log.remark}
+                    onChange={(e) => {
+                      const updatedLogs = [...selectedLead.leadLogs];
+                      updatedLogs[index].remark = e.target.value;
+                      setSelectedLead({
+                        ...selectedLead,
+                        leadLogs: updatedLogs,
+                      });
+                    }}
+                  />
+                </div>
+              ))}
+
+              <button type="submit" className="leadlogupdateform-submit-button">
+                Save Changes
+              </button>
             </form>
           </div>
         </div>

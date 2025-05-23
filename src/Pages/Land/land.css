@@ -1,0 +1,1488 @@
+/* .land_search_section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+.Land_search_bar {
+  width: 550px;
+  padding: 15px 20px 15px 50px;
+  border-radius: var(--border-radius-xl, 8px);
+  border: 2px solid var(--color-border, #ccc);
+  font-size: 1rem;
+  background-color: var(--color-bg-primary, #fff);
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1));
+  transition: all var(--transition-normal, 0.3s ease);
+  outline: none;
+}
+
+.Land_search_bar:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.AddLand_button_wrapper {
+  display: flex;
+}
+.land_add_property_button {
+  background: var(--secondary-gradient);
+  color: white;
+  padding: 12px 25px;
+  border-radius: var(--border-radius-md);
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+} */
+
+/* Land Management System Styles */
+:root {
+  --land-primary-color: #6366f1;
+  --land-primary-dark: #4f46e5;
+  --land-primary-light: #e0e7ff;
+  --land-secondary-color: #ec4899;
+  --land-secondary-light: #fce7f3;
+  --land-accent-color: #f59e0b;
+  --land-accent-light: #fef3c7;
+  --land-success-color: #10b981;
+  --land-success-light: #d1fae5;
+  --land-danger-color: #ef4444;
+  --land-danger-light: #fee2e2;
+  --land-warning-color: #f59e0b;
+  --land-warning-light: #fef3c7;
+  --land-info-color: #3b82f6;
+  --land-info-light: #dbeafe;
+  --land-text-primary: #1f2937;
+  --land-text-secondary: #6b7280;
+  --land-text-light: #9ca3af;
+  --land-bg-primary: #ffffff;
+  --land-bg-secondary: #f9fafb;
+  --land-bg-tertiary: #f3f4f6;
+  --land-border-color: #e5e7eb;
+  --land-border-light: #f3f4f6;
+  --land-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --land-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --land-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --land-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --land-radius-sm: 0.375rem;
+  --land-radius-md: 0.5rem;
+  --land-radius-lg: 0.75rem;
+  --land-radius-xl: 1rem;
+  --land-transition: all 0.3s ease;
+  --land-gradient-primary: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  --land-gradient-secondary: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+  --land-gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --land-gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  --land-gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  --land-gradient-info: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  --land-gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  --land-gradient-pink: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+  --land-gradient-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --land-gradient-rainbow: linear-gradient(
+    45deg,
+    #f687b3,
+    #fc8181,
+    #f6ad55,
+    #f6e05e,
+    #68d391,
+    #63b3ed,
+    #b794f4
+  );
+}
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  background-color: var(--land-bg-secondary);
+  color: var(--land-text-primary);
+  line-height: 1.6;
+}
+.land-header {
+  position: relative;
+  background: var(--land-gradient-purple);
+  color: white;
+  padding: 1rem 1.2rem;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border-radius: 0 0 2rem 2rem;
+  box-shadow: var(--land-shadow-lg);
+}
+
+.land-header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.land-animated-shape {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: landFloat 6s ease-in-out infinite;
+}
+
+.land-shape-1 {
+  width: 100px;
+  height: 100px;
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.land-shape-2 {
+  width: 150px;
+  height: 150px;
+  top: 60%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.land-shape-3 {
+  width: 80px;
+  height: 80px;
+  bottom: 30%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+.land-shape-4 {
+  width: 120px;
+  height: 120px;
+  top: 10%;
+  right: 30%;
+  animation-delay: 1s;
+}
+
+@keyframes landFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+.land-header-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.land-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #fff, #e0e7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.land-subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.land-stats {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+.land-stat-item {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: var(--land-radius-lg);
+  backdrop-filter: blur(5px);
+  min-width: 150px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: var(--land-transition);
+}
+
+.land-stat-item:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.land-stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.land-stat-label {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Search Section */
+.land-search-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 2rem 2rem;
+  flex-wrap: wrap;
+}
+
+.land-search-container {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+  max-width: 600px;
+}
+
+.land-search-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.land-search-bar {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 3rem;
+  border: 2px solid var(--land-border-color);
+  border-radius: var(--land-radius-lg);
+  font-size: 1rem;
+  background-color: var(--land-bg-primary);
+  box-shadow: var(--land-shadow-sm);
+  transition: var(--land-transition);
+  outline: none;
+}
+
+.land-search-bar:focus {
+  border-color: var(--land-primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.land-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--land-text-light);
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.land-add-property-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: var(--land-gradient-secondary);
+  color: white;
+  border: none;
+  border-radius: var(--land-radius-lg);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--land-transition);
+  box-shadow: var(--land-shadow-md);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.land-add-property-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transition: all 0.6s ease;
+}
+
+.land-add-property-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--land-shadow-lg);
+}
+
+.land-add-property-button:hover::before {
+  left: 100%;
+}
+
+.land-button-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.land-btn-icon-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Tabs */
+.land-tabs-container {
+  margin: 0 2rem 2rem;
+}
+
+.land-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid var(--land-border-color);
+  padding-bottom: 0.25rem;
+  overflow-x: auto;
+}
+
+.land-tab {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--land-text-secondary);
+  cursor: pointer;
+  transition: var(--land-transition);
+  border-radius: var(--land-radius-md) var(--land-radius-md) 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.land-tab::after {
+  content: "";
+  position: absolute;
+  bottom: -0.25rem;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--land-gradient-primary);
+  transition: var(--land-transition);
+  border-radius: var(--land-radius-sm) var(--land-radius-sm) 0 0;
+}
+
+.land-tab:hover {
+  color: var(--land-primary-color);
+}
+
+.land-tab:hover::after {
+  width: 100%;
+}
+
+.land-tab.active {
+  color: var(--land-primary-color);
+  font-weight: 600;
+}
+
+.land-tab.active::after {
+  width: 100%;
+}
+
+.land-tab-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Main Container */
+.land-container {
+  padding: 0 2rem 2rem;
+}
+
+/* Loading State */
+.land-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.land-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 3px solid var(--land-border-color);
+  border-top: 3px solid var(--land-primary-color);
+  border-radius: 50%;
+  animation: landSpin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes landSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* No Data State */
+.land-no-data {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: var(--land-bg-primary);
+  border-radius: var(--land-radius-xl);
+  box-shadow: var(--land-shadow-sm);
+  border: 1px solid var(--land-border-color);
+}
+
+.land-no-data-icon {
+  width: 4rem;
+  height: 4rem;
+  color: var(--land-text-light);
+  margin-bottom: 1rem;
+}
+
+.land-no-data h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--land-text-primary);
+}
+
+.land-no-data p {
+  color: var(--land-text-secondary);
+  margin-bottom: 2rem;
+}
+
+.land-add-first-property {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--land-gradient-secondary);
+  color: white;
+  border: none;
+  border-radius: var(--land-radius-lg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--land-transition);
+  box-shadow: var(--land-shadow-md);
+}
+
+.land-add-first-property:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--land-shadow-lg);
+}
+
+/* Property Grid */
+.land-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Property Cards */
+.land-card {
+  background-color: var(--land-bg-primary);
+  border-radius: var(--land-radius-xl);
+  box-shadow: var(--land-shadow-sm);
+  border: 1px solid var(--land-border-color);
+  overflow: hidden;
+  transition: var(--land-transition);
+  position: relative;
+}
+
+.land-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--land-shadow-lg);
+}
+
+.land-card-completed {
+  border-top: 4px solid var(--land-success-color);
+}
+
+.land-card-status {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+}
+
+.land-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--land-radius-full, 9999px);
+  font-size: 0.75rem;
+  font-weight: 600;
+  box-shadow: var(--land-shadow-sm);
+}
+
+.land-status-completed {
+  background-color: var(--land-success-light);
+  color: var(--land-success-color);
+}
+
+.land-status-pending {
+  background-color: var(--land-warning-light);
+  color: var(--land-warning-color);
+}
+
+.land-status-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.land-status-icon-lg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.land-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--land-border-light);
+  background: linear-gradient(to right, #f9fafb, #f3f4f6);
+}
+
+.land-card-title h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--land-text-primary);
+}
+
+.land-plot-number {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: var(--land-primary-light);
+  color: var(--land-primary-color);
+  border-radius: var(--land-radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.land-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.land-action-btn {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--land-transition);
+  background-color: var(--land-bg-tertiary);
+  color: var(--land-text-secondary);
+}
+
+.land-view-btn:hover {
+  background-color: var(--land-info-light);
+  color: var(--land-info-color);
+  transform: scale(1.1);
+}
+
+.land-edit-btn:hover {
+  background-color: var(--land-success-light);
+  color: var(--land-success-color);
+  transform: scale(1.1);
+}
+
+.land-delete-btn:hover {
+  background-color: var(--land-danger-light);
+  color: var(--land-danger-color);
+  transform: scale(1.1);
+}
+
+.land-card-content {
+  padding: 1.5rem;
+}
+
+.land-property-info {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.land-info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--land-radius-md);
+  font-weight: 500;
+  flex: 1;
+}
+
+.land-info-area {
+  background-color: var(--land-info-light);
+  color: var(--land-info-color);
+}
+
+.land-info-price {
+  background-color: var(--land-success-light);
+  color: var(--land-success-color);
+}
+
+.land-info-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.land-payment-summary {
+  background: linear-gradient(to right, #f9fafb, #f3f4f6);
+  border-radius: var(--land-radius-lg);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--land-border-color);
+}
+
+.land-payment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--land-border-color);
+}
+
+.land-payment-item:last-child {
+  border-bottom: none;
+}
+
+.land-payment-token {
+  color: var(--land-info-color);
+}
+
+.land-payment-agreement {
+  color: var(--land-primary-color);
+}
+
+.land-payment-registry {
+  color: var(--land-secondary-color);
+}
+
+.land-payment-item.land-remaining {
+  font-weight: 600;
+  color: var(--land-danger-color);
+}
+
+.land-payment-label {
+  font-size: 0.875rem;
+}
+
+.land-payment-amount {
+  font-weight: 600;
+}
+
+/* Toggle Buttons */
+.land-button-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.land-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: var(--land-bg-tertiary);
+  color: var(--land-text-secondary);
+  border: 1px solid var(--land-border-color);
+  border-radius: var(--land-radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--land-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.land-toggle-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transition: all 0.6s ease;
+}
+
+.land-toggle-btn:hover {
+  background-color: var(--land-primary-light);
+  color: var(--land-primary-color);
+  border-color: var(--land-primary-color);
+}
+
+.land-toggle-btn:hover::before {
+  left: 100%;
+}
+
+.land-toggle-btn.active {
+  background: var(--land-gradient-primary);
+  color: white;
+  border-color: var(--land-primary-dark);
+}
+
+.land-btn-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Expandable Sections */
+.land-section {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: var(--land-bg-tertiary);
+  border-radius: var(--land-radius-lg);
+  border: 1px solid var(--land-border-color);
+  animation: landFadeIn 0.3s ease-out;
+}
+
+.land-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--land-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--land-border-color);
+}
+
+.land-person-info {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.land-person-detail {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background-color: var(--land-bg-primary);
+  border-radius: var(--land-radius-md);
+  font-size: 0.875rem;
+  border: 1px solid var(--land-border-color);
+}
+
+.land-detail-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--land-primary-color);
+  flex-shrink: 0;
+}
+
+.land-transaction-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.land-transaction-btn,
+.land-add-transaction-btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--land-radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--land-transition);
+  border: 1px solid var(--land-border-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.land-transaction-btn {
+  background-color: var(--land-bg-primary);
+  color: var(--land-text-secondary);
+}
+
+.land-transaction-btn:hover {
+  background-color: var(--land-primary-light);
+  color: var(--land-primary-color);
+  border-color: var(--land-primary-color);
+}
+
+.land-add-transaction-btn {
+  background: var(--land-gradient-success);
+  color: white;
+  border-color: var(--land-success-color);
+}
+
+.land-add-transaction-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--land-shadow-md);
+}
+
+.land-transactions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: landSlideUp 0.3s ease-out;
+}
+
+.land-transaction-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background-color: var(--land-bg-primary);
+  border-radius: var(--land-radius-md);
+  border: 1px solid var(--land-border-color);
+}
+
+.land-transaction-date,
+.land-transaction-amount {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.land-transaction-date {
+  color: var(--land-info-color);
+  min-width: 120px;
+}
+
+.land-transaction-amount {
+  color: var(--land-success-color);
+  min-width: 100px;
+}
+
+.land-transaction-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.land-transaction-note {
+  flex: 1;
+  font-size: 0.875rem;
+  color: var(--land-text-secondary);
+}
+
+.land-no-transactions {
+  text-align: center;
+  color: var(--land-text-light);
+  font-style: italic;
+  padding: 1rem;
+}
+
+/* Partner Cards */
+.land-partner-card {
+  background-color: var(--land-bg-primary);
+  border-radius: var(--land-radius-lg);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--land-border-color);
+  box-shadow: var(--land-shadow-sm);
+}
+
+.land-partner-card:hover {
+  box-shadow: var(--land-shadow-md);
+}
+
+/* Address Section */
+.land-address-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.land-address-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  background-color: var(--land-bg-primary);
+  border-radius: var(--land-radius-md);
+  border: 1px solid var(--land-border-color);
+  transition: var(--land-transition);
+}
+
+.land-address-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--land-shadow-sm);
+  border-color: var(--land-primary-color);
+}
+
+.land-address-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--land-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.land-address-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--land-text-primary);
+}
+
+/* Modal Styles */
+.land-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  animation: landFadeIn 0.3s ease-out;
+}
+.land-modal-content {
+  background-color: var(--land-bg-primary);
+  border-radius: var(--land-radius-xl);
+  box-shadow: var(--land-shadow-xl);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: landSlideUp 0.3s ease-out;
+  border: 1px solid var(--land-border-color);
+  scrollbar-width: none;
+}
+
+.land-add-property-modal {
+  max-width: 700px;
+}
+
+.land-transaction-modal {
+  max-width: 600px;
+}
+
+.land-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--land-border-color);
+  background: linear-gradient(to right, #f9fafb, #f3f4f6);
+}
+
+.land-modal-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--land-text-primary);
+}
+
+.land-modal-close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--land-bg-tertiary);
+  color: var(--land-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--land-transition);
+}
+
+.land-modal-close:hover {
+  background-color: var(--land-danger-color);
+  color: white;
+  transform: rotate(90deg);
+}
+
+.land-modal-body {
+  padding: 1.5rem;
+}
+
+.land-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--land-border-color);
+  background-color: var(--land-bg-tertiary);
+}
+
+.land-property-overview {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(to bottom, #f9fafb, #f3f4f6);
+  border-radius: var(--land-radius-lg);
+  border: 1px solid var(--land-border-color);
+}
+
+.land-property-overview h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--land-text-primary);
+}
+
+.land-property-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--land-success-color);
+  margin-top: 1rem;
+}
+
+.land-property-status {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: var(--land-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.land-status-complete {
+  background-color: var(--land-success-light);
+  color: var(--land-success-color);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--land-radius-md);
+}
+
+.land-status-pending {
+  background-color: var(--land-warning-light);
+  color: var(--land-warning-color);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--land-radius-md);
+}
+
+.land-modal-details {
+  margin-bottom: 1.5rem;
+}
+
+.land-modal-section {
+  margin-bottom: 1.5rem;
+}
+
+.land-modal-section h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--land-border-color);
+}
+
+.land-modal-payment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.land-modal-payment-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background-color: var(--land-bg-tertiary);
+  border-radius: var(--land-radius-md);
+  border: 1px solid var(--land-border-color);
+}
+
+.land-modal-payment-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--land-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.land-modal-payment-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--land-text-primary);
+}
+
+.land-modal-payment-date {
+  font-size: 0.75rem;
+  color: var(--land-text-light);
+}
+
+.land-modal-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--land-radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--land-transition);
+  border: none;
+}
+
+.land-modal-edit-btn {
+  background: var(--land-gradient-info);
+  color: white;
+}
+
+.land-modal-transaction-btn {
+  background: var(--land-gradient-success);
+  color: white;
+}
+
+.land-modal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--land-shadow-md);
+}
+
+.land-modal-btn-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Form Styles */
+.land-form-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--land-border-color);
+}
+
+.land-form-section:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.land-form-section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--land-primary-color);
+}
+
+.land-form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.land-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.land-form-group-full {
+  flex: 1 0 100%;
+}
+
+.land-form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--land-text-primary);
+}
+
+.land-form-group input,
+.land-form-group textarea,
+.land-form-group select {
+  padding: 0.75rem;
+  border: 1px solid var(--land-border-color);
+  border-radius: var(--land-radius-md);
+  font-size: 1rem;
+  transition: var(--land-transition);
+  background-color: var(--land-bg-primary);
+}
+
+.land-form-group input:focus,
+.land-form-group textarea:focus,
+.land-form-group select:focus {
+  outline: none;
+  border-color: var(--land-primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.land-form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.land-form-group select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  padding-right: 2.5rem;
+}
+
+.land-form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.land-cancel-btn,
+.land-submit-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--land-radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--land-transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.land-cancel-btn {
+  background-color: var(--land-bg-tertiary);
+  color: var(--land-text-secondary);
+  border: 1px solid var(--land-border-color);
+}
+
+.land-cancel-btn:hover {
+  background-color: var(--land-border-color);
+}
+
+.land-submit-btn {
+  background: var(--land-gradient-primary);
+  color: white;
+  border: none;
+}
+
+.land-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--land-shadow-md);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .land-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  }
+
+  .land-stats {
+    gap: 2rem;
+  }
+
+  .land-form-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .land-title {
+    font-size: 2rem;
+  }
+
+  .land-subtitle {
+    font-size: 1rem;
+  }
+
+  .land-stats {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .land-search-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .land-search-container {
+    max-width: none;
+    flex-direction: column;
+  }
+
+  .land-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .land-button-group {
+    grid-template-columns: 1fr;
+  }
+
+  .land-address-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .land-transaction-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .land-form-actions {
+    flex-direction: column;
+  }
+
+  .land-modal-payment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .land-modal-footer {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .land-container {
+    padding: 0 1rem 2rem;
+  }
+
+  .land-search-section {
+    margin: 0 1rem 2rem;
+  }
+
+  .land-header {
+    padding: 2rem 1rem;
+  }
+
+  .land-card-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .land-property-info {
+    flex-direction: column;
+  }
+
+  .land-modal-content {
+    margin: 1rem;
+    max-width: calc(100% - 2rem);
+  }
+
+  .land-tabs-container {
+    margin: 0 1rem 1.5rem;
+  }
+
+  .land-tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Animation Classes */
+.land-fade-in {
+  animation: landFadeIn 0.3s ease-out;
+}
+
+@keyframes landFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.land-slide-up {
+  animation: landSlideUp 0.3s ease-out;
+}
+
+@keyframes landSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Utility Classes */
+.land-text-center {
+  text-align: center;
+}
+
+.land-text-left {
+  text-align: left;
+}
+
+.land-text-right {
+  text-align: right;
+}
+
+.land-mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.land-mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.land-mb-3 {
+  margin-bottom: 0.75rem;
+}
+
+.land-mb-4 {
+  margin-bottom: 1rem;
+}
+
+.land-mt-1 {
+  margin-top: 0.25rem;
+}
+
+.land-mt-2 {
+  margin-top: 0.5rem;
+}
+
+.land-mt-3 {
+  margin-top: 0.75rem;
+}
+
+.land-mt-4 {
+  margin-top: 1rem;
+}

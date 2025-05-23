@@ -728,21 +728,16 @@ function LeadProject() {
         }
 
         setLoading(true);
-        const response = await fetch(`${BASE_URL}/show-AllProject`, {
-          method: "GET",
+
+        const response = await axiosInstance(`${BASE_URL}/show-AllProject`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log(data);
-        setProjects(data);
+        // This check is optional because Axios throws on non-2xx by default
+        setProjects(response.data);
         setError(null);
       } catch (error) {
         console.error("Failed to fetch projects:", error);
@@ -753,7 +748,7 @@ function LeadProject() {
     }
 
     fetchProjects();
-  }, []);
+  }, [token]);
 
   const categories = ["All", "ACTIVE", "INACTIVE", "COMPLETED"];
 

@@ -481,12 +481,14 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       icon: <Building size={22} />,
       color: "pink",
       count: 11,
+      path: "/office",
     },
     {
       name: "Stationary Management",
       icon: <Pen size={22} />,
       color: "violet",
       count: 9,
+      path: "/stationary",
     },
   ];
 

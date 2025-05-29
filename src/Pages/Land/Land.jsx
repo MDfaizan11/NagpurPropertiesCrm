@@ -284,9 +284,60 @@ function Land() {
   const [khno, setKhno] = useState("");
   const [plotno, setPlotno] = useState("");
   const [phno, setPhno] = useState("");
-
   const [partners, setPartners] = useState([]);
 
+  const [editLandId, setEditLandId] = useState(null);
+  const [ShowEditLandModal, setShowEditLandModal] = useState(false);
+
+  const [editArea, setEditArea] = useState("");
+  const [editTotalAmount, setEditTotalAmount] = useState("");
+  const [editTokenDate, setEditTokenDate] = useState("");
+  const [editTokenAmount, setEditTokenAmount] = useState("");
+  const [editAgreementAmount, setEditAgreementAmount] = useState("");
+  const [editAgreementDate, setEditAgreementDate] = useState("");
+  const [editRegistryAmount, setEditRegistryAmount] = useState("");
+  const [editRegistryDate, setEditRegistryDate] = useState("");
+
+  const [editOwnerName, setEditOwnerName] = useState("");
+  const [editOwnerPhone, setEditOwnerPhone] = useState("");
+  const [editOwnerAadhar, setEditOwnerAadhar] = useState("");
+  const [editOwnerAddress, setEditOwnerAddress] = useState("");
+
+  const [editPurchaserName, setEditPurchaserName] = useState("");
+  const [editPurchaserPhone, setEditPurchaserPhone] = useState("");
+  const [editPurchaserAadhar, setEditPurchaserAadhar] = useState("");
+  const [editPurchaserAddress, setEditPurchaserAddress] = useState("");
+
+  const [editLandmark, setEditLandmark] = useState("");
+  const [editPincode, setEditPincode] = useState("");
+  const [editCity, setEditCity] = useState("");
+  const [editCountry, setEditCountry] = useState("");
+  const [editState, setEditState] = useState("");
+  const [editMuza, setEditMuza] = useState("");
+  const [editKhno, setEditKhno] = useState("");
+  const [editPlotno, setEditPlotno] = useState("");
+  const [editPhno, setEditPhno] = useState("");
+
+  // For partners, you can use an array
+  const [editPartners, setEditPartners] = useState([
+    { name: "", phoneNumber: "", city: "", addhar_number: "" },
+  ]);
+
+  const [LandId, setLandId] = useState("");
+
+  const [showAddpatnerForm, setShowAddPatnerForm] = useState(false);
+  const [newPatnerName, setNewPatnerName] = useState("");
+  const [newPatnerCity, setNewPatnerCity] = useState("");
+  const [newPatnerPhoneNumber, setNewPatnerPhoneNumber] = useState("");
+  const [newPatnerAadharNumber, setNewPatnerAadharNumber] = useState("");
+
+  const [patnerTransactionId, setpatnerTransactionId] = useState("");
+  const [madeBy, setMadeBy] = useState("PARTNER");
+  const [transactionType, setTransactionType] = useState("");
+  const [transactionDate, setTransactionDate] = useState("");
+  const [transactionAmount, setTransactionAmount] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [note, setNote] = useState("");
   const handleAddPartner = () => {
     setPartners([
       ...partners,
@@ -294,11 +345,10 @@ function Land() {
     ]);
   };
   const handlePartnerChange = (index, field, value) => {
-    const updatedPartners = [...partners];
+    const updatedPartners = [...editPartners];
     updatedPartners[index][field] = value;
-    setPartners(updatedPartners);
+    setEditPartners(updatedPartners);
   };
-
   useEffect(() => {
     async function getAllLand() {
       try {
@@ -354,7 +404,9 @@ function Land() {
     setShowAddPropertyModal(false);
   };
 
-  const openTransactionModal = () => {
+  const openTransactionModal = (id) => {
+    alert(id);
+    setpatnerTransactionId(id);
     setShowTransactionModal(true);
   };
 
@@ -445,6 +497,249 @@ function Land() {
       console.log(error);
     }
   }
+
+  async function handleDeleteProperty(id) {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this property?"
+    );
+    if (!confirmDelete) return;
+    try {
+      const response = await axiosInstance.delete(`${BASE_URL}/Land/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.status === 200) {
+        alert("Property deleted successfully");
+        setRefreshKey((prev) => prev + 1);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function handleEditProperty(id) {
+    setEditLandId(id);
+    setShowEditLandModal(true);
+    try {
+      const response = await axiosInstance.get(`${BASE_URL}/Land/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = response.data;
+
+      setEditArea(data.area);
+      setEditTotalAmount(data.totalAmount);
+      setEditTokenDate(data.tokenDate);
+      setEditTokenAmount(data.tokenAmount);
+      setEditAgreementAmount(data.agreementAmount);
+      setEditAgreementDate(data.agreementDate);
+      setEditRegistryAmount(data.registryAmount);
+      setEditRegistryDate(data.registryDate);
+
+      setEditOwnerName(data.owner.name);
+      setEditOwnerPhone(data.owner.phoneNumber);
+      setEditOwnerAadhar(data.owner.aadharNumber);
+      setEditOwnerAddress(data.owner.address);
+
+      setEditPurchaserName(data.purchaser.name);
+      setEditPurchaserPhone(data.purchaser.phoneNumber);
+      setEditPurchaserAadhar(data.purchaser.aadharNumber);
+      setEditPurchaserAddress(data.purchaser.address);
+
+      setEditLandmark(data.address.landmark);
+      setEditPincode(data.address.pincode);
+      setEditCity(data.address.city);
+      setEditState(data.address.state);
+      setEditCountry(data.address?.country || "India");
+      setEditMuza(data.address?.muza || "");
+      setEditKhno(data.address?.khno || "");
+      setEditPlotno(data.address?.plotno || "");
+      setEditPhno(data.address?.phno || "");
+
+      setEditPartners(data.partners || []);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleUpdateland(e) {
+    e.preventDefault();
+    const body = {
+      area: editArea,
+      tokenAmount: editTokenAmount,
+      tokenDate: editTokenDate,
+      agreementAmount: editAgreementAmount,
+      agreementDate: editAgreementDate,
+      registryAmount: editRegistryAmount,
+      registryDate: editRegistryDate,
+      totalAmount: editTotalAmount,
+      address: {
+        landmark: editLandmark,
+        pincode: editPincode,
+        city: editCity,
+        country: editCountry,
+        state: editState,
+        muza: editMuza,
+        khno: editKhno,
+        plotno: editPlotno,
+        phno: editPhno,
+      },
+      purchaser: {
+        name: editPurchaserName,
+        address: editPurchaserAddress,
+        phoneNumber: editPurchaserPhone,
+        aadharNumber: editPurchaserAadhar,
+      },
+      owner: {
+        name: editOwnerName,
+        address: editOwnerAddress,
+        phoneNumber: editOwnerPhone,
+        aadharNumber: editOwnerAadhar,
+      },
+      partners: editPartners.map((p) => ({
+        name: p.name,
+        city: p.city,
+        phoneNumber: p.phoneNumber,
+        addhar_number: p.addhar_number,
+      })),
+    };
+
+    try {
+      const response = await axiosInstance.put(
+        `${BASE_URL}/updateLand/${editLandId}`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200) {
+        alert("Land updated successfully");
+        setRefreshKey((prev) => prev + 1);
+        setShowEditLandModal(false);
+        setEditLandId(null);
+        setEditArea("");
+        setEditTotalAmount("");
+        setEditTokenDate("");
+        setEditTokenAmount("");
+        setEditAgreementAmount("");
+        setEditAgreementDate("");
+        setEditRegistryAmount("");
+        setEditRegistryDate("");
+        setEditLandmark("");
+        setEditPincode("");
+        setEditCity("");
+        setEditState("");
+        setEditCountry("");
+        setEditMuza("");
+        setEditKhno("");
+        setEditPlotno("");
+        setEditPhno("");
+        setEditPurchaserName("");
+        setEditPurchaserAddress("");
+        setEditPurchaserPhone("");
+        setEditPurchaserAadhar("");
+        setEditOwnerName("");
+        setEditOwnerAddress("");
+        setEditOwnerPhone("");
+        setEditOwnerAadhar("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function handleShowAddpatnerForm(id) {
+    setLandId(id);
+    setShowAddPatnerForm(true);
+  }
+
+  const handleAddPatner = async (e) => {
+    e.preventDefault();
+    const newPatnerData = {
+      name: newPatnerName,
+      city: newPatnerCity,
+      phoneNumber: newPatnerPhoneNumber,
+      addhar_number: newPatnerAadharNumber,
+    };
+
+    try {
+      const response = await axiosInstance.post(
+        `${BASE_URL}/Land/${LandId}/addPartner`,
+        newPatnerData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200) {
+        alert("Patner Added Successfully");
+        setRefreshKey(refreshKey + 1);
+        setNewPatnerName("");
+        setNewPatnerCity("");
+        setNewPatnerPhoneNumber("");
+        setNewPatnerAadharNumber("");
+        setShowAddPatnerForm(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  function handleDeletePatner(id) {
+    alert(id);
+  }
+
+  const handleSubmitpatnerTransaction = async (e) => {
+    e.preventDefault();
+
+    const transactionbody = {
+      transactionDate,
+      transactionAmount: parseFloat(transactionAmount),
+      note,
+      change: transactionType,
+      madeBy,
+      status: paymentMethod,
+    };
+
+    try {
+      const response = await axiosInstance.post(
+        `${BASE_URL}/addpayment/partner/${patnerTransactionId}`,
+        transactionbody,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(response);
+      if (response.status === 201) {
+        alert("Patner Transaction Added Successfully");
+        setRefreshKey(refreshKey + 1);
+        setTransactionDate("");
+        setTransactionAmount("");
+        setNote("");
+        setTransactionType("");
+
+        setPaymentMethod("");
+        setShowTransactionModal(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {/* Header Section */}
@@ -582,12 +877,16 @@ function Land() {
                       <button
                         className="land-action-btn land-edit-btn"
                         title="Edit"
+                        onClick={() => handleEditProperty(item.id)}
                       >
                         <Edit />
                       </button>
                       <button
                         className="land-action-btn land-delete-btn"
                         title="Delete"
+                        onClick={() => {
+                          handleDeleteProperty(item.id);
+                        }}
                       >
                         <Trash2 />
                       </button>
@@ -834,80 +1133,97 @@ function Land() {
                     {toggleSection[`${baseKey}-partners`] && (
                       <div className="land-section land-partners-section">
                         <h4 className="land-section-title">Partners</h4>
-                        {item.partners?.map((partner, pIndex) => {
-                          const partnerKey = `${baseKey}-partner-${pIndex}`;
-                          return (
-                            <div
-                              key={partner.id || pIndex}
-                              className="land-partner-card"
-                            >
-                              <div className="land-person-info">
-                                <div className="land-person-detail">
-                                  <User className="land-detail-icon" />
-                                  <span>{partner.name}</span>
+                        {item.partners?.length > 0 ? (
+                          item.partners.map((partner, pIndex) => {
+                            const partnerKey = `${baseKey}-partner-${pIndex}`;
+                            return (
+                              <div
+                                key={partner.id || pIndex}
+                                className="land-partner-card"
+                              >
+                                <div className="land-person-info">
+                                  <div className="land-person-detail">
+                                    <User className="land-detail-icon" />
+                                    <span>{partner.name}</span>
+                                  </div>
+                                  <div className="land-person-detail">
+                                    <Phone className="land-detail-icon" />
+                                    <span>{partner.phoneNumber}</span>
+                                  </div>
+                                  <div className="land-person-detail">
+                                    <CreditCard className="land-detail-icon" />
+                                    <span>{partner.addhar_number}</span>
+                                  </div>
+                                  <div className="land-person-detail">
+                                    <MapPin className="land-detail-icon" />
+                                    <span>{partner.city}</span>
+                                  </div>
                                 </div>
-                                <div className="land-person-detail">
-                                  <Phone className="land-detail-icon" />
-                                  <span>{partner.phoneNumber}</span>
+                                <div className="land-transaction-controls">
+                                  <button
+                                    className="land-transaction-btn"
+                                    onClick={() => toggle(`${partnerKey}-txn`)}
+                                  >
+                                    {toggleSection[`${partnerKey}-txn`]
+                                      ? "Hide"
+                                      : "Show"}{" "}
+                                    Transactions
+                                  </button>
+                                  <button
+                                    className="land-add-transaction-btn"
+                                    onClick={() =>
+                                      openTransactionModal(partner.id)
+                                    }
+                                  >
+                                    <Plus className="land-btn-icon-sm" /> Add
+                                    Transaction
+                                  </button>
+                                  <button
+                                    className="land-transaction-btn"
+                                    onClick={() =>
+                                      handleDeletePatner(partner.id)
+                                    }
+                                  >
+                                    Delete
+                                  </button>
                                 </div>
-                                <div className="land-person-detail">
-                                  <CreditCard className="land-detail-icon" />
-                                  <span>{partner.addhar_number}</span>
-                                </div>
-                                <div className="land-person-detail">
-                                  <MapPin className="land-detail-icon" />
-                                  <span>{partner.city}</span>
-                                </div>
+                                {toggleSection[`${partnerKey}-txn`] && (
+                                  <div className="land-transactions">
+                                    {partner.landTransactions?.length > 0 ? (
+                                      partner.landTransactions.map((txn, i) => (
+                                        <div
+                                          key={i}
+                                          className="land-transaction-item"
+                                        >
+                                          <div className="land-transaction-date">
+                                            <Calendar className="land-transaction-icon" />
+                                            {txn.transactionDate}
+                                          </div>
+                                          <div className="land-transaction-amount">
+                                            <IndianRupee className="land-transaction-icon" />
+                                            ₹
+                                            {txn.transactionAmount.toLocaleString()}
+                                          </div>
+                                          <div className="land-transaction-note">
+                                            {txn.note}
+                                          </div>
+                                        </div>
+                                      ))
+                                    ) : (
+                                      <p className="land-no-transactions">
+                                        No transactions found
+                                      </p>
+                                    )}
+                                  </div>
+                                )}
                               </div>
-                              <div className="land-transaction-controls">
-                                <button
-                                  className="land-transaction-btn"
-                                  onClick={() => toggle(`${partnerKey}-txn`)}
-                                >
-                                  {toggleSection[`${partnerKey}-txn`]
-                                    ? "Hide"
-                                    : "Show"}{" "}
-                                  Transactions
-                                </button>
-                                <button
-                                  className="land-add-transaction-btn"
-                                  onClick={openTransactionModal}
-                                >
-                                  <Plus className="land-btn-icon-sm" /> Add
-                                  Transaction
-                                </button>
-                              </div>
-                              {toggleSection[`${partnerKey}-txn`] && (
-                                <div className="land-transactions">
-                                  {partner.landTransactions?.length > 0 ? (
-                                    partner.landTransactions.map((txn, i) => (
-                                      <div
-                                        key={i}
-                                        className="land-transaction-item"
-                                      >
-                                        <div className="land-transaction-date">
-                                          <Calendar className="land-transaction-icon" />
-                                          {txn.transactionDate}
-                                        </div>
-                                        <div className="land-transaction-amount">
-                                          <IndianRupee className="land-transaction-icon" />
-                                          ₹{txn.transactionAmount}
-                                        </div>
-                                        <div className="land-transaction-note">
-                                          {txn.note}
-                                        </div>
-                                      </div>
-                                    ))
-                                  ) : (
-                                    <p className="land-no-transactions">
-                                      No transactions found
-                                    </p>
-                                  )}
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })}
+                            );
+                          })
+                        ) : (
+                          <p className="land-no-partners">
+                            No partners available
+                          </p>
+                        )}
                       </div>
                     )}
 
@@ -1048,8 +1364,11 @@ function Land() {
               </div>
             </div>
             <div className="land-modal-footer">
-              <button className="land-modal-btn land-modal-edit-btn">
-                <Edit className="land-modal-btn-icon" /> Edit Property
+              <button
+                className="land-modal-btn land-modal-edit-btn"
+                onClick={() => handleShowAddpatnerForm(selectedProperty.id)}
+              >
+                <Edit className="land-modal-btn-icon" /> Add Patner
               </button>
               <button
                 className="land-modal-btn land-modal-transaction-btn"
@@ -1417,7 +1736,6 @@ function Land() {
                     className="land-cancel-btn"
                     onClick={handleAddPartner}
                   >
-                    {" "}
                     Add Patner
                   </button>
                   <button
@@ -1454,42 +1772,76 @@ function Land() {
               </button>
             </div>
             <div className="land-modal-body">
-              <form className="land-transaction-form">
+              <form
+                className="land-transaction-form"
+                onSubmit={handleSubmitpatnerTransaction}
+              >
                 <div className="land-form-row">
                   <div className="land-form-group">
+                    <label>Made By</label>
+                    <input
+                      type="text"
+                      value={madeBy}
+                      // onChange={(e) => setMadeBy(e.target.value)}
+                    />
+
                     <label>Transaction Type</label>
-                    <select>
+                    <select
+                      value={transactionType}
+                      onChange={(e) => setTransactionType(e.target.value)}
+                    >
                       <option value="">Select type</option>
-                      <option value="agreement">Agreement</option>
-                      <option value="registry">Registry</option>
-                      <option value="other">Other</option>
+                      <option value="CREDIT">CREDIT</option>
+                      <option value="DEBIT">DEBIT</option>
                     </select>
                   </div>
+
                   <div className="land-form-group">
                     <label>Transaction Date</label>
-                    <input type="date" />
+                    <input
+                      type="date"
+                      value={transactionDate}
+                      onChange={(e) => setTransactionDate(e.target.value)}
+                    />
                   </div>
                 </div>
+
                 <div className="land-form-row">
                   <div className="land-form-group">
                     <label>Amount</label>
-                    <input type="number" placeholder="Enter amount" />
+                    <input
+                      type="number"
+                      placeholder="Enter amount"
+                      value={transactionAmount}
+                      onChange={(e) => setTransactionAmount(e.target.value)}
+                    />
                   </div>
+
                   <div className="land-form-group">
                     <label>Payment Method</label>
-                    <select>
+                    <select
+                      value={paymentMethod}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                    >
                       <option value="">Select method</option>
-                      <option value="cash">Cash</option>
-                      <option value="cheque">Cheque</option>
-                      <option value="bank">Bank Transfer</option>
-                      <option value="upi">UPI</option>
+                      <option value="CASH">Cash</option>
+                      <option value="CHECK">Cheque</option>
+                      <option value="RTGS">RTGS</option>
+                      <option value="UPI">UPI</option>
+                      <option value="NEFT">NEFT</option>
                     </select>
                   </div>
                 </div>
+
                 <div className="land-form-group land-form-group-full">
                   <label>Note</label>
-                  <textarea placeholder="Enter transaction note"></textarea>
+                  <textarea
+                    placeholder="Enter transaction note"
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                  />
                 </div>
+
                 <div className="land-form-actions">
                   <button
                     type="button"
@@ -1498,6 +1850,7 @@ function Land() {
                   >
                     Cancel
                   </button>
+
                   <button type="submit" className="land-submit-btn">
                     <Plus className="land-btn-icon-sm" /> Add Transaction
                   </button>
@@ -1506,6 +1859,424 @@ function Land() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* land Edit model */}
+
+      {ShowEditLandModal && (
+        <div
+          className="land-modal-overlay"
+          onClick={() => setShowEditLandModal(false)}
+        >
+          <div
+            className="land-modal-content land-edit-land-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="land-modal-header">
+              <h2>Edit Land</h2>
+              <button
+                className="land-modal-close"
+                onClick={() => setShowEditLandModal(false)}
+              >
+                <X />
+              </button>
+            </div>
+            <div className="land-modal-body">
+              <form
+                className="land-add-property-form"
+                onSubmit={handleUpdateland}
+              >
+                <div className="land-form-section">
+                  <h3 className="land-form-section-title">Property Details</h3>
+                  <div className="land-form-row">
+                    <div className="land-form-group">
+                      <label>Area (sqft)</label>
+                      <input
+                        type="number"
+                        placeholder="Area"
+                        value={editArea}
+                        onChange={(e) => setEditArea(e.target.value)}
+                      />
+                    </div>
+                    <div className="land-form-group">
+                      <label>Total Amount</label>
+                      <input
+                        type="number"
+                        placeholder="Total Amount"
+                        value={editTotalAmount}
+                        onChange={(e) => setEditTotalAmount(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group">
+                      <label>Token Date</label>
+                      <input
+                        type="date"
+                        placeholder="Token Date"
+                        value={editTokenDate}
+                        onChange={(e) => setEditTokenDate(e.target.value)}
+                      />
+                    </div>
+                    <div className="land-form-group">
+                      <label>Token Amount</label>
+                      <input
+                        type="number"
+                        placeholder="Token Amount"
+                        value={editTokenAmount}
+                        onChange={(e) => setEditTokenAmount(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="land-form-row">
+                    <div className="land-form-group">
+                      <label>Agreement Amount</label>
+                      <input
+                        type="number"
+                        placeholder="Agreement Amount"
+                        value={editAgreementAmount}
+                        onChange={(e) => setEditAgreementAmount(e.target.value)}
+                      />
+                    </div>
+                    <div className="land-form-group">
+                      <label>Agreement Date</label>
+                      <input
+                        type="date"
+                        placeholder="Agreement Date"
+                        value={editAgreementDate}
+                        onChange={(e) => setEditAgreementDate(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group">
+                      <label>Registry Amount</label>
+                      <input
+                        type="number"
+                        placeholder="Registry Amount"
+                        value={editRegistryAmount}
+                        onChange={(e) => setEditRegistryAmount(e.target.value)}
+                      />
+                    </div>
+                    <div className="land-form-group">
+                      <label>Registry Date</label>
+                      <input
+                        type="date"
+                        placeholder="Registry Date"
+                        value={editRegistryDate}
+                        onChange={(e) => setEditRegistryDate(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="land-form-section">
+                  <h3 className="land-form-section-title">Owner Details</h3>
+                  <div className="land-form-row">
+                    <div className="land-form-group">
+                      <label>Owner Name</label>
+                      <input
+                        type="text"
+                        placeholder="Owner Name"
+                        value={editOwnerName}
+                        onChange={(e) => setEditOwnerName(e.target.value)}
+                      />
+                    </div>
+                    <div className="land-form-group">
+                      <label>Phone Number</label>
+                      <input
+                        type="tel"
+                        placeholder="Owner Phone"
+                        value={editOwnerPhone}
+                        onChange={(e) => setEditOwnerPhone(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group">
+                      <label>Aadhar Number</label>
+
+                      <input
+                        type="text"
+                        placeholder="Owner Aadhar"
+                        value={editOwnerAadhar}
+                        onChange={(e) => setEditOwnerAadhar(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group land-form-group-full">
+                      <label>Address</label>
+                      <textarea
+                        placeholder="Owner Address"
+                        value={editOwnerAddress}
+                        onChange={(e) => setEditOwnerAddress(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="land-form-section">
+                  <h3 className="land-form-section-title">Purchaser Details</h3>
+                  <div className="land-form-row">
+                    <div className="land-form-group">
+                      <label>Purchaser Name</label>
+                      <input
+                        type="text"
+                        placeholder="Purchaser Name"
+                        value={editPurchaserName}
+                        onChange={(e) => setEditPurchaserName(e.target.value)}
+                      />
+                    </div>
+                    <div className="land-form-group">
+                      <label>Purchaser Number</label>
+                      <input
+                        type="tel"
+                        placeholder="Purchaser Phone"
+                        value={editPurchaserPhone}
+                        onChange={(e) => setEditPurchaserPhone(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group">
+                      <label>Purchaser Aadhar Number</label>
+                      <input
+                        type="text"
+                        placeholder="Purchaser Aadhar"
+                        value={editPurchaserAadhar}
+                        onChange={(e) => setEditPurchaserAadhar(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group land-form-group-full">
+                      <label>Purchaser Address</label>
+                      <textarea
+                        placeholder="Purchaser Address"
+                        value={editPurchaserAddress}
+                        onChange={(e) =>
+                          setEditPurchaserAddress(e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="land-form-section">
+                  <h3 className="land-form-section-title">Address Details</h3>
+                  <div className="land-form-row">
+                    <div className="land-form-group">
+                      <label>Landmark</label>
+                      <input
+                        placeholder="Landmark"
+                        value={editLandmark}
+                        onChange={(e) => setEditLandmark(e.target.value)}
+                      />
+                    </div>
+                    <div className="land-form-group">
+                      <label>Pincode Number</label>
+                      <input
+                        placeholder="Pincode"
+                        value={editPincode}
+                        onChange={(e) => setEditPincode(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group">
+                      <label>city</label>
+                      <input
+                        placeholder="City"
+                        value={editCity}
+                        onChange={(e) => setEditCity(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group land-form-group-full">
+                      <label>Country</label>
+                      <input
+                        placeholder="Country"
+                        value={editCountry}
+                        onChange={(e) => setEditCountry(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group land-form-group-full">
+                      <label>state</label>
+                      <input
+                        placeholder="State"
+                        value={editState}
+                        onChange={(e) => setEditState(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group land-form-group-full">
+                      <label>muza</label>
+                      <input
+                        placeholder="Muza"
+                        value={editMuza}
+                        onChange={(e) => setEditMuza(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group land-form-group-full">
+                      <label>khno</label>
+                      <input
+                        placeholder="KHNO"
+                        value={editKhno}
+                        onChange={(e) => setEditKhno(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group land-form-group-full">
+                      <label>plot No</label>
+                      <input
+                        placeholder="Plot No"
+                        value={editPlotno}
+                        onChange={(e) => setEditPlotno(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="land-form-row">
+                    <div className="land-form-group land-form-group-full">
+                      <label>phno</label>
+                      <input
+                        placeholder="PHNO"
+                        value={editPhno}
+                        onChange={(e) => setEditPhno(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="land-form-section">
+                  <h3 className="land-form-section-title">Partner Details</h3>
+                  {editPartners.map((partner, index) => (
+                    <div className="land-form-row" key={index}>
+                      <h3 className="land-form-section-title">
+                        Partner {index + 1}
+                      </h3>
+                      <div className="land-form-group">
+                        <label>Partner Name</label>
+                        <input
+                          type="text"
+                          placeholder="Enter partner name"
+                          value={partner.name}
+                          onChange={(e) =>
+                            handlePartnerChange(index, "name", e.target.value)
+                          }
+                        />
+                      </div>
+                      <div className="land-form-group">
+                        <label>Phone Number</label>
+                        <input
+                          type="tel"
+                          placeholder="Enter phone number"
+                          value={partner.phoneNumber}
+                          onChange={(e) =>
+                            handlePartnerChange(
+                              index,
+                              "phoneNumber",
+                              e.target.value
+                            )
+                          }
+                        />
+                      </div>
+                      <div className="land-form-group">
+                        <label>City</label>
+                        <input
+                          type="text"
+                          placeholder="Enter city"
+                          value={partner.city}
+                          onChange={(e) =>
+                            handlePartnerChange(index, "city", e.target.value)
+                          }
+                        />
+                      </div>
+                      <div className="land-form-group">
+                        <label>Aadhar Number</label>
+                        <input
+                          type="text"
+                          placeholder="Enter Aadhar number"
+                          value={partner.addhar_number}
+                          onChange={(e) =>
+                            handlePartnerChange(
+                              index,
+                              "addhar_number",
+                              e.target.value
+                            )
+                          }
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="land-form-actions">
+                  <button type="submit" className="land-submit-btn">
+                    <Plus className="land-btn-icon-sm" /> Update Property
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* add patner model */}
+      {showAddpatnerForm && (
+        <>
+          <div className="Add_newPatner_popup_form_overlay">
+            <form className="Add_newPatner_form" onSubmit={handleAddPatner}>
+              <button
+                type="button"
+                onClick={() => setShowAddPatnerForm(false)}
+                className="Add_newPatner_popup_form_close_button"
+              >
+                X
+              </button>
+              <input
+                type="text"
+                placeholder="Enter Patner Name"
+                className="Add_newPatner_form_input"
+                value={newPatnerName}
+                onChange={(e) => setNewPatnerName(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Enter Patner City Name"
+                className="Add_newPatner_form_input"
+                value={newPatnerCity}
+                onChange={(e) => setNewPatnerCity(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Enter Patner PhoneNumber"
+                className="Add_newPatner_form_input"
+                value={newPatnerPhoneNumber}
+                onChange={(e) => setNewPatnerPhoneNumber(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Enter Patner Adhar Number"
+                className="Add_newPatner_form_input"
+                value={newPatnerAadharNumber}
+                onChange={(e) => setNewPatnerAadharNumber(e.target.value)}
+              />
+              <button
+                className="Add_newPatner_form_submit_button"
+                type="submit"
+              >
+                Add Patner
+              </button>
+            </form>
+          </div>
+        </>
       )}
     </>
   );

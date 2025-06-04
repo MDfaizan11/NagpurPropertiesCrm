@@ -275,7 +275,7 @@ const Lead = () => {
       })) || [];
 
     const updatedLead = {
-      id: parsedProjectId,
+      projectId: parsedProjectId,
       name: selectedLead.name,
       phone: selectedLead.phone,
       city: selectedLead.city,

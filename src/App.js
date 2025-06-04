@@ -9,6 +9,18 @@ import Protected from "./Components/protected/Protected";
 import LeadProject from "./Pages/Lead/LeadProject";
 import Stationary from "./Pages/stationary/Stationary";
 import Office from "./Pages/office/Office";
+import Labour from "./Pages/labour/Labour";
+import Plot from "./Pages/Plot/Plot";
+import PlotDetails from "./Pages/Plot/PlotDetails";
+import Material from "./Pages/Material/Material";
+import Quatation from "./Pages/Quatation/Quatation";
+import Machine from "./Pages/Machine/Machine";
+import Project from "./Pages/Project/Project";
+import Finance from "./Pages/Finance/Finance";
+import Task from "./Pages/Task/Task";
+import Letters from "./Pages/Letters/Letters";
+import Stock from "./Pages/Stock/Stock";
+import PlotQuatation from "./Pages/Plot/PlotQuatation";
 function App() {
   return (
     <>
@@ -16,16 +28,34 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<Login />} />
-            {/* <Route element={<Protected />}> */}
-            <Route path="/" element={<Dashboard />}>
-              <Route index element={<Home />} />
-              <Route path="lead/:ProjectId/:ProjectName" element={<Lead />} />
-              <Route path="land" element={<Land />} />
-              <Route path="leadProject" element={<LeadProject />} />
-              <Route path="stationary" element={<Stationary />} />
-              <Route path="office" element={<Office />} />
+            <Route element={<Protected />}>
+              <Route path="/" element={<Dashboard />}>
+                <Route index element={<Home />} />
+                <Route path="lead/:ProjectId/:ProjectName" element={<Lead />} />
+                <Route path="land" element={<Land />} />
+                <Route path="leadProject" element={<LeadProject />} />
+                <Route path="labour" element={<Labour />} />
+                <Route path="plot" element={<Plot />} />
+                <Route
+                  path="plotQuatation/:plotId"
+                  element={<PlotQuatation />}
+                />
+                <Route path="stationary" element={<Stationary />} />
+                <Route path="office" element={<Office />} />
+                <Route
+                  path="/plotDetails/:ProjectId/:ProjectName"
+                  element={<PlotDetails />}
+                />
+                <Route path="material" element={<Material />} />
+                <Route path="quatation" element={<Quatation />} />
+                <Route path="machine" element={<Machine />} />
+                <Route path="project" element={<Project />} />
+                <Route path="finance" element={<Finance />} />
+                <Route path="task" element={<Task />} />
+                <Route path="letter" element={<Letters />} />
+                <Route path="stock" element={<Stock />} />
+              </Route>
             </Route>
-            {/* </Route> */}
           </Routes>
         </BrowserRouter>
       </>

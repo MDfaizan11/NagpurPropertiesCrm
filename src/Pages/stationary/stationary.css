@@ -1,5 +1,4 @@
-/* Base Styles */
-:root {
+Base Styles :root {
   --primary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
   --secondary-gradient: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
   --success-gradient: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
@@ -397,8 +396,8 @@ body {
 }
 
 .edit-btn {
-  background: rgba(79, 172, 254, 0.1);
-  color: #4facfe;
+  background: rgb(79, 172, 254);
+  color: #ffffff;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -407,8 +406,8 @@ body {
 }
 
 .delete-btn {
-  background: rgba(245, 101, 101, 0.1);
-  color: #f56565;
+  background: rgb(245, 101, 101);
+  color: #ffffff;
 }
 
 .print-btn {

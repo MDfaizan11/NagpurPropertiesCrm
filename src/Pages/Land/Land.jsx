@@ -338,6 +338,18 @@ function Land() {
   const [transactionAmount, setTransactionAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [note, setNote] = useState("");
+
+  const [PurcheserId, setPurcheserId] = useState("");
+  const [ShowAddPurcheserTransaction, setShowAddPurcheserTransaction] =
+    useState(false);
+  const [purchaserTransaction, setPurchaserTransaction] = useState({
+    transactionDate: "",
+    transactionAmount: "",
+    note: "",
+    change: "CREDIT",
+    madeBy: "PURCHASER",
+    status: "UPI",
+  });
   const handleAddPartner = () => {
     setPartners([
       ...partners,
@@ -405,7 +417,6 @@ function Land() {
   };
 
   const openTransactionModal = (id) => {
-    alert(id);
     setpatnerTransactionId(id);
     setShowTransactionModal(true);
   };
@@ -740,6 +751,50 @@ function Land() {
     }
   };
 
+  function handleAddPurchesTransaction(id) {
+    setPurcheserId(id);
+    setShowAddPurcheserTransaction(true);
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPurchaserTransaction((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmitPurcheserTransacton = async (e) => {
+    e.preventDefault();
+    console.log("Form Submitted:", purchaserTransaction);
+    try {
+      const response = await axiosInstance.post(
+        `${BASE_URL}/addpayment/purchaser/${PurcheserId}`,
+        purchaserTransaction,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        alert("Purchaser Transactions Added Successfully");
+        setRefreshKey(refreshKey + 1);
+        setPurchaserTransaction({
+          transactionDate: "",
+          transactionAmount: "",
+          note: "",
+          change: "",
+          madeBy: "",
+          status: "",
+        });
+        setShowAddPurcheserTransaction(false);
+      }
+    } catch (error) {}
+  };
+
   return (
     <>
       {/* Header Section */}
@@ -863,7 +918,7 @@ function Land() {
                     <div className="land-card-title">
                       <h3>{item.owner?.name || "Unknown Owner"}</h3>
                       <span className="land-plot-number">
-                        Plot #{item.plotno || "N/A"}
+                        Plot # {item.address?.plotno || "N/A"}
                       </span>
                     </div>
                     <div className="land-card-actions">
@@ -897,11 +952,13 @@ function Land() {
                     <div className="land-property-info">
                       <div className="land-info-item land-info-area">
                         <MapPin className="land-info-icon" />
-                        <span>{item.area} sqft</span>
+                        <span> Plot Area : {item.area} sqft</span>
                       </div>
                       <div className="land-info-item land-info-price">
                         <IndianRupee className="land-info-icon" />
-                        <span>₹{item.totalAmount?.toLocaleString()}</span>
+                        <span>
+                          Total Amount : ₹ {item.totalAmount?.toLocaleString()}
+                        </span>
                       </div>
                     </div>
 
@@ -1091,7 +1148,9 @@ function Land() {
                             </button>
                             <button
                               className="land-add-transaction-btn"
-                              onClick={openTransactionModal}
+                              onClick={() =>
+                                handleAddPurchesTransaction(item.purchaser.id)
+                              }
                             >
                               <Plus className="land-btn-icon-sm" /> Add
                               Transaction
@@ -1296,9 +1355,10 @@ function Land() {
             </div>
             <div className="land-modal-body">
               <div className="land-property-overview">
-                <h3>{selectedProperty.owner?.name}</h3>
+                <h3> Owner Name : {selectedProperty.owner?.name}</h3>
                 <p>
-                  Plot #{selectedProperty.plotno} • {selectedProperty.area} sqft
+                  Plot No & Area : {selectedProperty.address?.plotno} /
+                  {selectedProperty.area} sqft
                 </p>
                 <div className="land-property-value">
                   Total Value: ₹{selectedProperty.totalAmount?.toLocaleString()}
@@ -1370,12 +1430,12 @@ function Land() {
               >
                 <Edit className="land-modal-btn-icon" /> Add Patner
               </button>
-              <button
+              {/* <button
                 className="land-modal-btn land-modal-transaction-btn"
                 onClick={openTransactionModal}
               >
                 <Plus className="land-modal-btn-icon" /> Add Transaction
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -2277,6 +2337,82 @@ function Land() {
             </form>
           </div>
         </>
+      )}
+
+      {/* show add purcheser transaction form */}
+      {ShowAddPurcheserTransaction && (
+        <div className="popup-overlay landaddpurchesTransactionform-overlay">
+          <form
+            className="landaddpurchesTransactionform"
+            onSubmit={handleSubmitPurcheserTransacton}
+          >
+            <button
+              type="button"
+              className="close-button"
+              onClick={() => setShowAddPurcheserTransaction(false)}
+            >
+              X
+            </button>
+
+            <h2>Add Purchaser Transaction</h2>
+
+            <label htmlFor="transactionDate">Transaction Date</label>
+            <input
+              type="date"
+              id="transactionDate"
+              name="transactionDate"
+              value={purchaserTransaction.transactionDate}
+              onChange={handleChange}
+              required
+            />
+
+            <label htmlFor="transactionAmount">Transaction Amount</label>
+            <input
+              type="number"
+              id="transactionAmount"
+              name="transactionAmount"
+              value={purchaserTransaction.transactionAmount}
+              onChange={handleChange}
+              required
+            />
+
+            <label htmlFor="change">Type</label>
+            <select
+              id="change"
+              name="change"
+              value={purchaserTransaction.change}
+              onChange={handleChange}
+            >
+              <option value="CREDIT">CREDIT</option>
+              <option value="DEBIT">DEBIT</option>
+            </select>
+
+            <label htmlFor="status">Payment Method</label>
+            <select
+              id="status"
+              name="status"
+              value={purchaserTransaction.status}
+              onChange={handleChange}
+            >
+              <option value="CASH">CASH</option>
+              <option value="CHECK">CHEQUE</option>
+              <option value="UPI">UPI</option>
+              <option value="RTGS">RTGS</option>
+              <option value="NEFT">NEFT</option>
+            </select>
+            <label htmlFor="note">Note</label>
+            <textarea
+              id="note"
+              name="note"
+              rows="3"
+              value={purchaserTransaction.note}
+              onChange={handleChange}
+            />
+            <button type="submit" className="submit-button">
+              Submit
+            </button>
+          </form>
+        </div>
       )}
     </>
   );

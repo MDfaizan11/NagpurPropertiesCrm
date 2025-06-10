@@ -4,9 +4,9 @@ import axiosInstance from "../../utils/axiosInstance";
 import { BASE_URL } from "../../config";
 import html2pdf from "html2pdf.js";
 import { NotebookPen, Search } from "lucide-react";
+
 function Office() {
   const printOfficeTableRefs = useRef({});
-
   const token = JSON.parse(localStorage.getItem("NagpurProperties"))?.token;
   const [officeExpenseData, setOfficeExpenseData] = useState([]);
   const [filteredExpenses, setFilteredExpenses] = useState([]);
@@ -36,6 +36,10 @@ function Office() {
   const [EditofficeRemark, setEditOfficeRemark] = useState("");
   const [EditofficeAmount, setEditOfficeAmount] = useState("");
   const [EditofficeDate, setEditOfficeDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [totalFilteredAmount, setTotalFilteredAmount] = useState(0);
+
   useEffect(() => {
     async function getAllOfficeExpense() {
       try {
@@ -73,6 +77,15 @@ function Office() {
         expense.giverName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         expense.amount?.toString().includes(searchQuery)
     );
+
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      filtered = filtered.filter((expense) => {
+        const expenseDate = new Date(expense.date);
+        return expenseDate >= start && expenseDate <= end;
+      });
+    }
 
     if (activeFilter !== "All Expenses") {
       const amount = Number.parseFloat(activeFilter.split(" ")[0]);
@@ -119,11 +132,23 @@ function Office() {
       });
     }
 
+    const total = filtered.reduce(
+      (sum, expense) => sum + (Number.parseFloat(expense.amount) || 0),
+      0
+    );
+    setTotalFilteredAmount(total);
+
     setFilteredExpenses(filtered);
     setCurrentPage(1);
-  }, [searchQuery, officeExpenseData, activeFilter, sortConfig]);
+  }, [
+    searchQuery,
+    officeExpenseData,
+    activeFilter,
+    sortConfig,
+    startDate,
+    endDate,
+  ]);
 
-  // Handle sorting
   const requestSort = (key) => {
     let direction = "ascending";
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
@@ -132,12 +157,20 @@ function Office() {
     setSortConfig({ key, direction });
   };
 
-  // Handle filter change
   const handleFilterChange = (filter) => {
     setActiveFilter(filter);
   };
 
-  // Format currency
+  // New function to reset all filters
+  const handleShowAllData = () => {
+    setSearchQuery("");
+    setStartDate("");
+    setEndDate("");
+    setActiveFilter("All Expenses");
+    setSortConfig({ key: null, direction: "ascending" });
+    setCurrentPage(1);
+  };
+
   const formatCurrency = (amount) => {
     if (!amount) return "₹0";
     return new Intl.NumberFormat("en-IN", {
@@ -147,7 +180,6 @@ function Office() {
     }).format(amount);
   };
 
-  // Format date
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
@@ -158,7 +190,6 @@ function Office() {
     });
   };
 
-  // Pagination
   const indexOfLastExpense = currentPage * expensesPerPage;
   const indexOfFirstExpense = indexOfLastExpense - expensesPerPage;
   const currentExpenses = filteredExpenses.slice(
@@ -169,7 +200,6 @@ function Office() {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // Handle delete expense
   const handleDeleteExpense = async (id) => {
     const deleteConfirm = window.confirm(
       "Are you sure you want to delete this expense?"
@@ -340,9 +370,41 @@ function Office() {
               aria-label="Search expenses"
             />
             <span className="search-icon">
-              {" "}
               <Search />
             </span>
+          </div>
+
+          <div className="date-range-wrapper">
+            <div className="date-input">
+              <label htmlFor="start-date" className="date-label">
+                Start Date
+              </label>
+              <input
+                type="date"
+                id="start-date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="office-search-input"
+                aria-label="Start date"
+              />
+            </div>
+            <div className="date-input">
+              <label htmlFor="end-date" className="date-label">
+                End Date
+              </label>
+              <input
+                type="date"
+                id="end-date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="office-search-input"
+                aria-label="End date"
+              />
+            </div>
+          </div>
+
+          <div className="total-amount">
+            <h3>Total Amount: {formatCurrency(totalFilteredAmount)}</h3>
           </div>
 
           <div className="view-controls">
@@ -359,37 +421,17 @@ function Office() {
             </div>
 
             <div className="filter-and-sort">
-              <select
-                className="office-filter"
-                aria-label="Filter expenses"
-                value={activeFilter}
-                onChange={(e) => handleFilterChange(e.target.value)}
-              >
-                <option>All Expenses</option>
-                <option>High Value (₹10K+)</option>
-                <option>Medium Value (₹5K-₹10K)</option>
-                <option>Low Value (&lt;₹5K)</option>
-              </select>
-
-              <select
-                className="office-sort"
-                aria-label="Sort expenses"
-                onChange={(e) => requestSort(e.target.value)}
-              >
-                <option value="">Sort By</option>
-                <option value="date">Date</option>
-                <option value="amount">Amount</option>
-                <option value="remark">Remark</option>
-                <option value="reciverName">Receiver</option>
-                <option value="giverName">Giver</option>
-              </select>
-
               <button
                 className="add-expense-btn"
                 onClick={() => setshowAddOfficeExpense(!showAddOfficeExpense)}
               >
                 <span className="btn-icon">+</span>
                 <span>Add Expense</span>
+              </button>
+
+              <button className="show-all-btn" onClick={handleShowAllData}>
+                <span className="btn-icon">↻</span>
+                <span>Show All Data</span>
               </button>
             </div>
           </div>
@@ -416,13 +458,11 @@ function Office() {
           </div>
         )}
 
-        {/* Expense Cards */}
         {!isLoading && !error && (
           <div className="stationary-card-container">
             {currentExpenses.length > 0 ? (
               currentExpenses.map((expense, index) => (
                 <div key={expense.id || index}>
-                  {/* Visible Card */}
                   <div className="stationary-card">
                     <div className="stationary-card-header">
                       <h3>
@@ -463,9 +503,7 @@ function Office() {
                     <div className="stationary-card-actions">
                       <button
                         className="action-btn edit-btn"
-                        onClick={() => {
-                          handleEditOfficeExpense(expense.id);
-                        }}
+                        onClick={() => handleEditOfficeExpense(expense.id)}
                       >
                         <span>Edit</span>
                       </button>
@@ -589,8 +627,8 @@ function Office() {
                   <div className="no-data-icon">📊</div>
                   <h3>No Office Expenses Found</h3>
                   <p>
-                    {searchQuery
-                      ? "Try adjusting your search criteria or filters"
+                    {searchQuery || startDate || endDate
+                      ? "Try adjusting your search criteria, date range, or filters"
                       : "No office expenses have been recorded yet"}
                   </p>
                   <button className="add-expense-btn-small">
@@ -685,82 +723,78 @@ function Office() {
       )}
 
       {ShowOfficeExpenseEditForm && (
-        <>
-          <div className="addofficeExpenseform-overlay">
-            <div className="addofficeExpenseform-container">
+        <div className="addofficeExpenseform-overlay">
+          <div className="addofficeExpenseform-container">
+            <button
+              onClick={() => setShowOfficeExpenseEditForm(false)}
+              className="addofficeExpenseform-close-button"
+            >
+              ✕
+            </button>
+            <h2 className="addofficeExpenseform-title">Edit Office Expense</h2>
+
+            <form
+              className="addofficeExpenseform-form"
+              onSubmit={handleUpdateOfficeExpense}
+            >
+              <div className="addofficeExpenseform-field">
+                <input
+                  type="text"
+                  placeholder="Enter Giver Name"
+                  className="addofficeExpenseform-input"
+                  value={editofficeGiverName}
+                  onChange={(e) => setEditOfficeGiverName(e.target.value)}
+                />
+              </div>
+
+              <div className="addofficeExpenseform-field">
+                <input
+                  type="text"
+                  placeholder="Enter Receiver Name"
+                  className="addofficeExpenseform-input"
+                  value={editofficeReceiverName}
+                  onChange={(e) => seteditOfficeReceiverName(e.target.value)}
+                />
+              </div>
+
+              <div className="addofficeExpenseform-field">
+                <input
+                  type="text"
+                  placeholder="Enter Remark"
+                  className="addofficeExpenseform-input"
+                  value={EditofficeRemark}
+                  onChange={(e) => setEditOfficeRemark(e.target.value)}
+                />
+              </div>
+
+              <div className="addofficeExpenseform-field">
+                <input
+                  type="number"
+                  placeholder="Enter Amount"
+                  className="addofficeExpenseform-input"
+                  value={EditofficeAmount}
+                  onChange={(e) => setEditOfficeAmount(e.target.value)}
+                />
+              </div>
+
+              <div className="addofficeExpenseform-field">
+                <input
+                  type="date"
+                  className="addofficeExpenseform-input"
+                  value={EditofficeDate}
+                  onChange={(e) => setEditOfficeDate(e.target.value)}
+                />
+              </div>
+
               <button
-                onClick={() => setShowOfficeExpenseEditForm(false)}
-                className="addofficeExpenseform-close-button"
+                type="submit"
+                className="addofficeExpenseform-submit-button"
               >
-                ✕
+                Update
               </button>
-              <h2 className="addofficeExpenseform-title">
-                Edit Office Expense
-              </h2>
-
-              <form
-                className="addofficeExpenseform-form"
-                onSubmit={handleUpdateOfficeExpense}
-              >
-                <div className="addofficeExpenseform-field">
-                  <input
-                    type="text"
-                    placeholder="Enter Giver Name"
-                    className="addofficeExpenseform-input"
-                    value={editofficeGiverName}
-                    onChange={(e) => setEditOfficeGiverName(e.target.value)}
-                  />
-                </div>
-
-                <div className="addofficeExpenseform-field">
-                  <input
-                    type="text"
-                    placeholder="Enter Receiver Name"
-                    className="addofficeExpenseform-input"
-                    value={editofficeReceiverName}
-                    onChange={(e) => seteditOfficeReceiverName(e.target.value)}
-                  />
-                </div>
-
-                <div className="addofficeExpenseform-field">
-                  <input
-                    type="text"
-                    placeholder="Enter Remark"
-                    className="addofficeExpenseform-input"
-                    value={EditofficeRemark}
-                    onChange={(e) => setEditOfficeRemark(e.target.value)}
-                  />
-                </div>
-
-                <div className="addofficeExpenseform-field">
-                  <input
-                    type="number"
-                    placeholder="Enter Amount"
-                    className="addofficeExpenseform-input"
-                    value={EditofficeAmount}
-                    onChange={(e) => setEditOfficeAmount(e.target.value)}
-                  />
-                </div>
-
-                <div className="addofficeExpenseform-field">
-                  <input
-                    type="date"
-                    className="addofficeExpenseform-input"
-                    value={EditofficeDate}
-                    onChange={(e) => setEditOfficeDate(e.target.value)}
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="addofficeExpenseform-submit-button"
-                >
-                  Update
-                </button>
-              </form>
-            </div>
+            </form>
           </div>
-        </>
+        </div>
       )}
     </>
   );

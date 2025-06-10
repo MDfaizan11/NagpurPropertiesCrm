@@ -2,12 +2,13 @@ import { useEffect, useState, useRef } from "react";
 import "../stationary/stationary.css";
 import axiosInstance from "../../utils/axiosInstance";
 import { BASE_URL } from "../../config";
-import { NotebookPen } from "lucide-react";
+import { NotebookPen, Search } from "lucide-react";
 import html2pdf from "html2pdf.js";
 
 function Stationary() {
   const token = JSON.parse(localStorage.getItem("NagpurProperties"))?.token;
   const [stationaryData, setStationaryData] = useState([]);
+  const [filteredStationaryData, setFilteredStationaryData] = useState([]);
   const [searchStationary, setSearchStationary] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,6 +22,9 @@ function Stationary() {
   const [editProductDate, setEditProductDate] = useState("");
   const [editProductAmount, setEditProductAmount] = useState("");
   const printTableRefs = useRef({});
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [totalFilteredAmount, setTotalFilteredAmount] = useState(0);
 
   useEffect(() => {
     async function getStationary() {
@@ -34,6 +38,7 @@ function Stationary() {
         });
         console.log(response.data);
         setStationaryData(response.data);
+        setFilteredStationaryData(response.data);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -44,13 +49,37 @@ function Stationary() {
     getStationary();
   }, [token]);
 
-  const filteredStationaryData = stationaryData.filter((item) => {
-    return (
-      item.remark.toLowerCase().includes(searchStationary.toLowerCase()) ||
-      item.date.toLowerCase().includes(searchStationary.toLowerCase()) ||
-      item.amount.toString().includes(searchStationary.toLowerCase())
+  useEffect(() => {
+    let filtered = stationaryData.filter(
+      (item) =>
+        item.remark.toLowerCase().includes(searchStationary.toLowerCase()) ||
+        item.date.toLowerCase().includes(searchStationary.toLowerCase()) ||
+        item.amount.toString().includes(searchStationary.toLowerCase())
     );
-  });
+
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      filtered = filtered.filter((item) => {
+        const itemDate = new Date(item.date);
+        return itemDate >= start && itemDate <= end;
+      });
+    }
+
+    const total = filtered.reduce(
+      (sum, item) => sum + (Number.parseFloat(item.amount) || 0),
+      0
+    );
+    setTotalFilteredAmount(total);
+
+    setFilteredStationaryData(filtered);
+  }, [searchStationary, stationaryData, startDate, endDate]);
+
+  const handleShowAllData = () => {
+    setSearchStationary("");
+    setStartDate("");
+    setEndDate("");
+  };
 
   async function handleDeleteStationary(id) {
     const deleteConfirm = window.confirm("Are you sure you want to delete?");
@@ -81,7 +110,7 @@ function Stationary() {
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleDateString("en-IN", {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -90,7 +119,11 @@ function Stationary() {
 
   const formatPrice = (price) => {
     if (!price) return "₹0";
-    return `₹${Number.parseFloat(price).toLocaleString("en-IN")}`;
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(price);
   };
 
   async function handleSubmitStationaryItem(e) {
@@ -195,6 +228,7 @@ function Stationary() {
 
     html2pdf().set(opt).from(element).save();
   };
+
   return (
     <>
       <div className="stationary-container">
@@ -206,25 +240,83 @@ function Stationary() {
             </p>
           </div>
         </div>
-
+        <div className="control-section date-range-section">
+          <h3 className="section-title">Date Range</h3>
+          <div className="date-range-wrapper">
+            <div className="date-input">
+              <label htmlFor="start-date" className="date-label">
+                Start Date
+              </label>
+              <input
+                type="date"
+                id="start-date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="stationary-search-input"
+                aria-label="Start date"
+              />
+            </div>
+            <div className="date-input">
+              <label htmlFor="end-date" className="date-label">
+                End Date
+              </label>
+              <input
+                type="date"
+                id="end-date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="stationary-search-input"
+                aria-label="End date"
+              />
+            </div>
+          </div>
+        </div>
         <div className="stationary-controls">
-          <div className="search-wrapper">
-            <input
-              type="search"
-              value={searchStationary}
-              onChange={(e) => setSearchStationary(e.target.value)}
-              className="stationary-search-input"
-              placeholder="Search stationary items..."
-            />
-            <span className="search-icon">🔍</span>
+          {/* Search Section */}
+          <div className="control-section search-section">
+            <h3 className="section-title">Search</h3>
+            <div className="search-wrapper">
+              <input
+                type="search"
+                value={searchStationary}
+                onChange={(e) => setSearchStationary(e.target.value)}
+                className="stationary-search-input"
+                placeholder="Search by name, date, or amount..."
+                aria-label="Search stationary items"
+              />
+              <span className="search-icon">
+                <Search />
+              </span>
+            </div>
           </div>
 
-          <button className="add-stationary-btn">
-            <span className="btn-icon">+</span>
-            <span onClick={() => setShowAddStationaryForm(true)}>
-              Add Stationary
-            </span>
-          </button>
+          {/* Date Range Section */}
+
+          {/* Total Amount Section */}
+          <div className="control-section total-amount-section">
+            <h3 className="section-title">Total Amount</h3>
+            <div className="total-amount">
+              <span>{formatPrice(totalFilteredAmount)}</span>
+            </div>
+          </div>
+
+          {/* Actions Section */}
+          <div className="control-section actions-section">
+            <h3 className="section-title">Actions</h3>
+            <div className="stationary-actions">
+              <button
+                className="add-stationary-btn"
+                onClick={() => setShowAddStationaryForm(true)}
+              >
+                <span className="btn-icon">+</span>
+                <span>Add Stationary</span>
+              </button>
+              <button className="show-all-btn" onClick={handleShowAllData}>
+                <span className="btn-icon">↻</span>
+                <span>Show All Data</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         {isLoading ? (
@@ -249,7 +341,6 @@ function Stationary() {
             {filteredStationaryData.length > 0 ? (
               filteredStationaryData.map((item, index) => (
                 <div key={item.id || index}>
-                  {/* 👇 Visible Card */}
                   <div className="stationary-card">
                     <div className="stationary-card-header">
                       <h3>
@@ -295,7 +386,6 @@ function Stationary() {
                     </div>
                   </div>
 
-                  {/* 👇 Hidden Table for PDF */}
                   <div style={{ display: "none" }}>
                     <table
                       ref={(el) => (printTableRefs.current[item.id] = el)}
@@ -366,11 +456,14 @@ function Stationary() {
                 <div className="no-data-icon">📋</div>
                 <h3>No Stationary Items Found</h3>
                 <p>
-                  {searchStationary
-                    ? "Try adjusting your search criteria"
+                  {searchStationary || startDate || endDate
+                    ? "Try adjusting your search criteria or date range"
                     : "Add some stationary items to get started"}
                 </p>
-                <button className="add-stationary-btn-small">
+                <button
+                  className="add-stationary-btn-small"
+                  onClick={() => setShowAddStationaryForm(true)}
+                >
                   Add Stationary
                 </button>
               </div>
@@ -382,31 +475,28 @@ function Stationary() {
       {showAddStationaryForm && (
         <div className="add-stationary-form-overlay">
           <div className="add-stationary-form">
-            <h2 className="Add_stationary_form_heading">Add Stationary Item</h2>
-
+            <h2 className="stationary-form-title">Add Stationary Item</h2>
             <button
-              className="add_statinary_close-form-btn"
+              className="stationary-close-btn"
               onClick={() => setShowAddStationaryForm(false)}
             >
               X
             </button>
-
             <form
-              className="Addstationary-form"
+              className="stationary-form"
               onSubmit={handleSubmitStationaryItem}
             >
               <input
                 type="text"
                 placeholder="Product Name"
-                className="Addstationary-form_input"
+                className="stationary-form-input"
                 value={ProductName}
                 onChange={(e) => setProductName(e.target.value)}
                 required
               />
               <input
                 type="date"
-                placeholder="Date"
-                className="Addstationary-form_input"
+                className="stationary-form-input"
                 value={ProductDate}
                 onChange={(e) => setProductDate(e.target.value)}
                 required
@@ -414,15 +504,12 @@ function Stationary() {
               <input
                 type="number"
                 placeholder="Amount"
-                className="Addstationary-form_input"
+                className="stationary-form-input"
                 value={ProductAmount}
                 onChange={(e) => setProductAmount(e.target.value)}
                 required
               />
-              <button
-                type="submit"
-                className="Addstationary-form_submit_button"
-              >
+              <button type="submit" className="stationary-form-submit">
                 Add Stationary
               </button>
             </form>
@@ -433,46 +520,38 @@ function Stationary() {
       {showEditStationaryForm && (
         <div className="add-stationary-form-overlay">
           <div className="add-stationary-form">
-            <h2 className="Add_stationary_form_heading">
-              Edit Stationary Item
-            </h2>
-
+            <h2 className="stationary-form-title">Edit Stationary Item</h2>
             <button
-              className="add_statinary_close-form-btn"
+              className="stationary-close-btn"
               onClick={() => setShowEditStationaryForm(false)}
             >
               X
             </button>
-
             <form
-              className="Addstationary-form"
+              className="stationary-form"
               onSubmit={handleupdateStationaryItem}
             >
               <input
                 type="text"
                 placeholder="Product Name"
-                className="Addstationary-form_input"
+                className="stationary-form-input"
                 value={editProductName}
                 onChange={(e) => setEditProductName(e.target.value)}
               />
               <input
                 type="date"
-                placeholder="Date"
-                className="Addstationary-form_input"
+                className="stationary-form-input"
                 value={editProductDate}
                 onChange={(e) => setEditProductDate(e.target.value)}
               />
               <input
                 type="number"
                 placeholder="Amount"
-                className="Addstationary-form_input"
+                className="stationary-form-input"
                 value={editProductAmount}
                 onChange={(e) => setEditProductAmount(e.target.value)}
               />
-              <button
-                type="submit"
-                className="Addstationary-form_submit_button"
-              >
+              <button type="submit" className="stationary-form-submit">
                 Update Stationary
               </button>
             </form>

@@ -131,7 +131,7 @@ function PlotDetails() {
             },
           }
         );
-
+        console.log(response.data);
         setPlotData(response.data);
         setError(null);
       } catch (error) {
@@ -169,15 +169,40 @@ function PlotDetails() {
     }));
   };
 
-  const handleViewCustomer = (plot) => {
+  const handleViewCustomer = async (plot) => {
     setBookedPLotId(plot.id);
-    const customerData =
-      plot.bookings && plot.bookings.length > 0 ? plot.bookings[0] : null;
-    if (customerData) {
-      setSelectedCustomer(customerData);
-      setShowCustomerPopup(true);
-    } else {
-      alert("No customer data available for this plot.");
+    // const customerData =
+    //   plot.bookings && plot.bookings.length > 0 ? plot.bookings[0] : null;
+    // if (customerData) {
+    //   setSelectedCustomer(customerData);
+    //   setShowCustomerPopup(true);
+    // } else {
+    //   alert("No customer data available for this plot.");
+    // }
+    try {
+      const response = await axiosInstance.get(
+        `${BASE_URL}/bookings/layout/${plot.id}/booked`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data);
+      const customerData =
+        Array.isArray(response.data) && response.data.length > 0
+          ? response.data[0]
+          : null;
+
+      if (customerData) {
+        setSelectedCustomer(customerData);
+        setShowCustomerPopup(true);
+      } else {
+        alert("No customer data available for this plot.");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   const handleAddCustomer = (plotNo) => {
@@ -282,9 +307,8 @@ function PlotDetails() {
     if (!confirmation) return;
 
     try {
-      await axiosInstance.delete(
+      const response = await axiosInstance.put(
         `${BASE_URL}/cancelled-booking/${Id}`,
-        { layoutStatus: "AVAILABLE" },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -292,14 +316,18 @@ function PlotDetails() {
           },
         }
       );
-      setPlotData((prevData) =>
-        prevData.map((item) =>
-          item.bookings && item.bookings[0]?.id === Id
-            ? { ...item, layoutStatus: "AVAILABLE" }
-            : item
-        )
-      );
-      alert("Plot booking cancelled successfully");
+
+      if (response.status === 200) {
+        alert("Plot booking cancelled successfully");
+        setPlotData((prevData) =>
+          prevData.map((item) =>
+            item.bookings && item.bookings[0]?.id === Id
+              ? { ...item, layoutStatus: "AVAILABLE" }
+              : item
+          )
+        );
+        setrefreshKey(refreshKey + 1);
+      }
     } catch (error) {
       console.error("Failed to cancel plot:", error);
       alert("Failed to cancel plot");
@@ -564,6 +592,10 @@ function PlotDetails() {
       console.log(error);
     }
   }
+
+  function handleShowCancelBookingHistory(id) {
+    navigate(`/history/${id}`);
+  }
   return (
     <>
       <div className="plotDetailsWrapper">
@@ -779,13 +811,23 @@ function PlotDetails() {
                             <button
                               className="plotDetailsActionBtn plotDetailsCancelBtn"
                               onClick={() =>
-                                handleCancelPlot(item?.bookings[0]?.id)
+                                handleCancelPlot(
+                                  item?.bookings[item.bookings.length - 1]?.id
+                                )
                               }
                             >
                               <XCircle className="plotDetailsBtnIcon" /> Cancel
                               Plot
                             </button>
                           )}
+                          <button
+                            className="plotDetailsActionBtn plotDetailsEditBtn"
+                            onClick={() =>
+                              handleShowCancelBookingHistory(item.id)
+                            }
+                          >
+                            Booking History
+                          </button>
                         </div>
                       )}
                     </div>
@@ -1957,7 +1999,7 @@ function PlotDetails() {
                       Special Conditions
                     </label>
                     <textarea
-                      name="anySpecialConduction"
+                      name="anySpecialCondition"
                       className="plotDetailsAddcustomerPlotInput plotDetailsAddcustomerPlotTextarea"
                       value={formData.anySpecialCondition}
                       onChange={handleChange}

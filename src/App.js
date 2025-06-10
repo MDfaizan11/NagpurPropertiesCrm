@@ -21,6 +21,7 @@ import Task from "./Pages/Task/Task";
 import Letters from "./Pages/Letters/Letters";
 import Stock from "./Pages/Stock/Stock";
 import PlotQuatation from "./Pages/Plot/PlotQuatation";
+import History from "./Pages/Plot/History";
 function App() {
   return (
     <>
@@ -40,6 +41,7 @@ function App() {
                   path="plotQuatation/:plotId"
                   element={<PlotQuatation />}
                 />
+                <Route path="history/:id" element={<History />} />
                 <Route path="stationary" element={<Stationary />} />
                 <Route path="office" element={<Office />} />
                 <Route

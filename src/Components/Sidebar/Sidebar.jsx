@@ -7,8 +7,6 @@
 //   ChevronRight,
 //   ChevronLeft,
 //   LogOut,
-// } from "lucide-react";
-// import {
 //   MapPin,
 //   Phone,
 //   HardHat,
@@ -32,6 +30,21 @@
 //   const [activeSection, setActiveSection] = useState("Dashboard");
 //   const [favorites, setFavorites] = useState(["Dashboard", "Calendar"]);
 
+//   // Load activeSection from localStorage
+//   useEffect(() => {
+//     const saved = localStorage.getItem("NagpurProperties");
+//     if (saved) {
+//       try {
+//         const data = JSON.parse(saved);
+//         if (data.activeSection) {
+//           setActiveSection(data.activeSection);
+//         }
+//       } catch (e) {
+//         console.error("Error parsing NagpurProperties:", e);
+//       }
+//     }
+//   }, []);
+
 //   useEffect(() => {
 //     if (isOpen !== undefined && setIsOpen) {
 //       if (window.innerWidth < 768) {
@@ -43,7 +56,6 @@
 //   const toggleCollapsed = () => {
 //     const newCollapsedState = !collapsed;
 //     setCollapsed(newCollapsedState);
-
 //     if (setIsOpen) {
 //       setIsOpen(!newCollapsedState);
 //     }
@@ -57,6 +69,18 @@
 //     } else {
 //       setFavorites([...favorites, name]);
 //     }
+//   };
+
+//   const updateLocalStorageActiveSection = (sectionName) => {
+//     const saved = localStorage.getItem("NagpurProperties");
+//     let data = {};
+//     try {
+//       data = saved ? JSON.parse(saved) : {};
+//     } catch {
+//       data = {};
+//     }
+//     data.activeSection = sectionName;
+//     localStorage.setItem("NagpurProperties", JSON.stringify(data));
 //   };
 
 //   const sections = [
@@ -75,28 +99,32 @@
 //       path: "/leadProject",
 //     },
 //     {
-//       name: "Labour Management",
+//       name: "Partner Management",
 //       icon: <HardHat size={22} />,
 //       color: "orange",
 //       count: 32,
+//       path: "/labour",
 //     },
 //     {
 //       name: "Plot Management",
 //       icon: <MapPin size={22} />,
 //       color: "red",
 //       count: 15,
+//       path: "/plot",
 //     },
 //     {
 //       name: "Task Management",
 //       icon: <CheckSquare size={22} />,
 //       color: "green",
 //       count: 47,
+//       path: "/task",
 //     },
 //     {
 //       name: "Material Management",
 //       icon: <Tool size={22} />,
 //       color: "teal",
 //       count: 29,
+//       path: "/material",
 //     },
 //     {
 //       name: "Employee Management",
@@ -115,63 +143,72 @@
 //       icon: <Package size={22} />,
 //       color: "brown",
 //       count: 21,
+//       path: "/stock",
 //     },
 //     {
 //       name: "Finance Management",
 //       icon: <DollarSign size={22} />,
 //       color: "emerald",
 //       count: 19,
+//       path: "/finance",
 //     },
 //     {
 //       name: "Machine Management",
 //       icon: <Settings size={22} />,
 //       color: "gray",
 //       count: 8,
+//       path: "/machine",
 //     },
 //     {
 //       name: "Project Management",
 //       icon: <Calendar size={22} />,
 //       color: "cyan",
 //       count: 27,
+//       path: "/project",
 //     },
 //     {
 //       name: "Quotation",
 //       icon: <FileText size={22} />,
 //       color: "amber",
 //       count: 14,
+//       path: "/quatation",
 //     },
-//     { name: "Letter Head", icon: <Mail size={22} />, color: "lime", count: 6 },
+//     {
+//       name: "Letter Head",
+//       icon: <Mail size={22} />,
+//       color: "lime",
+//       count: 6,
+//       path: "/letter",
+//     },
 //     {
 //       name: "Office Expense",
 //       icon: <Building size={22} />,
 //       color: "pink",
 //       count: 11,
+//       path: "/office",
 //     },
 //     {
 //       name: "Stationary Management",
 //       icon: <Pen size={22} />,
 //       color: "violet",
 //       count: 9,
+//       path: "/stationary",
 //     },
 //   ];
+
 //   const mainNavItems = [
 //     { name: "Dashboard", icon: <LayoutGrid size={20} />, path: "/" },
 //   ];
 
-//   const bottomNavItems = [
-//     // { name: "Settings", icon: <Settings size={20} /> },
-//     // { name: "Help", icon: <HelpCircle size={20} /> },
-//     // { name: "Profile", icon: <User size={20} /> },
-//     { name: "Logout", icon: <LogOut size={20} /> },
-//   ];
+//   const bottomNavItems = [{ name: "Logout", icon: <LogOut size={20} /> }];
 
 //   function handleLogOut() {
 //     const logOut = window.confirm("Are You Sure To LogOut ?");
 //     if (!logOut) return;
-
 //     localStorage.removeItem("NagpurProperties");
 //     navigate("/login");
 //   }
+
 //   return (
 //     <aside
 //       className={`sidebar ${collapsed ? "collapsed" : ""} ${
@@ -188,21 +225,6 @@
 //         </button>
 //       </div>
 
-//       {/* <div className="sidebar-search">
-//         {!collapsed && (
-//           <div className="quick-actions">
-//             <button className="quick-action">
-//               <Zap size={16} />
-//               <span>Quick Add</span>
-//             </button>
-//             <button className="quick-action">
-//               <Clock size={16} />
-//               <span>Recent</span>
-//             </button>
-//           </div>
-//         )}
-//       </div> */}
-
 //       <nav className="sidebar-nav">
 //         {favorites.length > 0 && (
 //           <div className="nav-section">
@@ -216,6 +238,7 @@
 //                     className={activeSection === item.name ? "active" : ""}
 //                     onClick={() => {
 //                       setActiveSection(item.name);
+//                       updateLocalStorageActiveSection(item.name);
 //                       if (item.path) navigate(item.path);
 //                     }}
 //                   >
@@ -231,45 +254,16 @@
 //           </div>
 //         )}
 
-//         {/* <div className="nav-section">
-//           <span className="nav-section-title">Main</span>
-//           <ul className="nav-items">
-//             {mainNavItems
-//               .filter((item) => !favorites.includes(item.name))
-//               .map((item) => (
-//                 <li
-//                   key={item.name}
-//                   className={activeSection === item.name ? "active" : ""}
-//                   onClick={() => setActiveSection(item.name)}
-//                 >
-//                   <a href="#" className="nav-item">
-//                     <span className="nav-icon">{item.icon}</span>
-//                     {!collapsed && (
-//                       <span className="nav-text">{item.name}</span>
-//                     )}
-//                     {!collapsed && (
-//                       <button
-//                         className="favorite-button"
-//                         onClick={(e) => toggleFavorite(item.name, e)}
-//                       >
-//                         <Star size={16} />
-//                       </button>
-//                     )}
-//                   </a>
-//                 </li>
-//               ))}
-//           </ul>
-//         </div> */}
-
 //         <div className="nav-section">
 //           <span className="nav-section-title">Modules</span>
 //           <ul className="nav-items">
-//             {sections?.map((section) => (
+//             {sections.map((section) => (
 //               <li
 //                 key={section.name}
 //                 className={activeSection === section.name ? "active" : ""}
 //                 onClick={() => {
 //                   setActiveSection(section.name);
+//                   updateLocalStorageActiveSection(section.name);
 //                   if (section.path) {
 //                     navigate(section.path);
 //                   }
@@ -341,7 +335,12 @@ export default function Sidebar({ isOpen, setIsOpen }) {
   const [activeSection, setActiveSection] = useState("Dashboard");
   const [favorites, setFavorites] = useState(["Dashboard", "Calendar"]);
 
-  // Load activeSection from localStorage
+  // Extract user role from localStorage
+  const storedData = JSON.parse(localStorage.getItem("NagpurProperties"));
+  const actualRole = Array.isArray(storedData?.role)
+    ? storedData.role[0]?.roleName
+    : storedData?.role;
+
   useEffect(() => {
     const saved = localStorage.getItem("NagpurProperties");
     if (saved) {
@@ -410,7 +409,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       path: "/leadProject",
     },
     {
-      name: "Labour Management",
+      name: "Partner Management",
       icon: <HardHat size={22} />,
       color: "orange",
       count: 32,
@@ -442,12 +441,21 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       icon: <Users size={22} />,
       color: "indigo",
       count: 36,
+      path: "/getDepartment",
+    },
+    {
+      name: "Attendance Management",
+      icon: <FileText size={22} />,
+      color: "amber",
+      count: 14,
+      path: "/empList",
     },
     {
       name: "Contractor Management",
       icon: <Handshake size={22} />,
       color: "yellow",
       count: 12,
+      path: "/contractor",
     },
     {
       name: "Stock Management",
@@ -477,13 +485,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       count: 27,
       path: "/project",
     },
-    {
-      name: "Quotation",
-      icon: <FileText size={22} />,
-      color: "amber",
-      count: 14,
-      path: "/quatation",
-    },
+
     {
       name: "Letter Head",
       icon: <Mail size={22} />,
@@ -568,28 +570,35 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         <div className="nav-section">
           <span className="nav-section-title">Modules</span>
           <ul className="nav-items">
-            {sections.map((section) => (
-              <li
-                key={section.name}
-                className={activeSection === section.name ? "active" : ""}
-                onClick={() => {
-                  setActiveSection(section.name);
-                  updateLocalStorageActiveSection(section.name);
-                  if (section.path) {
-                    navigate(section.path);
-                  }
-                }}
-              >
-                <div className="nav-item">
-                  <span className={`nav-icon module-icon ${section.color}`}>
-                    {section.icon}
-                  </span>
-                  {!collapsed && (
-                    <span className="nav-text">{section.name}</span>
-                  )}
-                </div>
-              </li>
-            ))}
+            {sections
+              .filter((section) => {
+                if (actualRole === "Admin") return true;
+                if (actualRole === "Partner")
+                  return section.name === "Land Management";
+                return false;
+              })
+              .map((section) => (
+                <li
+                  key={section.name}
+                  className={activeSection === section.name ? "active" : ""}
+                  onClick={() => {
+                    setActiveSection(section.name);
+                    updateLocalStorageActiveSection(section.name);
+                    if (section.path) {
+                      navigate(section.path);
+                    }
+                  }}
+                >
+                  <div className="nav-item">
+                    <span className={`nav-icon module-icon ${section.color}`}>
+                      {section.icon}
+                    </span>
+                    {!collapsed && (
+                      <span className="nav-text">{section.name}</span>
+                    )}
+                  </div>
+                </li>
+              ))}
           </ul>
         </div>
       </nav>

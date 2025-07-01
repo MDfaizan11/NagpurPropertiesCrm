@@ -1,0 +1,732 @@
+:root {
+  --hot-gradient: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+  --warm-gradient: linear-gradient(135deg, #ffd166 0%, #ffe066 100%);
+  --cold-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --total-gradient: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+  --primary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  --secondary-gradient: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+  --success-gradient: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+  --header-gradient: linear-gradient(135deg, #4776e6 0%, #8e54e9 100%);
+  --card-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 20px;
+  --border-radius-xl: 30px;
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --font-primary: "Poppins", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-tertiary: #94a3b8;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-hot: #ff6b6b;
+  --color-warm: #ffd166;
+  --color-cold: #4facfe;
+  --color-active: #48bb78;
+  --color-pending: #ed8936;
+  --color-inactive: #a0aec0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-primary);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+/* Page Header */
+.Attendence-page-header {
+  background: var(--header-gradient);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: white;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.Attendence-page-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+    repeat;
+  animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.Attendence-page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.Attendence-page-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+}
+
+/* Main Container */
+.Attendence-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem 2rem;
+}
+.Attendence-header-container {
+  background: var(--color-bg-primary);
+  border-radius: var(--border-radius-lg);
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.Attendence-header-content {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.Attendence-header {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 1rem 0;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.Attendence-header-decoration {
+  width: 80px;
+  height: 4px;
+  background: var(--primary-gradient);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+/* Controls */
+.Attendence-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 1.5rem;
+  align-items: end;
+}
+
+.Attendence-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.Attendence-label {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.Attendence-label-icon {
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.Attendence-select-wrapper {
+  position: relative;
+}
+
+.Attendence-select,
+.Attendence-date-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  font-family: var(--font-primary);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  transition: var(--transition-normal);
+}
+
+.Attendence-select:focus,
+.Attendence-date-input:focus {
+  outline: none;
+  border-color: #6a11cb;
+  box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+  transform: translateY(-1px);
+}
+
+.Attendence-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  padding-right: 2.5rem;
+}
+
+/* Buttons */
+.Attendence-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.Attendence-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.Attendence-button:hover::before {
+  left: 100%;
+}
+
+.Attendence-button-load {
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.Attendence-button-load:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.Attendence-button-submit {
+  background: var(--success-gradient);
+  color: white;
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.Attendence-button-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.Attendence-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.Attendence-button-icon {
+  font-size: 1.1rem;
+}
+
+/* Loading States */
+.Attendence-loading {
+  pointer-events: none;
+}
+
+.Attendence-spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error Message */
+.Attendence-error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--hot-gradient);
+  color: white;
+  padding: 1rem 1.25rem;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  animation: slideIn 0.3s ease;
+}
+
+.Attendence-error-icon {
+  font-size: 1.2rem;
+}
+
+.Attendence-error-text {
+  flex: 1;
+}
+
+.Attendence-error-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity var(--transition-fast);
+}
+
+.Attendence-error-close:hover {
+  opacity: 1;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Success Message */
+.Attendence-success-message {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: var(--success-gradient);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Table Wrapper */
+.Attendence-table-wrapper {
+  background: var(--color-bg-primary);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Summary Cards */
+.Attendence-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.Attendence-summary-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: var(--border-radius-lg);
+  color: white;
+  font-weight: 600;
+  overflow: hidden;
+  transition: transform var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+  width: 250px;
+}
+
+.Attendence-summary-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.Attendence-summary-card.Attendence-present {
+  background: var(--success-gradient);
+}
+
+.Attendence-summary-card.Attendence-absent {
+  background: var(--hot-gradient);
+}
+
+.Attendence-summary-card.Attendence-half-day {
+  background: var(--warm-gradient);
+}
+
+.Attendence-icon {
+  font-size: 2rem;
+  opacity: 0.9;
+}
+
+.Attendence-info {
+  flex: 1;
+}
+
+.Attendence-info h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.Attendence-info p {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.Attendence-card-percentage {
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius-sm);
+}
+
+.Attendence-card-bg {
+  position: absolute;
+  top: -50%;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Table Container */
+.Attendence-table-container {
+  overflow-x: auto;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+}
+
+/* Table */
+.Attendence-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-bg-primary);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+
+.Attendence-table thead {
+  background: var(--header-gradient);
+  color: white;
+}
+
+.Attendence-table th {
+  padding: 1.25rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+}
+
+.Attendence-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.Attendence-table-row:hover {
+  background: var(--color-bg-secondary);
+  transform: scale(1.01);
+  transition: all var(--transition-fast);
+}
+
+.Attendence-row-even {
+  background: var(--color-bg-tertiary);
+}
+
+/* Employee Details */
+.Attendence-employee-id {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.Attendence-employee-code {
+  background: var(--card-gradient);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius-sm);
+  font-family: "Courier New", monospace;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+}
+
+.Attendence-employee-name {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.Attendence-name-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.Attendence-name-text {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.Attendence-phone-number {
+  font-family: "Courier New", monospace;
+  color: var(--color-text-secondary);
+}
+
+.Attendence-designation-badge {
+  background: var(--cold-gradient);
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--border-radius-xl);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Status Elements */
+.Attendence-status-wrapper {
+  min-width: 140px;
+}
+
+.Attendence-status-select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9rem;
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  background: var(--color-bg-primary);
+}
+
+.Attendence-status-select:focus {
+  outline: none;
+  border-color: #6a11cb;
+  box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+}
+
+.Attendence-status-badge {
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--border-radius-xl);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.Attendence-status-badge.Attendence-status-present {
+  background: var(--success-gradient);
+  color: white;
+}
+
+.Attendence-status-badge.Attendence-status-absent {
+  background: var(--hot-gradient);
+  color: white;
+}
+
+.Attendence-status-badge.Attendence-status-half-day {
+  background: var(--warm-gradient);
+  color: white;
+}
+
+/* Submit Section */
+.Attendence-submit-section {
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .Attendence-controls {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .Attendence-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .Attendence-container {
+    padding: 0 1rem 2rem;
+  }
+
+  .Attendence-page-title {
+    font-size: 2rem;
+  }
+
+  .Attendence-header-container,
+  .Attendence-table-wrapper {
+    padding: 1.5rem;
+  }
+
+  .Attendence-table {
+    font-size: 0.9rem;
+  }
+
+  .Attendence-table th,
+  .Attendence-table td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .Attendence-employee-name {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .Attendence-name-avatar {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .Attendence-page-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .Attendence-page-title {
+    font-size: 1.75rem;
+  }
+
+  .Attendence-summary-card {
+    padding: 1rem;
+  }
+
+  .Attendence-info p {
+    font-size: 1.5rem;
+  }
+
+  .Attendence-table-container {
+    font-size: 0.8rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .Attendence-page-header,
+  .Attendence-controls,
+  .Attendence-submit-section {
+    display: none;
+  }
+
+  .Attendence-container {
+    background: white;
+    padding: 0;
+  }
+
+  .Attendence-table-wrapper {
+    box-shadow: none;
+    border: 1px solid var(--color-border);
+  }
+}
+
+/* Focus Styles for Accessibility */
+.Attendence-button:focus,
+.Attendence-select:focus,
+.Attendence-date-input:focus,
+.Attendence-status-select:focus {
+  outline: 2px solid #6a11cb;
+  outline-offset: 2px;
+}
+
+/* Smooth Animations */
+* {
+  transition: all var(--transition-normal);
+}

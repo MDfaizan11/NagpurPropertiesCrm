@@ -17,32 +17,42 @@ const Login = () => {
       email,
       password,
     };
+
     try {
       const response = await axios.post(`${BASE_URL}/auth/login`, loginData);
       console.log(response.data);
+
       const token = response.data?.jwtToken;
-      const email = response.data?.admin?.email;
-      const gender = response.data?.admin?.gender;
-      const id = response.data?.admin?.id;
-      const userName = response.data?.admin?.name;
-      const role = response.data?.admin?.role?.[0]?.roleName;
 
-      const userdata = {
-        token: token,
-        email: email,
-        id: id,
-        userName: userName,
-        role: role,
-        gender: gender,
-      };
+      // Determine user type
+      const isAdmin = response.data?.admin !== null;
+      const isPartner = response.data?.partner !== null;
 
-      if (response.status === 200) {
-        alert("Login successful");
+      let user = null;
+      let role = "";
+
+      if (isAdmin) {
+        user = response.data.admin;
+        role = user.role?.[0]?.roleName || "Admin";
+      } else if (isPartner) {
+        user = response.data.partner;
+        role = user.role?.[0]?.roleName || "Partner";
+      }
+
+      if (user && token) {
+        const userdata = {
+          token: token,
+          role: role,
+          ...user, // Spread full user object: includes lands, transactions, etc.
+        };
+
         localStorage.setItem("NagpurProperties", JSON.stringify(userdata));
+        alert("Login successful");
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      alert("Login failed. Check credentials.");
     }
   };
 

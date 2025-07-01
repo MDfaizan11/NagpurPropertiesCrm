@@ -113,6 +113,29 @@ body {
   color: var(--land-text-primary);
   line-height: 1.6;
 }
+.land-section-title_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.land-add-partner-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--land-primary-dark);
+  color: white;
+  border: none;
+  border-radius: var(--land-radius-lg);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--land-transition);
+  box-shadow: var(--land-shadow-md);
+  margin-top: -20px;
+}
 .land-header {
   position: relative;
   background: var(--land-gradient-purple);
@@ -1347,7 +1370,7 @@ body {
   }
 
   .land-button-group {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   .land-address-grid {
@@ -1514,7 +1537,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: 380px;
+  height: auto;
   justify-content: center;
 }
 

@@ -1,0 +1,473 @@
+/* Base Styles */
+:root {
+  --hot-gradient: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+  --warm-gradient: linear-gradient(135deg, #ffd166 0%, #ffe066 100%);
+  --cold-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --total-gradient: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+  --primary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  --secondary-gradient: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+  --success-gradient: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+  --header-gradient: linear-gradient(135deg, #4776e6 0%, #8e54e9 100%);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 20px;
+  --border-radius-xl: 30px;
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --font-primary: "Poppins", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-tertiary: #94a3b8;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-hot: #ff6b6b;
+  --color-warm: #ffd166;
+  --color-cold: #4facfe;
+  --color-active: #48bb78;
+  --color-pending: #ed8936;
+  --color-inactive: #a0aec0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main Container */
+.EmpList-container {
+  min-height: 100vh;
+  background: var(--color-bg-secondary);
+  font-family: var(--font-primary);
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header Container */
+.EmpList-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.EmpList-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  position: relative;
+  margin: 0;
+}
+
+.EmpList-title::after {
+  content: "";
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: var(--header-gradient);
+  border-radius: var(--border-radius-sm);
+}
+
+/* Controls */
+.EmpList-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.EmpList-search-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 300px;
+}
+
+.EmpList-search-label {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.EmpList-searchInput {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.95rem;
+  background: var(--color-bg-primary);
+  transition: all var(--transition-normal);
+  font-family: var(--font-primary);
+}
+
+.EmpList-searchInput:focus {
+  outline: none;
+  border-color: #6a11cb;
+  box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+}
+
+.EmpList-searchInput::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+.EmpList-viewModeSelect {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.95rem;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.EmpList-viewModeSelect:focus {
+  outline: none;
+  border-color: #6a11cb;
+  box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+}
+
+.EmpList-markAttendance {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  border: none;
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-primary);
+}
+
+.EmpList-markAttendance:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.EmpList-markAttendance:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Table View */
+.EmpList-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+
+.EmpList-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-bg-primary);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.EmpList-table th,
+.EmpList-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.95rem;
+}
+
+.EmpList-table th {
+  background: var(--color-bg-secondary);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.EmpList-table td {
+  color: var(--color-text-secondary);
+}
+
+.EmpList-table tr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.EmpList-table tr:hover {
+  background: rgba(106, 17, 203, 0.05);
+}
+
+.EmpList-table th:nth-child(1),
+.EmpList-table td:nth-child(1) {
+  width: 10%;
+}
+
+.EmpList-table th:nth-child(2),
+.EmpList-table td:nth-child(2) {
+  width: 15%;
+}
+
+.EmpList-table th:nth-child(3),
+.EmpList-table td:nth-child(3) {
+  width: 20%;
+}
+
+.EmpList-table th:nth-child(4),
+.EmpList-table td:nth-child(4) {
+  width: 12%;
+}
+
+.EmpList-table th:nth-child(5),
+.EmpList-table td:nth-child(5) {
+  width: 15%;
+}
+
+.EmpList-table th:nth-child(6),
+.EmpList-table td:nth-child(6) {
+  width: 10%;
+}
+
+.EmpList-table th:nth-child(7),
+.EmpList-table td:nth-child(7) {
+  width: 10%;
+}
+
+.EmpList-table th:nth-child(8),
+.EmpList-table td:nth-child(8) {
+  width: 15%;
+}
+
+.EmpList-table th:nth-child(9),
+.EmpList-table td:nth-child(9) {
+  width: 13%;
+}
+
+.EmpList-statusSelect {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.85rem;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.EmpList-statusSelect:focus {
+  outline: none;
+  border-color: #6a11cb;
+  box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.1);
+}
+
+.EmpList-statusSelect:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.EmpList-statusUpdating {
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+/* Card View */
+.EmpList-cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.EmpList-card {
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  transition: all var(--transition-normal);
+}
+
+.EmpList-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.EmpList-cardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 1rem;
+}
+
+.EmpList-card p {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.EmpList-card p strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+/* Empty State */
+.EmpList-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  background: var(--color-bg-primary);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+}
+
+.EmpList-empty-state-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 1rem;
+}
+
+.EmpList-empty-state-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: var(--color-text-secondary);
+}
+
+/* Print Styles */
+@media print {
+  .EmpList-header-container,
+  .EmpList-empty-state {
+    display: none;
+  }
+
+  .EmpList-container {
+    background: none;
+    padding: 0;
+  }
+
+  .EmpList-table-wrapper,
+  .EmpList-table {
+    max-width: 100%;
+  }
+
+  .EmpList-table th,
+  .EmpList-table td {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    border: 1px solid #000;
+  }
+
+  .EmpList-table tr:nth-child(even),
+  .EmpList-table tr:hover {
+    background: none;
+  }
+
+  .EmpList-statusSelect,
+  .EmpList-statusUpdating {
+    display: none;
+  }
+
+  .EmpList-cardGrid {
+    display: none;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .EmpList-container {
+    padding: 1.5rem;
+  }
+
+  .EmpList-header-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+  }
+
+  .EmpList-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .EmpList-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .EmpList-search-form {
+    max-width: 100%;
+  }
+
+  .EmpList-viewModeSelect,
+  .EmpList-markAttendance {
+    width: 100%;
+    text-align: center;
+  }
+
+  .EmpList-table th,
+  .EmpList-table td {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .EmpList-card {
+    padding: 1rem;
+  }
+
+  .EmpList-cardTitle {
+    font-size: 1.1rem;
+  }
+
+  .EmpList-card p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .EmpList-container {
+    padding: 1rem;
+  }
+
+  .EmpList-title {
+    font-size: 1.25rem;
+  }
+
+  .EmpList-searchInput,
+  .EmpList-viewModeSelect,
+  .EmpList-markAttendance {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .EmpList-table th,
+  .EmpList-table td {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .EmpList-statusSelect {
+    font-size: 0.8rem;
+  }
+
+  .EmpList-cardTitle {
+    font-size: 1rem;
+  }
+
+  .EmpList-card p {
+    font-size: 0.85rem;
+  }
+}

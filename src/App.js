@@ -13,7 +13,7 @@ import Labour from "./Pages/labour/Labour";
 import Plot from "./Pages/Plot/Plot";
 import PlotDetails from "./Pages/Plot/PlotDetails";
 import Material from "./Pages/Material/Material";
-import Quatation from "./Pages/Quatation/Quatation";
+
 import Machine from "./Pages/Machine/Machine";
 import Project from "./Pages/Project/Project";
 import Finance from "./Pages/Finance/Finance";
@@ -22,6 +22,16 @@ import Letters from "./Pages/Letters/Letters";
 import Stock from "./Pages/Stock/Stock";
 import PlotQuatation from "./Pages/Plot/PlotQuatation";
 import History from "./Pages/Plot/History";
+import FinanceParty from "./Pages/Finance/FinanceParty";
+import PartyDetails from "./Pages/Finance/PartyDetails";
+import Contractor from "./Pages/Contractor/Contractor";
+import PartyTransaction from "./Pages/Finance/PartyTransaction";
+import CompanyTransaction from "./Pages/Finance/CompanyTransaction";
+import GetDepartment from "./Pages/Employee/GetDepartment";
+import RegisterEmployeeForm from "./Pages/Employee/RegisterEmployeeForm";
+import EmpList from "./Pages/Attendance/EmpList";
+import Attendence from "./Pages/Attendance/Attendence";
+import MonthlyReport from "./Pages/Attendance/MonthlyReport";
 function App() {
   return (
     <>
@@ -49,13 +59,38 @@ function App() {
                   element={<PlotDetails />}
                 />
                 <Route path="material" element={<Material />} />
-                <Route path="quatation" element={<Quatation />} />
+
                 <Route path="machine" element={<Machine />} />
                 <Route path="project" element={<Project />} />
                 <Route path="finance" element={<Finance />} />
+                <Route
+                  path="/financeParty/:id/:name"
+                  element={<FinanceParty />}
+                />
+                <Route
+                  path="/partyDetails/:id/:name"
+                  element={<PartyDetails />}
+                />
+                <Route
+                  path="/partyTransaction/:id/:name"
+                  element={<PartyTransaction />}
+                />
+                <Route
+                  path="/companyTransaction/:id/:name"
+                  element={<CompanyTransaction />}
+                />
                 <Route path="task" element={<Task />} />
                 <Route path="letter" element={<Letters />} />
                 <Route path="stock" element={<Stock />} />
+                <Route path="contractor" element={<Contractor />} />
+                <Route path="/getDepartment" element={<GetDepartment />} />
+                <Route
+                  path="/registerEmploye/:id"
+                  element={<RegisterEmployeeForm />}
+                />
+                <Route path="/empList" element={<EmpList />} />
+                <Route path="/attentance" element={<Attendence />} />
+                <Route path="/monthlyReport" element={<MonthlyReport />} />
               </Route>
             </Route>
           </Routes>

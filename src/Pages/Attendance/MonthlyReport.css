@@ -1,0 +1,158 @@
+/* Root Wrapper */
+.MonthlyReport-report-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  padding: 24px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Heading */
+.MonthlyReport-report-heading {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 24px;
+  color: #2c3e50;
+}
+
+/* Form */
+.MonthlyReport-filter-form {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 24px;
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.MonthlyReport-form-group {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.MonthlyReport-form-group label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #555;
+}
+
+.MonthlyReport-form-group select,
+.MonthlyReport-form-group input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Submit Button */
+.MonthlyReport-btn-submit {
+  padding: 10px 20px;
+  background-color: #2d7eff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 26px;
+  transition: background-color 0.3s ease;
+}
+
+.MonthlyReport-btn-submit:hover {
+  background-color: #1a5fd2;
+}
+
+/* Loading */
+.MonthlyReport-loading-text {
+  text-align: center;
+  font-size: 16px;
+  color: #888;
+}
+
+/* Table */
+.MonthlyReport-table-scroll {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.MonthlyReport-monthly-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.MonthlyReport-monthly-table th,
+.MonthlyReport-monthly-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.MonthlyReport-monthly-table th {
+  background-color: #f1f5f9;
+  font-weight: 600;
+}
+
+.MonthlyReport-emp-name {
+  text-align: left;
+  font-weight: 500;
+}
+
+.MonthlyReport-status-cell {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* Status Colors */
+.MonthlyReport-present-status {
+  background-color: #d1f5d3;
+  color: #207a22;
+}
+
+.MonthlyReport-absent-status {
+  background-color: #ffd6d6;
+  color: #c0392b;
+}
+
+.MonthlyReport-halfday-status {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.MonthlyReport-na-status {
+  background-color: #f0f0f0;
+  color: #999;
+}
+
+/* Summary Section */
+.MonthlyReport-summary-header {
+  text-align: center;
+  margin-bottom: 12px;
+  color: #2c3e50;
+}
+
+.MonthlyReport-summary-header h4 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.MonthlyReport-summary-row {
+  font-weight: bold;
+}
+
+.MonthlyReport-present-row td,
+.MonthlyReport-absent-row td,
+.MonthlyReport-halfday-row td {
+  font-size: 12px;
+}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import SectionCard from "../SectionCard/SectionCard";
 import "../Home/home.css";
 import StatisticCard from "../StatisticCard/StatisticCard";
@@ -23,16 +23,18 @@ import {
   TrendingUp,
   Clock,
   Plus,
-  ChevronRight,
-  Filter,
-  Download,
-  Zap,
 } from "lucide-react";
-import { useOutletContext } from "react-router-dom";
-function Home() {
-  const { filteredSections } = useOutletContext();
-  const [viewMode, setViewMode] = useState("grid");
 
+function Home() {
+  const [viewMode, setViewMode] = useState("grid");
+  const userRole = useMemo(() => {
+    try {
+      const user = JSON.parse(localStorage.getItem("NagpurProperties"));
+      return user?.role?.[0]?.roleName || "Partner";
+    } catch {
+      return "Partner";
+    }
+  }, []);
   const sections = [
     {
       name: "Land Management",
@@ -128,6 +130,15 @@ function Home() {
       count: 9,
     },
   ];
+
+  // 🔍 Role-based filtering
+  const filteredSections = useMemo(() => {
+    if (userRole === "Admin") return sections;
+    if (userRole === "Partner")
+      return sections.filter((sec) => sec.name === "Land Management");
+    return [];
+  }, [userRole]);
+
   const statistics = [
     {
       title: "Total Projects",
@@ -135,23 +146,24 @@ function Home() {
       icon: <BarChart3 size={24} />,
       change: "+12%",
       color: "blue",
+      path: "/dashboard/land",
     },
     {
-      title: "Active Tasks",
+      title: "Total Lead",
       value: "64",
       icon: <CheckSquare size={24} />,
       change: "+8%",
       color: "green",
     },
     {
-      title: "Revenue",
+      title: "Plot",
       value: "$48.5k",
       icon: <TrendingUp size={24} />,
       change: "+24%",
       color: "emerald",
     },
     {
-      title: "Pending Tasks",
+      title: "Letter",
       value: "23",
       icon: <Clock size={24} />,
       change: "-5%",
@@ -167,30 +179,35 @@ function Home() {
           <h1>Management Dashboard</h1>
           <p>Welcome back! Here's an overview of your management modules</p>
         </div>
-        <div className="dashboard-actions">
-          <button className="action-button primary">
-            <Plus size={16} />
-            <span>New Project</span>
-          </button>
-          <button className="action-button secondary">
-            <FileText size={16} />
-            <span>Generate Report</span>
-          </button>
+        {userRole === "Admin" && (
+          <div className="dashboard-actions">
+            <button className="action-button primary">
+              <Plus size={16} />
+              <span>New Project</span>
+            </button>
+          </div>
+        )}
+      </div>
+
+      {userRole === "Admin" && (
+        <div className="statistics-row">
+          {statistics.map((stat, index) => (
+            <StatisticCard
+              key={index}
+              title={stat.title}
+              value={stat.value}
+              icon={stat.icon}
+              change={stat.change}
+              color={stat.color}
+              isNegative={stat.isNegative}
+            />
+          ))}
         </div>
-      </div>
-      <div className="statistics-row">
-        {statistics.map((stat, index) => (
-          <StatisticCard
-            key={index}
-            title={stat.title}
-            value={stat.value}
-            icon={stat.icon}
-            change={stat.change}
-            color={stat.color}
-            isNegative={stat.isNegative}
-          />
-        ))}
-      </div>
+      )}
+
+      {userRole === "Partner" && (
+        <hr style={{ backgroundColor: "lightgrey" }} />
+      )}
       <div className="section-header">
         <h2>Management Modules</h2>
         <div className="section-controls">
@@ -210,6 +227,7 @@ function Home() {
           </div>
         </div>
       </div>
+
       <div className={`sections-container ${viewMode}`}>
         {filteredSections.map((section, index) => (
           <SectionCard

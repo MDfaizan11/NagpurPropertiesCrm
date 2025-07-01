@@ -272,14 +272,13 @@ function PlotDetails() {
   }
 
   const handleDeletePlot = async (id) => {
-    const isAnyPlotBooked = plotData.some(
-      (plot) => plot.bookings && plot.bookings.length > 0
-    );
-
-    if (isAnyPlotBooked) {
-      alert("Plot is  booked. Please cancel the bookings before proceeding.");
+    const mydelete = plotData.find((item) => item.id === id);
+    console.log(mydelete);
+    if (mydelete && mydelete.layoutStatus === "BOOKED") {
+      alert("Plot is booked. Please cancel the bookings before proceeding.");
       return;
     }
+
     const confirmation = window.confirm(
       "Are you sure you want to delete this plot?"
     );

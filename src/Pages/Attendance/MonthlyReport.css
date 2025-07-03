@@ -156,3 +156,29 @@
 .MonthlyReport-halfday-row td {
   font-size: 12px;
 }
+
+.MonthlyReport-actions {
+  margin: 10px 0;
+}
+
+.MonthlyReport-btn-print,
+.MonthlyReport-btn-pdf {
+  padding: 8px 12px;
+  margin-right: 8px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.MonthlyReport-btn-print:hover,
+.MonthlyReport-btn-pdf:hover {
+  background-color: #0056b3;
+}
+
+.MonthlyReport-monthly-table th,
+.MonthlyReport-monthly-table td {
+  white-space: nowrap;
+  font-size: 12px;
+}

@@ -86,12 +86,12 @@ function Home() {
       color: "yellow",
       count: 12,
     },
-    {
-      name: "Stock Management",
-      icon: <Package size={24} />,
-      color: "brown",
-      count: 21,
-    },
+    // {
+    //   name: "Stock Management",
+    //   icon: <Package size={24} />,
+    //   color: "brown",
+    //   count: 21,
+    // },
     {
       name: "Finance Management",
       icon: <DollarSign size={24} />,
@@ -104,18 +104,18 @@ function Home() {
       color: "gray",
       count: 8,
     },
-    {
-      name: "Project Management",
-      icon: <Calendar size={24} />,
-      color: "cyan",
-      count: 27,
-    },
-    {
-      name: "Quotation",
-      icon: <FileText size={24} />,
-      color: "amber",
-      count: 14,
-    },
+    // {
+    //   name: "Project Management",
+    //   icon: <Calendar size={24} />,
+    //   color: "cyan",
+    //   count: 27,
+    // },
+    // {
+    //   name: "Quotation",
+    //   icon: <FileText size={24} />,
+    //   color: "amber",
+    //   count: 14,
+    // },
     { name: "Letter Head", icon: <Mail size={24} />, color: "lime", count: 6 },
     {
       name: "Office Expense",

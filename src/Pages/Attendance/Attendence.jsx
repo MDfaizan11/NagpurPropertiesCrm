@@ -112,6 +112,7 @@ function Attendence() {
       return;
     }
 
+    console.log([selectedDeptId, attendanceEmpDetails, selectedDate]);
     setLoading(true);
     try {
       await axiosInstance.post(

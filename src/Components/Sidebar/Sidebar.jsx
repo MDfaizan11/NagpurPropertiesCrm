@@ -457,13 +457,13 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       count: 12,
       path: "/contractor",
     },
-    {
-      name: "Stock Management",
-      icon: <Package size={22} />,
-      color: "brown",
-      count: 21,
-      path: "/stock",
-    },
+    // {
+    //   name: "Stock Management",
+    //   icon: <Package size={22} />,
+    //   color: "brown",
+    //   count: 21,
+    //   path: "/stock",
+    // },
     {
       name: "Finance Management",
       icon: <DollarSign size={22} />,
@@ -478,13 +478,13 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       count: 8,
       path: "/machine",
     },
-    {
-      name: "Project Management",
-      icon: <Calendar size={22} />,
-      color: "cyan",
-      count: 27,
-      path: "/project",
-    },
+    // {
+    //   name: "Project Management",
+    //   icon: <Calendar size={22} />,
+    //   color: "cyan",
+    //   count: 27,
+    //   path: "/project",
+    // },
 
     {
       name: "Letter Head",

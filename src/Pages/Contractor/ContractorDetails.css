@@ -1,0 +1,1262 @@
+/* Import Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+/* CSS Variables for consistent theming */
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --info-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --info-color: #3b82f6;
+
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-light: #9ca3af;
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+
+  --border-color: #e5e7eb;
+  --border-light: #f3f4f6;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  --transition-fast: all 0.15s ease;
+  --transition-normal: all 0.3s ease;
+  --transition-slow: all 0.5s ease;
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Main container */
+.ContractorDetails-contractor-details-wrapper {
+  min-height: 100vh;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  /* background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+  padding: 0.5rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* Header section with enhanced gradient */
+.ContractorDetails-contractor-details-header {
+  background: var(--primary-gradient);
+  padding: 1.5rem 2rem;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  margin-bottom: 2.5rem;
+  box-shadow: var(--shadow-xl);
+}
+
+.ContractorDetails-contractor-details-header::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
+  animation: ContractorDetails-pulse 20s infinite linear;
+}
+
+.ContractorDetails-contractor-details-header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  animation: ContractorDetails-shimmer 3s infinite;
+}
+
+@keyframes ContractorDetails-pulse {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes ContractorDetails-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.ContractorDetails-header-content {
+  position: relative;
+  z-index: 2;
+}
+
+.ContractorDetails-contractor-details-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.025em;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(45deg, #ffffff, #e0e7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ContractorDetails-contractor-details-subtitle {
+  font-size: 1.125rem;
+  font-weight: 400;
+  opacity: 0.95;
+  max-width: 600px;
+  margin: 0 auto;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced controls section */
+.ContractorDetails-contractor-details-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto 2rem;
+  gap: 1.5rem;
+  max-width: 1400px;
+  padding: 0 1rem;
+  flex-wrap: wrap;
+}
+
+.ContractorDetails-search-container {
+  position: relative;
+  flex: 1;
+  max-width: 500px;
+}
+
+.ContractorDetails-search-container input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border-radius: var(--radius-xl);
+  border: 2px solid transparent;
+  background: var(--bg-primary);
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition-normal);
+  color: var(--text-primary);
+}
+
+.ContractorDetails-search-container input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-xl), 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
+}
+
+.ContractorDetails-search-container input::placeholder {
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+.ContractorDetails-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: var(--transition-normal);
+}
+
+.ContractorDetails-search-container
+  input:focus
+  + .ContractorDetails-search-icon {
+  color: var(--primary-color);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.ContractorDetails-add-project-btn {
+  padding: 1rem 2rem;
+  background: var(--secondary-gradient);
+  color: white;
+  border: none;
+  border-radius: var(--radius-xl);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.ContractorDetails-add-project-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: var(--transition-normal);
+}
+
+.ContractorDetails-add-project-btn:hover::before {
+  left: 100%;
+}
+
+.ContractorDetails-add-project-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
+}
+
+.ContractorDetails-add-project-btn:active {
+  transform: translateY(-1px);
+}
+
+.ContractorDetails-btn-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: var(--transition-normal);
+}
+
+.ContractorDetails-add-project-btn:hover .ContractorDetails-btn-icon {
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* Enhanced error styling */
+.ContractorDetails-error-text {
+  color: var(--danger-color);
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin: 1rem 0;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-md);
+  animation: ContractorDetails-shake 0.5s ease-in-out;
+}
+
+@keyframes ContractorDetails-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Enhanced loader */
+.ContractorDetails-loader-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ContractorDetails-loader-spin {
+  animation: ContractorDetails-spin 1s linear infinite;
+  color: var(--primary-color);
+  width: 2.5rem;
+  height: 2.5rem;
+  filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+}
+
+@keyframes ContractorDetails-spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* No contractors message */
+.ContractorDetails-no-contractors {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+/* Enhanced table container */
+.ContractorDetails-contractor-table-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.ContractorDetails-contractor-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-primary);
+  font-size: 0.875rem;
+}
+
+.ContractorDetails-contractor-table thead {
+  background: var(--primary-gradient);
+  color: white;
+}
+
+.ContractorDetails-contractor-table th {
+  padding: 1.25rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  border: none;
+  position: relative;
+}
+
+.ContractorDetails-contractor-table th::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.ContractorDetails-contractor-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+  transition: var(--transition-fast);
+}
+
+.ContractorDetails-contractor-table tbody tr {
+  transition: var(--transition-fast);
+}
+
+.ContractorDetails-contractor-table tbody tr:nth-child(even) {
+  background: var(--bg-secondary);
+}
+
+.ContractorDetails-contractor-table tbody tr:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.05),
+    rgba(118, 75, 162, 0.05)
+  );
+  transform: scale(1.01);
+  box-shadow: var(--shadow-md);
+}
+
+/* Enhanced table cell styling */
+.ContractorDetails-contractor-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.ContractorDetails-type-badge {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  background: var(--info-gradient);
+  color: rgb(0, 0, 0);
+  border-radius: var(--radius-xl);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  box-shadow: var(--shadow-sm);
+}
+
+.ContractorDetails-amount-cell {
+  font-weight: 600;
+  color: var(--success-color);
+  font-size: 0.95rem;
+}
+
+.ContractorDetails-amount-highlight {
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-md);
+  display: inline-block;
+}
+
+.ContractorDetails-amount-highlight.ContractorDetails-paid {
+  color: var(--success-color);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.ContractorDetails-amount-highlight.ContractorDetails-remaining {
+  color: var(--warning-color);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+/* Enhanced action buttons */
+.ContractorDetails-action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.ContractorDetails-add_payment_button,
+.ContractorDetails-view-btn,
+.ContractorDetails-edit-btn,
+.ContractorDetails-contractor_delete_button {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  position: relative;
+  overflow: hidden;
+}
+
+.ContractorDetails-add_payment_button::before,
+.ContractorDetails-view-btn::before,
+.ContractorDetails-edit-btn::before,
+.ContractorDetails-contractor_delete_button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: var(--transition-normal);
+}
+
+.ContractorDetails-add_payment_button:hover::before,
+.ContractorDetails-view-btn:hover::before,
+.ContractorDetails-edit-btn:hover::before,
+.ContractorDetails-contractor_delete_button:hover::before {
+  left: 100%;
+}
+
+.ContractorDetails-add_payment_button {
+  background: var(--warning-gradient);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.ContractorDetails-add_payment_button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.ContractorDetails-view-btn {
+  background: var(--success-gradient);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.ContractorDetails-view-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.ContractorDetails-edit-btn {
+  background: var(--info-gradient);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.ContractorDetails-edit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.ContractorDetails-contractor_delete_button {
+  background: var(--danger-gradient);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.ContractorDetails-contractor_delete_button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Enhanced modal styling */
+.ContractorDetails-contractor-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: ContractorDetails-fadeIn 0.3s ease-out;
+}
+
+@keyframes ContractorDetails-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ContractorDetails-contractor-modal-content {
+  background: var(--bg-primary);
+  padding: 2rem;
+  border-radius: var(--radius-xl);
+  width: 90%;
+  max-width: 600px;
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  animation: ContractorDetails-slideUp 0.3s ease-out;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes ContractorDetails-slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.ContractorDetails-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-light);
+}
+
+.ContractorDetails-modal-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ContractorDetails-modal-header button {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0.5rem;
+  border-radius: var(--radius-md);
+  transition: var(--transition-normal);
+}
+
+.ContractorDetails-modal-header button:hover {
+  background: var(--bg-tertiary);
+  color: var(--danger-color);
+  transform: scale(1.1);
+}
+
+.ContractorDetails-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.ContractorDetails-contractor-modal-content input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: var(--transition-normal);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.ContractorDetails-contractor-modal-content input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
+}
+
+.ContractorDetails-contractor-modal-content input::placeholder {
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+.ContractorDetails-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--border-light);
+}
+
+.ContractorDetails-modal-actions button {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.ContractorDetails-modal-actions button:first-child {
+  background: var(--success-gradient);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.ContractorDetails-modal-actions button:first-child:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ContractorDetails-modal-actions button:first-child:disabled {
+  background: var(--text-light);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ContractorDetails-modal-actions button:last-child {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 2px solid var(--border-color);
+}
+
+.ContractorDetails-modal-actions button:last-child:hover {
+  background: var(--text-light);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Enhanced popup styling */
+.ContractorDetails-contractor_popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: ContractorDetails-fadeIn 0.3s ease-out;
+}
+
+.ContractorDetails-contractor_popup_content {
+  background: var(--bg-primary);
+  padding: 1rem;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  overflow-y: auto;
+  position: relative;
+  animation: ContractorDetails-slideUp 0.3s ease-out;
+  scrollbar-width: none;
+}
+
+.ContractorDetails-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-light);
+}
+
+.ContractorDetails-contractor_popup_close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: var(--transition-normal);
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+}
+
+.ContractorDetails-contractor_popup_close:hover {
+  color: var(--danger-color);
+  background: rgba(239, 68, 68, 0.1);
+  transform: scale(1.1);
+}
+
+.ContractorDetails-contractor-info h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ContractorDetails-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.ContractorDetails-info-item {
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--primary-color);
+  transition: var(--transition-normal);
+}
+
+.ContractorDetails-info-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.ContractorDetails-info-item strong {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  margin-bottom: 0.5rem;
+}
+
+.ContractorDetails-contractor_popup_content h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 2rem 0 1rem;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+}
+
+/* Enhanced installment table */
+.ContractorDetails-installment_table_wrapper {
+  margin-top: 1rem;
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.ContractorDetails-installment_table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-primary);
+}
+
+.ContractorDetails-installment_table th {
+  padding: 1rem;
+  background: var(--primary-gradient);
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  border: none;
+}
+
+.ContractorDetails-installment_table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.875rem;
+}
+
+.ContractorDetails-installment_table tbody tr:nth-child(even) {
+  background: var(--bg-secondary);
+}
+
+.ContractorDetails-installment_table tbody tr:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.05),
+    rgba(118, 75, 162, 0.05)
+  );
+}
+
+.ContractorDetails-payment-method {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: var(--success-gradient);
+  color: white;
+  border-radius: var(--radius-xl);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.ContractorDetails-no-data {
+  text-align: center;
+  padding: 2rem;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 1rem;
+  background: var(--bg-secondary);
+}
+
+/* Enhanced payment form styling */
+.ContractorDetails-contractor_form_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  animation: ContractorDetails-fadeIn 0.3s ease-out;
+}
+
+.ContractorDetails-contractor_form_wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-primary);
+  padding: 2rem;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  width: 90%;
+  max-width: 500px;
+  z-index: 1000;
+  animation: ContractorDetails-slideUp 0.3s ease-out;
+}
+
+.ContractorDetails-contractor_payment_form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.ContractorDetails-contractor_payment_form h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 1rem;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ContractorDetails-contractor_payment_form input,
+.ContractorDetails-contractor_payment_form select {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: var(--transition-normal);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.ContractorDetails-contractor_payment_form input:focus,
+.ContractorDetails-contractor_payment_form select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
+}
+
+.ContractorDetails-contractor_payment_form select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+  padding-right: 3rem;
+}
+
+.ContractorDetails-contractor_payment_close_button {
+  position: absolute;
+  top: -3rem;
+  right: -1rem;
+  background: var(--danger-gradient);
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-md);
+}
+
+.ContractorDetails-contractor_payment_close_button:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+}
+
+.ContractorDetails-contractor_payment_submit_button {
+  background: var(--success-gradient);
+  color: white;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.ContractorDetails-contractor_payment_submit_button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: var(--transition-normal);
+}
+
+.ContractorDetails-contractor_payment_submit_button:hover::before {
+  left: 100%;
+}
+
+.ContractorDetails-contractor_payment_submit_button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ContractorDetails-contractor_payment_submit_button:disabled {
+  background: var(--text-light);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Enhanced responsive design */
+@media screen and (max-width: 1200px) {
+  .ContractorDetails-contractor-details-wrapper {
+    padding: 1.5rem;
+  }
+
+  .ContractorDetails-contractor-details-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ContractorDetails-search-container {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ContractorDetails-contractor-details-wrapper {
+    padding: 1rem;
+  }
+
+  .ContractorDetails-contractor-details-header {
+    padding: 2rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ContractorDetails-contractor-details-title {
+    font-size: 2rem;
+  }
+
+  .ContractorDetails-contractor-details-subtitle {
+    font-size: 1rem;
+  }
+
+  .ContractorDetails-contractor-table-container {
+    overflow-x: auto;
+  }
+
+  .ContractorDetails-contractor-table {
+    min-width: 800px;
+  }
+
+  .ContractorDetails-contractor-table th,
+  .ContractorDetails-contractor-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .ContractorDetails-action-buttons {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .ContractorDetails-add_payment_button,
+  .ContractorDetails-view-btn,
+  .ContractorDetails-edit-btn,
+  .ContractorDetails-contractor_delete_button {
+    padding: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .ContractorDetails-contractor_popup_content {
+    width: 95%;
+    max-height: 95vh;
+    padding: 1.5rem;
+  }
+
+  .ContractorDetails-contractor_form_wrapper {
+    width: 95%;
+    padding: 1.5rem;
+  }
+
+  .ContractorDetails-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ContractorDetails-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .ContractorDetails-contractor-details-title {
+    font-size: 1.75rem;
+  }
+
+  .ContractorDetails-contractor-details-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .ContractorDetails-contractor-details-controls {
+    gap: 1rem;
+  }
+
+  .ContractorDetails-add-project-btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  .ContractorDetails-contractor-table th,
+  .ContractorDetails-contractor-table td {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  .ContractorDetails-contractor_popup_close {
+    right: 0.5rem;
+    top: 0.5rem;
+    font-size: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .ContractorDetails-contractor_form_wrapper {
+    width: 95%;
+    padding: 1rem;
+  }
+
+  .ContractorDetails-contractor_payment_close_button {
+    top: -2.5rem;
+    right: -0.5rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.875rem;
+  }
+
+  .ContractorDetails-modal-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .ContractorDetails-modal-actions button {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
+/* Custom scrollbar styling */
+.ContractorDetails-contractor_popup_content::-webkit-scrollbar,
+.ContractorDetails-contractor-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ContractorDetails-contractor_popup_content::-webkit-scrollbar-track,
+.ContractorDetails-contractor-modal-content::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.ContractorDetails-contractor_popup_content::-webkit-scrollbar-thumb,
+.ContractorDetails-contractor-modal-content::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: var(--radius-md);
+}
+
+.ContractorDetails-contractor_popup_content::-webkit-scrollbar-thumb:hover,
+.ContractorDetails-contractor-modal-content::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-color);
+}
+
+/* Print styles */
+@media print {
+  .ContractorDetails-contractor-details-wrapper {
+    background: white;
+    padding: 0;
+  }
+
+  .ContractorDetails-contractor-details-header {
+    background: white !important;
+    color: black !important;
+    box-shadow: none;
+  }
+
+  .ContractorDetails-contractor-details-controls,
+  .ContractorDetails-add_payment_button,
+  .ContractorDetails-view-btn,
+  .ContractorDetails-edit-btn,
+  .ContractorDetails-contractor_delete_button {
+    display: none;
+  }
+
+  .ContractorDetails-contractor-table {
+    box-shadow: none;
+  }
+
+  .ContractorDetails-contractor-table th {
+    background: #f0f0f0 !important;
+    color: black !important;
+  }
+}
+
+/* Focus visible styles for accessibility */
+.ContractorDetails-add-project-btn:focus-visible,
+.ContractorDetails-add_payment_button:focus-visible,
+.ContractorDetails-view-btn:focus-visible,
+.ContractorDetails-edit-btn:focus-visible,
+.ContractorDetails-contractor_delete_button:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.ContractorDetails-search-container input:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --primary-gradient: linear-gradient(135deg, #000080 0%, #000040 100%);
+    --secondary-gradient: linear-gradient(135deg, #800080 0%, #400040 100%);
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --border-color: #000000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

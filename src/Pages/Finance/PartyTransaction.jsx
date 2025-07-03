@@ -9,8 +9,8 @@ function PartyTransaction() {
   const { id, name } = useParams();
   const token = JSON.parse(localStorage.getItem("NagpurProperties"))?.token;
   const [transactions, setTransactions] = useState([]);
-  const [startingDate, setStartingDate] = useState("2025-06-26");
-  const [endingDate, setEndingDate] = useState("2025-06-30");
+  const [startingDate, setStartingDate] = useState("");
+  const [endingDate, setEndingDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const tableRef = useRef(null);

@@ -32,6 +32,8 @@ import RegisterEmployeeForm from "./Pages/Employee/RegisterEmployeeForm";
 import EmpList from "./Pages/Attendance/EmpList";
 import Attendence from "./Pages/Attendance/Attendence";
 import MonthlyReport from "./Pages/Attendance/MonthlyReport";
+import MaterialVendor from "./Pages/Material/MaterialVendor";
+import ContractorDetails from "./Pages/Contractor/ContractorDetails";
 function App() {
   return (
     <>
@@ -59,6 +61,10 @@ function App() {
                   element={<PlotDetails />}
                 />
                 <Route path="material" element={<Material />} />
+                <Route
+                  path="/materialVendor/:id/:name"
+                  element={<MaterialVendor />}
+                />
 
                 <Route path="machine" element={<Machine />} />
                 <Route path="project" element={<Project />} />
@@ -83,6 +89,10 @@ function App() {
                 <Route path="letter" element={<Letters />} />
                 <Route path="stock" element={<Stock />} />
                 <Route path="contractor" element={<Contractor />} />
+                <Route
+                  path="/contractorDetails/:projectId"
+                  element={<ContractorDetails />}
+                />
                 <Route path="/getDepartment" element={<GetDepartment />} />
                 <Route
                   path="/registerEmploye/:id"

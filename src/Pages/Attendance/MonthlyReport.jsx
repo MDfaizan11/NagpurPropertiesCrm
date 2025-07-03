@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./MonthlyReport.css";
 import { BASE_URL } from "../../config";
 import axiosInstance from "../../utils/axiosInstance";
@@ -12,6 +12,9 @@ const MonthlyReport = () => {
   const [monthDates, setMonthDates] = useState([]);
   const [monthLabel, setMonthLabel] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Ref for the printable/exportable area
+  const reportRef = useRef();
 
   useEffect(() => {
     const fetchDepartments = async () => {
@@ -106,6 +109,65 @@ const MonthlyReport = () => {
     });
   };
 
+  const handlePrint = () => {
+    const printContents = reportRef.current.innerHTML;
+    const newWin = window.open("", "_blank");
+    newWin.document.write(`
+      <html>
+        <head>
+          <title>Monthly Attendance Report</title>
+          <style>
+            ${document.querySelector("style")?.innerHTML || ""}
+            body { font-family: Arial, sans-serif; padding: 5px; }
+            table { border-collapse: collapse; width: 100%; }
+            th, td { border: 1px solid #000; padding: 5px; text-align: center; }
+            .MonthlyReport-present-status { background-color: #c8e6c9; }
+            .MonthlyReport-absent-status { background-color: #ffcdd2; }
+            .MonthlyReport-halfday-status { background-color: #fff9c4; }
+          </style>
+        </head>
+        <body>
+          ${printContents}
+        </body>
+      </html>
+    `);
+    newWin.document.close();
+    newWin.focus();
+    newWin.print();
+    newWin.close();
+  };
+
+  const handleDownloadPDF = () => {
+    import("html2pdf.js").then((html2pdf) => {
+      const opt = {
+        margin: [0.1, 0.1, 0.1, 0.1],
+        filename: `Monthly_Report_${monthLabel || "report"}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 3,
+          useCORS: true,
+        },
+        jsPDF: {
+          unit: "in",
+          format: "a3",
+          orientation: "landscape",
+        },
+      };
+
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "visible";
+
+      html2pdf
+        .default()
+        .from(reportRef.current)
+        .set(opt)
+        .save()
+        .then(() => {
+          document.body.style.overflow = originalOverflow;
+        });
+    });
+  };
+
   return (
     <div className="MonthlyReport-report-wrapper">
       <h2 className="MonthlyReport-report-heading">
@@ -150,106 +212,123 @@ const MonthlyReport = () => {
 
       {attendanceData.length > 0 && (
         <>
-          <div className="MonthlyReport-summary-header">
-            <h4>
-              Month: <strong>{monthLabel}</strong> | Department:{" "}
-              <strong>{getDepartmentName(selectedDeptId)}</strong>
-            </h4>
+          <div className="MonthlyReport-actions">
+            <button className="MonthlyReport-btn-print" onClick={handlePrint}>
+              Print Report
+            </button>
+            <button
+              className="MonthlyReport-btn-pdf"
+              onClick={handleDownloadPDF}
+            >
+              Download PDF
+            </button>
           </div>
 
-          <div className="MonthlyReport-table-scroll">
-            <table className="MonthlyReport-monthly-table">
-              <thead>
-                <tr>
-                  <th>Employee</th>
-                  {monthDates.map((date, idx) => (
-                    <th key={idx}>{new Date(date).getDate()}</th>
-                  ))}
-                  <th>Present</th>
-                  <th>Leaves</th>
-                  <th>Half Days</th>
-                  <th>Total Marked</th>
-                </tr>
-              </thead>
-              <tbody>
-                {attendanceData.map((emp) => {
-                  const halfDayCount = emp.attendance.filter(
-                    (a) => a.attendanceStatus === "HALF_DAY"
-                  ).length;
+          <div ref={reportRef}>
+            <div className="MonthlyReport-summary-header">
+              <h4>
+                Month: <strong>{monthLabel}</strong> | Department:{" "}
+                <strong>{getDepartmentName(selectedDeptId)}</strong>
+              </h4>
+            </div>
 
-                  return (
-                    <tr key={emp.employeeId}>
-                      <td className="MonthlyReport-emp-name">
-                        <strong>{emp.employeeName}</strong>
-                        <br />
-                        <span>{emp.designation}</span>
-                      </td>
-                      {emp.attendance.map((a, i) => (
-                        <td key={i}>
-                          <span
-                            className={`MonthlyReport-status-cell ${getStatusClass(
-                              a.attendanceStatus
-                            )}`}
-                          >
-                            {a.attendanceStatus ? a.attendanceStatus[0] : "-"}
-                          </span>
+            <div
+              className="MonthlyReport-table-scroll"
+              style={{ overflow: "visible" }}
+            >
+              <table className="MonthlyReport-monthly-table">
+                <thead>
+                  <tr>
+                    <th>Employee</th>
+                    {monthDates.map((date, idx) => (
+                      <th key={idx}>{new Date(date).getDate()}</th>
+                    ))}
+                    <th>Present</th>
+                    <th>Leaves</th>
+                    <th>Half Days</th>
+                    <th>Total Marked</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {attendanceData.map((emp) => {
+                    const halfDayCount = emp.attendance.filter(
+                      (a) => a.attendanceStatus === "HALF_DAY"
+                    ).length;
+
+                    return (
+                      <tr key={emp.employeeId}>
+                        <td className="MonthlyReport-emp-name">
+                          <strong>{emp.employeeName}</strong>
+                          <br />
+                          <span>{emp.designation}</span>
                         </td>
-                      ))}
-                      <td>
-                        <strong>{emp.presentDay}</strong>
+                        {emp.attendance.map((a, i) => (
+                          <td key={i}>
+                            <span
+                              className={`MonthlyReport-status-cell ${getStatusClass(
+                                a.attendanceStatus
+                              )}`}
+                            >
+                              {a.attendanceStatus ? a.attendanceStatus[0] : "-"}
+                            </span>
+                          </td>
+                        ))}
+                        <td>
+                          <strong>{emp.presentDay}</strong>
+                        </td>
+                        <td>{emp.leaves}</td>
+                        <td>{halfDayCount}</td>
+                        <td>{emp.attendanceMarkedDay}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+                <tfoot>
+                  <tr className="MonthlyReport-summary-row MonthlyReport-present-row">
+                    <td>
+                      <strong>Present</strong>
+                    </td>
+                    {getDayWiseCounts("PRESENT").map((count, i) => (
+                      <td
+                        key={`present-${i}`}
+                        className="MonthlyReport-present-status"
+                      >
+                        {count}
                       </td>
-                      <td>{emp.leaves}</td>
-                      <td>{halfDayCount}</td>
-                      <td>{emp.attendanceMarkedDay}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-              <tfoot>
-                <tr className="MonthlyReport-summary-row MonthlyReport-present-row">
-                  <td>
-                    <strong>Present</strong>
-                  </td>
-                  {getDayWiseCounts("PRESENT").map((count, i) => (
-                    <td
-                      key={`present-${i}`}
-                      className="MonthlyReport-present-status"
-                    >
-                      {count}
+                    ))}
+                    <td colSpan="4"></td>
+                  </tr>
+                  <tr className="MonthlyReport-summary-row MonthlyReport-absent-row">
+                    <td>
+                      <strong>Absent</strong>
                     </td>
-                  ))}
-                  <td colSpan="4"></td>
-                </tr>
-                <tr className="MonthlyReport-summary-row MonthlyReport-absent-row">
-                  <td>
-                    <strong>Absent</strong>
-                  </td>
-                  {getDayWiseCounts("ABSENT").map((count, i) => (
-                    <td
-                      key={`absent-${i}`}
-                      className="MonthlyReport-absent-status"
-                    >
-                      {count}
+                    {getDayWiseCounts("ABSENT").map((count, i) => (
+                      <td
+                        key={`absent-${i}`}
+                        className="MonthlyReport-absent-status"
+                      >
+                        {count}
+                      </td>
+                    ))}
+                    <td colSpan="4"></td>
+                  </tr>
+                  <tr className="MonthlyReport-summary-row MonthlyReport-halfday-row">
+                    <td>
+                      <strong>Half Day</strong>
                     </td>
-                  ))}
-                  <td colSpan="4"></td>
-                </tr>
-                <tr className="MonthlyReport-summary-row MonthlyReport-halfday-row">
-                  <td>
-                    <strong>Half Day</strong>
-                  </td>
-                  {getDayWiseCounts("HALF_DAY").map((count, i) => (
-                    <td
-                      key={`half-${i}`}
-                      className="MonthlyReport-halfday-status"
-                    >
-                      {count}
-                    </td>
-                  ))}
-                  <td colSpan="4"></td>
-                </tr>
-              </tfoot>
-            </table>
+                    {getDayWiseCounts("HALF_DAY").map((count, i) => (
+                      <td
+                        key={`half-${i}`}
+                        className="MonthlyReport-halfday-status"
+                      >
+                        {count}
+                      </td>
+                    ))}
+                    <td colSpan="4"></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
           </div>
         </>
       )}

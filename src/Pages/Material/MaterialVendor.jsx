@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import "./materialVendor.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { BASE_URL } from "../../config";
 
 function MaterialVendor() {
-  const { id, name } = useParams();
+  const { ProjectId, ProjectName } = useParams();
+  const navigate = useNavigate();
   const token = JSON.parse(localStorage.getItem("NagpurProperties"))?.token;
   const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ function MaterialVendor() {
       }
       setLoading(true);
       const response = await axiosInstance.get(
-        `${BASE_URL}/showVendorByProjectId/${id}`,
+        `${BASE_URL}/showVendorByProjectId/${ProjectId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -33,6 +34,7 @@ function MaterialVendor() {
           },
         }
       );
+      console.log(response.data);
       setVendors(response.data);
       setError(null);
     } catch (error) {
@@ -76,7 +78,7 @@ function MaterialVendor() {
       }
       await axiosInstance.post(
         `${BASE_URL}/createVendor`,
-        { vendorName, phoneNo: vendorNumber, projectId: parseInt(id) },
+        { vendorName, phoneNo: vendorNumber, projectId: parseInt(ProjectId) },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -184,8 +186,9 @@ function MaterialVendor() {
   };
 
   // View vendor details (placeholder)
-  const viewVendor = (vendorId) => {
-    console.log(`View details for vendor ID: ${vendorId}`);
+  const viewVendor = (VendorId) => {
+    // console.log(`View details for vendor ID: ${id}`);
+    navigate(`/MaterialVendorDetails/${VendorId}/${ProjectName}/${ProjectId}`);
   };
 
   // Cancel form editing
@@ -207,7 +210,7 @@ function MaterialVendor() {
 
   useEffect(() => {
     fetchVendors();
-  }, [id, token]);
+  }, [ProjectId, token]);
 
   if (loading) {
     return (
@@ -241,7 +244,7 @@ function MaterialVendor() {
     <div className="MaterialVendor-container">
       <div className="MaterialVendor-header">
         <div className="MaterialVendor-header-content">
-          <h1 className="MaterialVendor-title">Vendors for {name}</h1>
+          <h1 className="MaterialVendor-title">Vendors for {ProjectName}</h1>
           <p className="MaterialVendor-subtitle">
             Manage your project vendors efficiently
           </p>

@@ -778,8 +778,8 @@ MaterialVendor-card-footer {
 
 /* Action Button Variants */
 .MaterialVendor-action-view {
-  background: var(--info-gradient);
-  color: rgb(8, 0, 255);
+  background: var(--success-gradient);
+  color: rgb(255, 255, 255);
   /* box-shadow: 0 2px 8px rgba(79, 172, 254, 0.3); */
   border-color: rgba(110, 106, 106, 0.3);
 }
@@ -791,8 +791,8 @@ MaterialVendor-card-footer {
 }
 
 .MaterialVendor-action-edit {
-  background: var(--warning-gradient);
-  color: rgb(0, 0, 0);
+  background: rgb(75, 238, 75);
+  color: rgb(255, 255, 255);
   /* box-shadow: 0 2px 8px rgba(255, 209, 102, 0.3); */
   border-color: rgba(110, 106, 106, 0.3);
 }
@@ -804,8 +804,8 @@ MaterialVendor-card-footer {
 }
 
 .MaterialVendor-action-delete {
-  background: var(--danger-gradient);
-  color: rgb(255, 0, 0);
+  background: rgb(228, 91, 91);
+  color: rgb(255, 255, 255);
   /* box-shadow: 0 2px 8px rgba(255, 88, 88, 0.3); */
   border-color: rgba(110, 106, 106, 0.3);
 }

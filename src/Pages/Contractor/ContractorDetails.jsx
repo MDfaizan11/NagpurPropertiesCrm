@@ -36,8 +36,8 @@ const ContractorDetails = () => {
   });
   const [showEditPaymentForm, setShowEditPaymentForm] = useState(false);
   const [editPaymentId, setEditPaymentId] = useState(null);
-
-  const token = localStorage.getItem("token");
+  const [InstallMentId, setInstallMentId] = useState("");
+  const token = JSON.parse(localStorage.getItem("NagpurProperties"))?.token;
 
   const fetchContractors = useCallback(async () => {
     try {
@@ -45,7 +45,10 @@ const ContractorDetails = () => {
       const response = await axiosInstance.get(
         `${BASE_URL}/${projectId}/Contractor`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
       const sortedData = response.data.sort(
@@ -143,7 +146,10 @@ const ContractorDetails = () => {
           `${BASE_URL}/contractor/${editContractorId}`,
           formData,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
           }
         );
       } else {
@@ -151,10 +157,14 @@ const ContractorDetails = () => {
           `${BASE_URL}/contractor/${projectId}`,
           formData,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
           }
         );
       }
+      alert("Contractor Added Successfully");
       fetchContractors();
       handleCloseForm();
     } catch (err) {
@@ -277,6 +287,7 @@ const ContractorDetails = () => {
   };
 
   const handleEditPayment = async (id) => {
+    setInstallMentId(id);
     try {
       const response = await axiosInstance.get(
         `${BASE_URL}/getSingleInstallmentById/${id}`,
@@ -303,7 +314,7 @@ const ContractorDetails = () => {
   const handleUpdatePayment = async (e) => {
     e.preventDefault();
     const {
-      contractorId,
+      // contractorId,
       amount,
       contractorPayDate,
       contractorPayStatus,
@@ -318,18 +329,19 @@ const ContractorDetails = () => {
     try {
       setLoading(true);
       await axiosInstance.put(
-        `${BASE_URL}/updateContractorInstallment/${contractorId}`,
-        [
-          {
-            id: editPaymentId,
-            amount,
-            contractorPayDate,
-            contractorPayStatus,
-            remark,
-          },
-        ],
+        `${BASE_URL}/contractorInstallments/${InstallMentId}`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          id: editPaymentId,
+          amount,
+          contractorPayDate,
+          contractorPayStatus,
+          remark,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
       setShowEditPaymentForm(false);
@@ -352,10 +364,14 @@ const ContractorDetails = () => {
       await axiosInstance.delete(
         `${BASE_URL}/deleteContractorInstallment/${id}`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
       handleViewContractor(contractorData.id);
+      alert("Delete Successfully");
     } catch (error) {
       console.error("Error deleting payment:", error);
     }
@@ -450,6 +466,12 @@ const ContractorDetails = () => {
                         >
                           View
                         </button>
+                        {/* <button
+                          className="ContractorDetails-view-btn"
+                          onClick={() => handleEditContractor(c.id)}
+                        >
+                          Edit
+                        </button> */}
                         <button
                           className="ContractorDetails-contractor_delete_button"
                           onClick={() => handleDeleteContractor(c.id)}

@@ -38,8 +38,8 @@ function Material() {
     fetchProject();
   }, [token]);
 
-  const handleViewDetails = (id, name) => {
-    navigate(`/materialVendor/${id}/${name}`);
+  const handleViewDetails = (ProjectId, ProjectName) => {
+    navigate(`/materialVendor/${ProjectId}/${ProjectName}`);
   };
 
   const getStatusColor = (status) => {

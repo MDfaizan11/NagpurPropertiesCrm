@@ -34,6 +34,8 @@ import Attendence from "./Pages/Attendance/Attendence";
 import MonthlyReport from "./Pages/Attendance/MonthlyReport";
 import MaterialVendor from "./Pages/Material/MaterialVendor";
 import ContractorDetails from "./Pages/Contractor/ContractorDetails";
+import MaterialVendorDetails from "./Pages/Material/MaterialVendorDetails";
+import MaterialLogDetails from "./Pages/Material/MaterialLogDetails";
 function App() {
   return (
     <>
@@ -62,8 +64,16 @@ function App() {
                 />
                 <Route path="material" element={<Material />} />
                 <Route
-                  path="/materialVendor/:id/:name"
+                  path="/materialVendor/:ProjectId/:ProjectName"
                   element={<MaterialVendor />}
+                />
+                <Route
+                  path="/MaterialVendorDetails/:VendorId/:ProjectName/:ProjectId"
+                  element={<MaterialVendorDetails />}
+                />
+                <Route
+                  path="/MaterialLogDetails/:id/:name"
+                  element={<MaterialLogDetails />}
                 />
 
                 <Route path="machine" element={<Machine />} />

@@ -140,7 +140,7 @@ const MonthlyReport = () => {
   const handleDownloadPDF = () => {
     import("html2pdf.js").then((html2pdf) => {
       const opt = {
-        margin: [0.1, 0.1, 0.1, 0.1],
+        // margin: [0.1, 0.1, 0.1, 0.1],
         filename: `Monthly_Report_${monthLabel || "report"}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: {

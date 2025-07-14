@@ -171,12 +171,13 @@ function MaterialVendor() {
       if (!token) {
         throw new Error("Authentication token not found");
       }
-      await axiosInstance.delete(`${BASE_URL}/deleteVendor/${vendorId}`, {
+      await axiosInstance.delete(`${BASE_URL}/vendors/${vendorId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
+      alert("Vendor Delete Successfully");
       await fetchVendors();
       setError(null);
     } catch (error) {

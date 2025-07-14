@@ -13,45 +13,57 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const loginData = {
-      email,
-      password,
-    };
+
+    const loginData = { email, password };
 
     try {
       const response = await axios.post(`${BASE_URL}/auth/login`, loginData);
-      console.log(response.data);
+      console.log("✅ Login API response: ", response.data);
 
       const token = response.data?.jwtToken;
+      if (!token) {
+        alert("Login failed: No token received");
+        return;
+      }
 
-      // Determine user type
-      const isAdmin = response.data?.admin !== null;
-      const isPartner = response.data?.partner !== null;
-
+      // Identify user object based on non-null role
       let user = null;
       let role = "";
 
-      if (isAdmin) {
+      if (response.data.admin) {
         user = response.data.admin;
         role = user.role?.[0]?.roleName || "Admin";
-      } else if (isPartner) {
+      } else if (response.data.partner) {
         user = response.data.partner;
         role = user.role?.[0]?.roleName || "Partner";
+      } else if (response.data.head) {
+        user = response.data.head;
+        role = user.role?.[0]?.roleName || "Head";
+      } else if (response.data.employee) {
+        user = response.data.employee;
+        role = user.role?.[0]?.roleName || "Employee";
+      } else if (response.data.accountant) {
+        user = response.data.accountant;
+        role = user.role?.[0]?.roleName || "Accountant";
+      } else {
+        alert("Login failed: user role not supported.");
+        return;
       }
 
-      if (user && token) {
-        const userdata = {
-          token: token,
-          role: role,
-          ...user, // Spread full user object: includes lands, transactions, etc.
-        };
+      // Save data in localStorage
+      const userdata = {
+        token,
+        role,
+        ...user,
+      };
 
-        localStorage.setItem("NagpurProperties", JSON.stringify(userdata));
-        alert("Login successful");
-        navigate("/");
-      }
+      localStorage.setItem("NagpurProperties", JSON.stringify(userdata));
+      console.log("📦 Saved to localStorage:", userdata);
+
+      alert("Login successful");
+      navigate("/"); // or navigate based on role
     } catch (error) {
-      console.error(error);
+      console.error(" Login error:", error);
       alert("Login failed. Check credentials.");
     }
   };

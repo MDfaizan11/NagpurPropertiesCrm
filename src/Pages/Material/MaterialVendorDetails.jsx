@@ -4,17 +4,24 @@ import axiosInstance from "../../utils/axiosInstance";
 import { BASE_URL } from "../../config";
 import "./MaterialVendorDetails.css";
 import { useRef } from "react";
+import { CiEdit } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
 
 function MaterialVendorDetails() {
   const { VendorId, ProjectName, ProjectId } = useParams();
   const navigate = useNavigate();
   const Tableref = useRef();
   const token = JSON.parse(localStorage.getItem("NagpurProperties"))?.token;
+
   const [vendorData, setVendorData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [AddMaterialFormShow, setAddMaterialFormShow] = useState(false);
+
+  // Edit states
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editingItem, setEditingItem] = useState(null);
 
   // Form states
   const [siteName, setSiteName] = useState(ProjectName);
@@ -23,13 +30,13 @@ function MaterialVendorDetails() {
   const [unit, setUnit] = useState("");
   const [qty, setQty] = useState("");
   const [billNo, setBillNo] = useState("");
-  const [vehicalNo, setVehicalNo] = useState("");
+  const [vehicalNo, setVehicleNo] = useState(""); // Changed from vehicalNo
   const [remark, setRemark] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [file, setFile] = useState(null);
-
   const [error, setError] = useState("");
+  const [existingImage, setExistingImage] = useState("");
 
   // Modal states
   const [showImageModal, setShowImageModal] = useState(false);
@@ -37,6 +44,31 @@ function MaterialVendorDetails() {
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [selectedDetails, setSelectedDetails] = useState(null);
   const [detailsType, setDetailsType] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletingItem, setDeletingItem] = useState(null);
+
+  // transaction model
+  const [
+    addTransactionShowAddTransaction,
+    setAddTransactionShowAddTransaction,
+  ] = useState(false);
+  const [addTransactionAmount, setAddTransactionAmount] = useState("");
+  const [addTransactionPaymentMode, setAddTransactionPaymentMode] =
+    useState("");
+  const [addTransactionPaymentDate, setAddTransactionPaymentDate] =
+    useState("");
+  const [addTransactionRemark, setAddTransactionRemark] = useState("");
+  const [addTransactionLoading, setAddTransactionLoading] = useState(false);
+  const [addTransactionError, setAddTransactionError] = useState("");
+  const [getTransactionData, setGetTransactionData] = useState([]);
+  const [ShowTransaction, setShowTransaction] = useState(false);
+  // Normalize time to HH:MM format
+  const normalizeTime = (timeString) => {
+    if (!timeString) return "";
+    // Handle common formats: HH:MM, HH:MM:SS, HH:MM:SS.sss
+    const match = timeString.match(/^(\d{2}:\d{2})(?::\d{2}(?:\.\d+)?)?$/);
+    return match ? match[1] : timeString; // Return HH:MM or original if invalid
+  };
 
   async function VendorMaterialDetail() {
     try {
@@ -50,12 +82,9 @@ function MaterialVendorDetails() {
           },
         }
       );
-
-      let sortedData = response.data.sort((a, b) => {
-        // Ensure date is comparable — adjust if your date format is different
+      const sortedData = response.data.sort((a, b) => {
         return new Date(a.date) - new Date(b.date);
       });
-
       setVendorData(sortedData);
       setFilteredData(sortedData);
     } catch (error) {
@@ -69,7 +98,6 @@ function MaterialVendorDetails() {
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-
     const filtered = vendorData.filter(
       (item) =>
         item.materialName?.toLowerCase().includes(term) ||
@@ -99,17 +127,97 @@ function MaterialVendorDetails() {
     navigate(`/MaterialLogDetails/${id}/${name}`);
   };
 
+  // Reset form function
+  const resetForm = () => {
+    setSiteName(ProjectName);
+    setSupplierName("");
+    setMaterialName("");
+    setUnit("");
+    setQty("");
+    setBillNo("");
+    setVehicleNo("");
+    setRemark("");
+    setDate("");
+    setTime("");
+    setFile(null);
+    setError("");
+    setExistingImage("");
+  };
+
+  // Handle edit button click
+  const handleEditClick = (item) => {
+    setIsEditMode(true);
+    setEditingItem(item);
+
+    // Pre-fill form with existing data
+    setSiteName(item.siteName || "");
+    setSupplierName(item.supplierName || "");
+    setMaterialName(item.materialName || "");
+    setUnit(item.unit || "");
+    setQty(item.qty || "");
+    setBillNo(item.billNo || "");
+    setVehicleNo(item.vehicleNo || ""); // Changed from vehicalNo
+    setRemark(item.remark || "");
+    setDate(item.date ? item.date.split("T")[0] : "");
+    setTime(item.time ? normalizeTime(item.time) : "");
+    setExistingImage(item.images || "");
+
+    setAddMaterialFormShow(true);
+  };
+
+  // Handle add button click
+  const handleAddClick = () => {
+    setIsEditMode(false);
+    setEditingItem(null);
+    resetForm();
+    setAddMaterialFormShow(true);
+  };
+
+  // Handle delete button click
+  const handleDeleteClick = (item) => {
+    setDeletingItem(item);
+    setShowDeleteModal(true);
+  };
+
+  // Handle delete confirmation
+  const handleDeleteConfirm = async () => {
+    if (!deletingItem) return;
+
+    try {
+      setLoading(true);
+      await axiosInstance.delete(`${BASE_URL}/materials/${deletingItem.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      alert("Material deleted successfully!");
+      VendorMaterialDetail();
+      setShowDeleteModal(false);
+      setDeletingItem(null);
+    } catch (error) {
+      console.error("Error deleting material:", error);
+      const errorMessage =
+        error.response?.data?.message ||
+        "Error deleting material. Please try again.";
+      alert(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmitMaterialDetails = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
     // Validate inputs
-    if (!qty || isNaN(qty) || parseInt(qty) <= 0) {
-      alert("Please enter a valid quantity.");
+    if (!qty || isNaN(qty) || Number.parseInt(qty) <= 0) {
+      setError("Please enter a valid positive quantity.");
+      setLoading(false);
       return;
     }
-
     if (
       !siteName.trim() ||
       !supplierName.trim() ||
@@ -122,79 +230,104 @@ function MaterialVendorDetails() {
       setLoading(false);
       return;
     }
-
     if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
       setError("Please enter a valid date in YYYY-MM-DD format.");
       setLoading(false);
       return;
     }
-
-    if (!time || !/^\d{2}:\d{2}$/.test(time)) {
-      setError("Please enter a valid time in HH:MM format.");
+    const normalizedTime = normalizeTime(time);
+    if (!normalizedTime || !/^\d{2}:\d{2}$/.test(normalizedTime)) {
+      setError("Please enter a valid time in HH:MM format (e.g., 14:30).");
       setLoading(false);
       return;
     }
 
+    // Create FormData
     const formData = new FormData();
     formData.append("siteName", siteName.trim());
     formData.append("supplierName", supplierName.trim());
     formData.append("materialName", materialName.trim());
     formData.append("unit", unit.trim());
-    formData.append("qty", qty.toString()); // Add qty as string
+    formData.append("qty", parseInt(qty));
     formData.append("billNo", billNo.trim());
-    formData.append("vehicalNo", vehicalNo.trim());
+    formData.append("vehicleNo", vehicalNo.trim()); // Changed from vehicalNo
     formData.append("remark", remark.trim());
     formData.append("date", date);
-    formData.append("time", time);
-
+    formData.append("time", normalizedTime);
     if (file) {
       formData.append("file", file);
     }
 
-    console.log(formData);
     try {
-      const response = await axiosInstance.post(
-        `/projects/${ProjectId}/${VendorId}/add-material`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      let response;
+      if (isEditMode && editingItem) {
+        // Update existing material
+        response = await axiosInstance.put(
+          `${BASE_URL}/projects/${ProjectId}/${VendorId}/materials/${editingItem.id}/update`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
 
-      // Reset form on success
-      setSiteName("");
-      setSupplierName("");
-      setMaterialName("");
-      setUnit("");
-      setQty("");
-      setBillNo("");
-      setVehicalNo("");
-      setRemark("");
-      setDate("");
-      setTime("");
-      setFile(null);
-      alert("Material added successfully!");
+        alert("Material updated successfully!");
+      } else {
+        // Add new material
+        response = await axiosInstance.post(
+          `${BASE_URL}/projects/${ProjectId}/${VendorId}/add-material`, // Fixed missing BASE_URL
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        alert("Material added successfully!");
+      }
+
+      resetForm();
       VendorMaterialDetail();
-      setAddMaterialFormShow(false); // Close modal on success
+      setAddMaterialFormShow(false);
+      setIsEditMode(false);
+      setEditingItem(null);
     } catch (error) {
-      console.error("Error adding material:", error);
+      console.error("Error saving material:", error);
       const errorMessage =
         error.response?.data?.message ||
-        "Error adding material. Please try again.";
+        error.response?.data?.errors
+          ?.map((err) => err.defaultMessage || err)
+          .join(", ") ||
+        `Error ${
+          isEditMode ? "updating" : "adding"
+        } material. Please try again.`;
       setError(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    VendorMaterialDetail();
-  }, []);
+  const handleFormClose = () => {
+    setAddMaterialFormShow(false);
+    setIsEditMode(false);
+    setEditingItem(null);
+    resetForm();
+  };
 
-  if (loading) {
+  useEffect(() => {
+    if (!token) {
+      setError("Authentication token is missing. Please log in again.");
+      navigate("/login");
+      return;
+    }
+    VendorMaterialDetail();
+    getAllTransaction();
+  }, [navigate, token]);
+
+  if (loading && !AddMaterialFormShow && !showDeleteModal) {
     return (
       <div className="MaterialVendorDetails-container">
         <div className="MaterialVendorDetails-loading">
@@ -208,25 +341,106 @@ function MaterialVendorDetails() {
   const handlePrint = () => {
     const printContent = Tableref.current.innerHTML;
     const originalContent = document.body.innerHTML;
-
     document.body.innerHTML = `
-    <div style="padding: 5px; margin: 5px;">
-      ${printContent}
-    </div>
-  `;
-
+      <div style="padding: 5px; margin: 5px;">
+        ${printContent}
+      </div>
+    `;
     window.print();
     document.body.innerHTML = originalContent;
-    window.location.reload(); // restore React app
+    window.location.reload();
   };
+
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const dateObj = new Date(dateString);
     const day = dateObj.getDate();
-    const month = dateObj.getMonth() + 1; // month is 0-indexed
+    const month = dateObj.getMonth() + 1;
     const year = dateObj.getFullYear();
     return `${day}-${month}-${year}`;
   };
+
+  const handleSubmitAddTransaction = async (e) => {
+    e.preventDefault();
+    setAddTransactionError("");
+    setAddTransactionLoading(true);
+
+    // Validation
+    if (
+      !addTransactionAmount ||
+      isNaN(addTransactionAmount) ||
+      Number.parseFloat(addTransactionAmount) <= 0
+    ) {
+      setAddTransactionError("Please enter a valid amount.");
+      setAddTransactionLoading(false);
+      return;
+    }
+    if (!addTransactionPaymentMode.trim()) {
+      setAddTransactionError("Please select a payment mode.");
+      setAddTransactionLoading(false);
+      return;
+    }
+    if (!addTransactionPaymentDate) {
+      setAddTransactionError("Please select a payment date.");
+      setAddTransactionLoading(false);
+      return;
+    }
+
+    try {
+      // API call would go here
+      const transactionData = {
+        amount: Number.parseFloat(addTransactionAmount),
+        paymentMode: addTransactionPaymentMode.trim(),
+        paymentDate: addTransactionPaymentDate,
+        remark: addTransactionRemark.trim(),
+        projectId: ProjectId,
+        vendorId: VendorId,
+      };
+
+      const response = await axiosInstance.post(
+        `${BASE_URL}/addVendorPayment`,
+        transactionData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Transaction Data:", transactionData);
+      // Reset form on success
+      setAddTransactionAmount("");
+      setAddTransactionPaymentMode("");
+      setAddTransactionPaymentDate("");
+      setAddTransactionRemark("");
+      alert("Transaction added successfully!");
+      setAddTransactionShowAddTransaction(false);
+    } catch (error) {
+      console.error("Error adding transaction:", error);
+      setAddTransactionError("Error adding transaction. Please try again.");
+    } finally {
+      setAddTransactionLoading(false);
+    }
+  };
+  // useEffect(() => {
+  // }, []);
+  async function getAllTransaction() {
+    try {
+      const response = await axiosInstance.get(
+        `${BASE_URL}/vendor/${VendorId}/payments`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data);
+      setGetTransactionData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className="MaterialVendorDetails-container">
@@ -234,16 +448,30 @@ function MaterialVendorDetails() {
         <h1 className="MaterialVendorDetails-title">
           Material Vendor Details {ProjectName}
         </h1>
-        <div
-          className="MaterialVendorDetails-badge"
-          style={{ cursor: "pointer" }}
-          onClick={() => setAddMaterialFormShow(true)}
-        >
-          Add Material
+
+        <div>
+          <button
+            onClick={handleAddClick}
+            className="MaterialVendorDetails-badge"
+            style={{ cursor: "pointer", border: "none", outline: "none" }}
+          >
+            Add Material
+          </button>
+          <button
+            style={{
+              cursor: "pointer",
+              border: "none",
+              outline: "none",
+              marginLeft: "3px",
+            }}
+            onClick={handlePrint}
+            className="MaterialVendorDetails-badge"
+          >
+            🖨️ Print
+          </button>
         </div>
       </div>
 
-      {/* Search Controls */}
       <div className="MaterialVendorDetails-controls">
         <div className="MaterialVendorDetails-search-container">
           <input
@@ -255,12 +483,21 @@ function MaterialVendorDetails() {
           />
           <div className="MaterialVendorDetails-search-icon">🔍</div>
         </div>
-        <div
-          className="MaterialVendorDetails-results-count"
-          style={{ cursor: "pointer" }}
-          onClick={handlePrint}
-        >
-          🖨️ Print
+        <div>
+          <button
+            className="MaterialVendorDetails-results-count"
+            style={{ cursor: "pointer" }}
+            onClick={() => setAddTransactionShowAddTransaction(true)}
+          >
+            Add Transaction
+          </button>
+          <button
+            className="MaterialVendorDetails-results-count"
+            style={{ cursor: "pointer", marginLeft: "5px" }}
+            onClick={() => setShowTransaction(true)}
+          >
+            View Transaction{" "}
+          </button>
         </div>
       </div>
 
@@ -286,8 +523,8 @@ function MaterialVendorDetails() {
                 <th>Vendor</th>
                 <th>Engineer</th>
                 <th>Image</th>
-                {/* <th>Actions</th> */}
-                <th> Remark</th>
+                <th>Remark</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody className="MaterialVendorDetails-table-body">
@@ -299,7 +536,6 @@ function MaterialVendorDetails() {
                   <td className="MaterialVendorDetails-table-cell">
                     {formatDate(item.date)}
                   </td>
-
                   <td className="MaterialVendorDetails-table-cell MaterialVendorDetails-material-cell">
                     {item.materialName}
                   </td>
@@ -347,15 +583,27 @@ function MaterialVendorDetails() {
                       </button>
                     )}
                   </td>
-                  {/* <td className="MaterialVendorDetails-table-cell">
-                    <button
-                      className="MaterialVendorDetails-table-action-btn"
-                      // onClick={() => handleViewLog(item)}
-                    >
-                      📋 Log
-                    </button>
-                  </td> */}
-                  <td>{item?.remark}</td>
+                  <td className="MaterialVendorDetails-table-cell">
+                    {item?.remark}
+                  </td>
+                  <td className="MaterialVendorDetails-table-cell">
+                    <div className="MaterialVendorDetails-action-buttons">
+                      <button
+                        className="MaterialVendorDetails-edit-btn"
+                        onClick={() => handleEditClick(item)}
+                        title="Edit Material"
+                      >
+                        <CiEdit />
+                      </button>
+                      <button
+                        className="MaterialVendorDetails-delete-btn"
+                        onClick={() => handleDeleteClick(item)}
+                        title="Delete Material"
+                      >
+                        <MdDelete />
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -462,7 +710,6 @@ function MaterialVendorDetails() {
                     </div>
                   </div>
                 )}
-
               {detailsType === "vendor" && selectedDetails.vendor && (
                 <div className="MaterialVendorDetails-modal-fields">
                   <div className="MaterialVendorDetails-modal-field">
@@ -499,7 +746,6 @@ function MaterialVendorDetails() {
                   </div>
                 </div>
               )}
-
               {detailsType === "supplier" && (
                 <div className="MaterialVendorDetails-modal-fields">
                   <div className="MaterialVendorDetails-modal-field">
@@ -515,7 +761,7 @@ function MaterialVendorDetails() {
                       Vehicle No:
                     </span>
                     <span className="MaterialVendorDetails-modal-value">
-                      {selectedDetails.vehicalNo}
+                      {selectedDetails.vehicleNo} {/* Changed from vehicalNo */}
                     </span>
                   </div>
                   <div className="MaterialVendorDetails-modal-field">
@@ -543,11 +789,65 @@ function MaterialVendorDetails() {
         </div>
       )}
 
-      {/* Add Material Form Modal */}
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && deletingItem && (
+        <div
+          className="MaterialVendorDetails-modal-overlay"
+          onClick={() => setShowDeleteModal(false)}
+        >
+          <div
+            className="MaterialVendorDetails-delete-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="MaterialVendorDetails-delete-modal-header">
+              <h3 className="MaterialVendorDetails-delete-modal-title">
+                Confirm Delete
+              </h3>
+              <button
+                className="MaterialVendorDetails-modal-close"
+                onClick={() => setShowDeleteModal(false)}
+              >
+                ✕
+              </button>
+            </div>
+            <div className="MaterialVendorDetails-delete-modal-content">
+              <div className="MaterialVendorDetails-delete-modal-icon">🗑️</div>
+              <p className="MaterialVendorDetails-delete-modal-text">
+                Are you sure you want to delete this material entry?
+              </p>
+              <div className="MaterialVendorDetails-delete-modal-details">
+                <strong>Material:</strong> {deletingItem.materialName}
+                <br />
+                <strong>Bill No:</strong> {deletingItem.billNo}
+                <br />
+                <strong>Supplier:</strong> {deletingItem.supplierName}
+              </div>
+              <div className="MaterialVendorDetails-delete-modal-actions">
+                <button
+                  className="MaterialVendorDetails-delete-cancel-btn"
+                  onClick={() => setShowDeleteModal(false)}
+                  disabled={loading}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="MaterialVendorDetails-delete-confirm-btn"
+                  onClick={handleDeleteConfirm}
+                  disabled={loading}
+                >
+                  {loading ? "Deleting..." : "Delete"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add/Edit Material Form Modal */}
       {AddMaterialFormShow && (
         <div
           className="MaterialVendorDetails-modal-overlay"
-          onClick={() => setAddMaterialFormShow(false)}
+          onClick={handleFormClose}
         >
           <div
             className="MaterialVendorDetails-form-modal"
@@ -555,17 +855,16 @@ function MaterialVendorDetails() {
           >
             <div className="MaterialVendorDetails-form-header">
               <h2 className="MaterialVendorDetails-form-title">
-                Add New Material
+                {isEditMode ? "Edit Material" : "Add New Material"}
               </h2>
               <button
                 className="MaterialVendorDetails-modal-close"
-                onClick={() => setAddMaterialFormShow(false)}
+                onClick={handleFormClose}
                 disabled={loading}
               >
                 ✕
               </button>
             </div>
-
             <div className="MaterialVendorDetails-form-content">
               {error && (
                 <div className="MaterialVendorDetails-form-error">{error}</div>
@@ -589,7 +888,6 @@ function MaterialVendorDetails() {
                       disabled={loading}
                     />
                   </div>
-
                   <div className="MaterialVendorDetails-form-group">
                     <label className="MaterialVendorDetails-form-label">
                       Supplier Name *
@@ -604,7 +902,6 @@ function MaterialVendorDetails() {
                       disabled={loading}
                     />
                   </div>
-
                   <div className="MaterialVendorDetails-form-group">
                     <label className="MaterialVendorDetails-form-label">
                       Material Name *
@@ -619,7 +916,6 @@ function MaterialVendorDetails() {
                       disabled={loading}
                     />
                   </div>
-
                   <div className="MaterialVendorDetails-form-group">
                     <label className="MaterialVendorDetails-form-label">
                       Unit *
@@ -634,7 +930,6 @@ function MaterialVendorDetails() {
                       disabled={loading}
                     />
                   </div>
-
                   <div className="MaterialVendorDetails-form-group">
                     <label className="MaterialVendorDetails-form-label">
                       Quantity *
@@ -650,7 +945,6 @@ function MaterialVendorDetails() {
                       disabled={loading}
                     />
                   </div>
-
                   <div className="MaterialVendorDetails-form-group">
                     <label className="MaterialVendorDetails-form-label">
                       Bill No *
@@ -665,22 +959,20 @@ function MaterialVendorDetails() {
                       disabled={loading}
                     />
                   </div>
-
                   <div className="MaterialVendorDetails-form-group">
                     <label className="MaterialVendorDetails-form-label">
-                      Vehical No *
+                      Vehicle No *
                     </label>
                     <input
                       type="text"
-                      placeholder="Enter vehical number"
+                      placeholder="Enter vehicle number"
                       value={vehicalNo}
-                      onChange={(e) => setVehicalNo(e.target.value)}
+                      onChange={(e) => setVehicleNo(e.target.value)}
                       className="MaterialVendorDetails-form-input"
                       required
                       disabled={loading}
                     />
                   </div>
-
                   <div className="MaterialVendorDetails-form-group">
                     <label className="MaterialVendorDetails-form-label">
                       Date *
@@ -694,7 +986,6 @@ function MaterialVendorDetails() {
                       disabled={loading}
                     />
                   </div>
-
                   <div className="MaterialVendorDetails-form-group">
                     <label className="MaterialVendorDetails-form-label">
                       Time *
@@ -702,17 +993,33 @@ function MaterialVendorDetails() {
                     <input
                       type="time"
                       value={time}
-                      onChange={(e) => setTime(e.target.value)}
+                      onChange={(e) => setTime(normalizeTime(e.target.value))}
                       className="MaterialVendorDetails-form-input"
                       required
                       disabled={loading}
+                      step="60" // Prevent seconds in time picker
                     />
                   </div>
-
                   <div className="MaterialVendorDetails-form-group MaterialVendorDetails-form-group-full">
                     <label className="MaterialVendorDetails-form-label">
                       Image
                     </label>
+                    {isEditMode && existingImage && (
+                      <div className="MaterialVendorDetails-existing-image">
+                        <p className="MaterialVendorDetails-existing-image-label">
+                          Current Image:
+                        </p>
+                        <img
+                          src={existingImage || "/placeholder.svg"}
+                          alt="Current material"
+                          className="MaterialVendorDetails-existing-image-preview"
+                          onClick={() => openImageModal(existingImage)}
+                        />
+                        <p className="MaterialVendorDetails-existing-image-note">
+                          Upload a new image to replace the current one
+                        </p>
+                      </div>
+                    )}
                     <input
                       type="file"
                       onChange={(e) => setFile(e.target.files[0])}
@@ -720,8 +1027,12 @@ function MaterialVendorDetails() {
                       accept="image/*"
                       disabled={loading}
                     />
+                    {file && (
+                      <p className="MaterialVendorDetails-new-file-selected">
+                        New file selected: {file.name}
+                      </p>
+                    )}
                   </div>
-
                   <div className="MaterialVendorDetails-form-group MaterialVendorDetails-form-group-full">
                     <label className="MaterialVendorDetails-form-label">
                       Remarks
@@ -736,12 +1047,11 @@ function MaterialVendorDetails() {
                     />
                   </div>
                 </div>
-
                 <div className="MaterialVendorDetails-form-actions">
                   <button
                     type="button"
                     className="MaterialVendorDetails-form-cancel-btn"
-                    onClick={() => setAddMaterialFormShow(false)}
+                    onClick={handleFormClose}
                     disabled={loading}
                   >
                     Cancel
@@ -751,13 +1061,178 @@ function MaterialVendorDetails() {
                     className="MaterialVendorDetails-form-submit-btn"
                     disabled={loading}
                   >
-                    {loading ? "Adding..." : "Add Material"}
+                    {loading
+                      ? isEditMode
+                        ? "Updating..."
+                        : "Adding..."
+                      : isEditMode
+                      ? "Update Material"
+                      : "Add Material"}
                   </button>
                 </div>
               </form>
             </div>
           </div>
         </div>
+      )}
+
+      {addTransactionShowAddTransaction && (
+        <div className="MaterialVendorDetails_addtransaction-overlay">
+          <div className="MaterialVendorDetails_addtransaction-modal">
+            <div className="MaterialVendorDetails_addtransaction-header">
+              <h2 className="MaterialVendorDetails_addtransaction-title">
+                Add New Transaction
+              </h2>
+              <button
+                className="MaterialVendorDetails_addtransaction-close-btn"
+                onClick={() => setAddTransactionShowAddTransaction(false)}
+                disabled={addTransactionLoading}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="MaterialVendorDetails_addtransaction-content">
+              {addTransactionError && (
+                <div className="MaterialVendorDetails_addtransaction-error">
+                  {addTransactionError}
+                </div>
+              )}
+
+              <form
+                className="MaterialVendorDetails_addtransaction-form"
+                onSubmit={handleSubmitAddTransaction}
+              >
+                <div className="MaterialVendorDetails_addtransaction-form-grid">
+                  <div className="MaterialVendorDetails_addtransaction-form-group">
+                    <label className="MaterialVendorDetails_addtransaction-form-label">
+                      Amount *
+                    </label>
+                    <input
+                      type="number"
+                      placeholder="Enter amount"
+                      value={addTransactionAmount}
+                      onChange={(e) => setAddTransactionAmount(e.target.value)}
+                      className="MaterialVendorDetails_addtransaction-form-input"
+                      min="0"
+                      step="0.01"
+                      required
+                      disabled={addTransactionLoading}
+                    />
+                  </div>
+
+                  <div className="MaterialVendorDetails_addtransaction-form-group">
+                    <label className="MaterialVendorDetails_addtransaction-form-label">
+                      Payment Mode *
+                    </label>
+                    <select
+                      value={addTransactionPaymentMode}
+                      onChange={(e) =>
+                        setAddTransactionPaymentMode(e.target.value)
+                      }
+                      className="MaterialVendorDetails_addtransaction-form-select"
+                      required
+                      disabled={addTransactionLoading}
+                    >
+                      <option value="">Select Payment Mode</option>
+                      <option value="UPI">UPI</option>
+                      <option value="CASH">Cash</option>
+                      <option value="CHECK">Cheque</option>
+                      <option value="RTGS">RTGS</option>
+                      <option value="NEFT">NEFT</option>
+                    </select>
+                  </div>
+
+                  <div className="MaterialVendorDetails_addtransaction-form-group MaterialVendorDetails_addtransaction-form-group-full">
+                    <label className="MaterialVendorDetails_addtransaction-form-label">
+                      Payment Date *
+                    </label>
+                    <input
+                      type="date"
+                      value={addTransactionPaymentDate}
+                      onChange={(e) =>
+                        setAddTransactionPaymentDate(e.target.value)
+                      }
+                      className="MaterialVendorDetails_addtransaction-form-input"
+                      required
+                      disabled={addTransactionLoading}
+                    />
+                  </div>
+
+                  <div className="MaterialVendorDetails_addtransaction-form-group MaterialVendorDetails_addtransaction-form-group-full">
+                    <label className="MaterialVendorDetails_addtransaction-form-label">
+                      Remark
+                    </label>
+                    <textarea
+                      placeholder="Enter remark (optional)"
+                      value={addTransactionRemark}
+                      onChange={(e) => setAddTransactionRemark(e.target.value)}
+                      className="MaterialVendorDetails_addtransaction-form-textarea"
+                      rows="3"
+                      disabled={addTransactionLoading}
+                    />
+                  </div>
+                </div>
+
+                <div className="MaterialVendorDetails_addtransaction-form-actions">
+                  <button
+                    type="button"
+                    className="MaterialVendorDetails_addtransaction-cancel-btn"
+                    onClick={() => setAddTransactionShowAddTransaction(false)}
+                    disabled={addTransactionLoading}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="MaterialVendorDetails_addtransaction-submit-btn"
+                    disabled={addTransactionLoading}
+                  >
+                    {addTransactionLoading ? "Adding..." : "Add Transaction"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {ShowTransaction && (
+        <>
+          <button onClick={() => setShowTransaction(false)}>X</button>
+
+          {getTransactionData.length > 0 ? (
+            <table border="1" cellPadding="5" cellSpacing="0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Remark</th>
+                  <th>Amount</th>
+                  <th>Payment Date</th>
+                  <th>Payment Mode</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {getTransactionData.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.id}</td>
+                    <td>{item.remark}</td>
+                    <td>{item.amount}</td>
+                    <td>{item.paymentDate}</td>
+                    <td>{item.paymentMode}</td>
+                    <td>
+                      <button>Edit</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>No Transaction Found</p>
+          )}
+        </>
       )}
     </div>
   );

@@ -249,7 +249,8 @@ export default function Header({
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   const userData = JSON.parse(localStorage.getItem("NagpurProperties"));
-  const user_name = userData?.userName || userData?.name || "User";
+  const user_name =
+    userData?.userName || userData?.name || userData?.employeeName || "User";
   const email = userData?.email || "";
   const gender = userData?.gender || "Male"; // default to male if not present
 
@@ -288,7 +289,6 @@ export default function Header({
       </div>
 
       <div className="header-actions">
-        {console.log("Role Name:", roleName)}
         {roleName === "Admin" && (
           <>
             <button className="header-button">
@@ -411,6 +411,5 @@ export default function Header({
     </header>
   );
 }
-
 
 //  name: "Land Management",

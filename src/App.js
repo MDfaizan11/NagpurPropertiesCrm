@@ -36,6 +36,8 @@ import MaterialVendor from "./Pages/Material/MaterialVendor";
 import ContractorDetails from "./Pages/Contractor/ContractorDetails";
 import MaterialVendorDetails from "./Pages/Material/MaterialVendorDetails";
 import MaterialLogDetails from "./Pages/Material/MaterialLogDetails";
+import MaterialPurches from "./Pages/Material/MaterialPurches";
+import MaterialAllDetails from "./Pages/Material/MaterialAllDetails";
 function App() {
   return (
     <>
@@ -76,6 +78,11 @@ function App() {
                   element={<MaterialLogDetails />}
                 />
 
+                <Route element={<MaterialPurches />} path="/purchesOrder" />
+                <Route
+                  path="/MaterialAllDetails/:ProjectId/:ProjectName"
+                  element={<MaterialAllDetails />}
+                />
                 <Route path="machine" element={<Machine />} />
                 <Route path="project" element={<Project />} />
                 <Route path="finance" element={<Finance />} />

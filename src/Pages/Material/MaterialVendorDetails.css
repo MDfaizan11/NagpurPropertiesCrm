@@ -2,7 +2,6 @@
 .MaterialVendorDetails-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f8fafc;
   min-height: 100vh;
@@ -240,6 +239,56 @@
   box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
 }
 
+/* Action Buttons */
+.MaterialVendorDetails-action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.MaterialVendorDetails-edit-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.MaterialVendorDetails-edit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+}
+
+.MaterialVendorDetails-delete-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+}
+
+.MaterialVendorDetails-delete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+}
+
 /* Modal Styles */
 .MaterialVendorDetails-modal-overlay {
   position: fixed;
@@ -349,6 +398,108 @@
   background: #f9fafb;
   border-radius: 8px;
   border: 1px solid #e5e7eb;
+}
+
+/* Delete Modal Styles */
+.MaterialVendorDetails-delete-modal {
+  background: white;
+  border-radius: 16px;
+  max-width: 450px;
+  width: 90vw;
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease-out;
+}
+
+.MaterialVendorDetails-delete-modal-header {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 16px 16px 0 0;
+}
+
+.MaterialVendorDetails-delete-modal-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.MaterialVendorDetails-delete-modal-content {
+  padding: 24px;
+  text-align: center;
+}
+
+.MaterialVendorDetails-delete-modal-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.MaterialVendorDetails-delete-modal-text {
+  font-size: 1.1rem;
+  color: #374151;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.MaterialVendorDetails-delete-modal-details {
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  text-align: left;
+  border: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.MaterialVendorDetails-delete-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.MaterialVendorDetails-delete-cancel-btn {
+  background: #f3f4f6;
+  color: #374151;
+  border: 2px solid #e5e7eb;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.MaterialVendorDetails-delete-cancel-btn:hover {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.MaterialVendorDetails-delete-confirm-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+}
+
+.MaterialVendorDetails-delete-confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
+}
+
+.MaterialVendorDetails-delete-confirm-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Form Modal Styles */
@@ -510,6 +661,17 @@
   transform: none;
 }
 
+.MaterialVendorDetails-form-error {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 /* No Data State */
 .MaterialVendorDetails-noData {
   text-align: center;
@@ -565,6 +727,65 @@
   }
 }
 
+/* Print Info */
+.MaterialVendorDetails-printInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Existing Image Preview Styles */
+.MaterialVendorDetails-existing-image {
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #f8fafc;
+  border: 2px dashed #e2e8f0;
+  border-radius: 8px;
+}
+
+.MaterialVendorDetails-existing-image-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.MaterialVendorDetails-existing-image-preview {
+  max-width: 200px;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid #e5e7eb;
+}
+
+.MaterialVendorDetails-existing-image-preview:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.MaterialVendorDetails-existing-image-note {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.MaterialVendorDetails-new-file-selected {
+  font-size: 0.9rem;
+  color: #059669;
+  font-weight: 500;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #ecfdf5;
+  border-radius: 6px;
+  border: 1px solid #a7f3d0;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .MaterialVendorDetails-container {
@@ -615,6 +836,15 @@
     width: 95vw;
     margin: 20px;
   }
+
+  .MaterialVendorDetails-action-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .MaterialVendorDetails-delete-modal-actions {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 480px) {
@@ -661,20 +891,422 @@
   }
 
   .MaterialVendorDetails-table-action-btn,
-  .MaterialVendorDetails-table-image-btn {
+  .MaterialVendorDetails-table-image-btn,
+  .MaterialVendorDetails-action-buttons {
     display: none;
   }
-}
-.MaterialVendorDetails-printInfo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  font-weight: bold;
-  font-size: 16px;
-}
-@media print {
+
   .MaterialVendorDetails-table-cell {
     white-space: nowrap;
   }
+}
+
+/* add transaction */
+/* Demo Container */
+.transaction-demo-container {
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Trigger Button */
+.MaterialVendorDetails_addtransaction-trigger-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.MaterialVendorDetails_addtransaction-trigger-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
+/* Modal Overlay */
+.MaterialVendorDetails_addtransaction-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+  padding: 20px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.MaterialVendorDetails_addtransaction-modal {
+  background: white;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal Header */
+.MaterialVendorDetails_addtransaction-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 16px 16px 0 0;
+}
+
+.MaterialVendorDetails_addtransaction-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.MaterialVendorDetails_addtransaction-close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.MaterialVendorDetails_addtransaction-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.MaterialVendorDetails_addtransaction-close-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Modal Content */
+.MaterialVendorDetails_addtransaction-content {
+  padding: 24px;
+}
+
+/* Error Message */
+.MaterialVendorDetails_addtransaction-error {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Form Styles */
+.MaterialVendorDetails_addtransaction-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.MaterialVendorDetails_addtransaction-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.MaterialVendorDetails_addtransaction-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.MaterialVendorDetails_addtransaction-form-group-full {
+  grid-column: 1 / -1;
+}
+
+.MaterialVendorDetails_addtransaction-form-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.MaterialVendorDetails_addtransaction-form-input,
+.MaterialVendorDetails_addtransaction-form-select {
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.MaterialVendorDetails_addtransaction-form-input:focus,
+.MaterialVendorDetails_addtransaction-form-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.MaterialVendorDetails_addtransaction-form-input:disabled,
+.MaterialVendorDetails_addtransaction-form-select:disabled {
+  background-color: #f9fafb;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.MaterialVendorDetails_addtransaction-form-select {
+  cursor: pointer;
+}
+
+.MaterialVendorDetails_addtransaction-form-textarea {
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.MaterialVendorDetails_addtransaction-form-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.MaterialVendorDetails_addtransaction-form-textarea:disabled {
+  background-color: #f9fafb;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Form Actions */
+.MaterialVendorDetails_addtransaction-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.MaterialVendorDetails_addtransaction-cancel-btn {
+  background: #f3f4f6;
+  color: #374151;
+  border: 2px solid #e5e7eb;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.MaterialVendorDetails_addtransaction-cancel-btn:hover {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.MaterialVendorDetails_addtransaction-cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.MaterialVendorDetails_addtransaction-submit-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.MaterialVendorDetails_addtransaction-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
+.MaterialVendorDetails_addtransaction-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .MaterialVendorDetails_addtransaction-overlay {
+    padding: 10px;
+  }
+
+  .MaterialVendorDetails_addtransaction-modal {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .MaterialVendorDetails_addtransaction-header {
+    padding: 20px;
+  }
+
+  .MaterialVendorDetails_addtransaction-title {
+    font-size: 1.3rem;
+  }
+
+  .MaterialVendorDetails_addtransaction-content {
+    padding: 20px;
+  }
+
+  .MaterialVendorDetails_addtransaction-form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .MaterialVendorDetails_addtransaction-form-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .MaterialVendorDetails_addtransaction-cancel-btn,
+  .MaterialVendorDetails_addtransaction-submit-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .MaterialVendorDetails_addtransaction-overlay {
+    padding: 5px;
+  }
+
+  .MaterialVendorDetails_addtransaction-header {
+    padding: 16px;
+  }
+
+  .MaterialVendorDetails_addtransaction-title {
+    font-size: 1.2rem;
+  }
+
+  .MaterialVendorDetails_addtransaction-content {
+    padding: 16px;
+  }
+
+  .MaterialVendorDetails_addtransaction-form-input,
+  .MaterialVendorDetails_addtransaction-form-select,
+  .MaterialVendorDetails_addtransaction-form-textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+@media (max-width: 360px) {
+  .MaterialVendorDetails_addtransaction-form-grid {
+    gap: 12px;
+  }
+
+  .MaterialVendorDetails_addtransaction-form-label {
+    font-size: 0.85rem;
+  }
+
+  .MaterialVendorDetails_addtransaction-cancel-btn,
+  .MaterialVendorDetails_addtransaction-submit-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .MaterialVendorDetails_addtransaction-form-input,
+  .MaterialVendorDetails_addtransaction-form-select,
+  .MaterialVendorDetails_addtransaction-form-textarea {
+    border-width: 1px;
+  }
+}
+
+/* Dark Mode Support (if needed) */
+@media (prefers-color-scheme: dark) {
+  .MaterialVendorDetails_addtransaction-modal {
+    background: #1f2937;
+    color: #f9fafb;
+  }
+
+  .MaterialVendorDetails_addtransaction-form-input,
+  .MaterialVendorDetails_addtransaction-form-select,
+  .MaterialVendorDetails_addtransaction-form-textarea {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+
+  .MaterialVendorDetails_addtransaction-error {
+    background: #7f1d1d;
+    color: #fca5a5;
+    border-color: #991b1b;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .MaterialVendorDetails_addtransaction-overlay {
+    display: none;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .MaterialVendorDetails_addtransaction-overlay,
+  .MaterialVendorDetails_addtransaction-modal,
+  .MaterialVendorDetails_addtransaction-close-btn,
+  .MaterialVendorDetails_addtransaction-submit-btn,
+  .MaterialVendorDetails_addtransaction-cancel-btn {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Focus Styles for Accessibility */
+.MaterialVendorDetails_addtransaction-close-btn:focus,
+.MaterialVendorDetails_addtransaction-cancel-btn:focus,
+.MaterialVendorDetails_addtransaction-submit-btn:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
 }

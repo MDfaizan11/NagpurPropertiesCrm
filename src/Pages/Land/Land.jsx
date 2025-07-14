@@ -25,7 +25,6 @@ import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 function Land() {
   const userData = JSON.parse(localStorage.getItem("NagpurProperties")) || {};
-  console.log(userData.lands);
   const token = userData?.token;
   const role = userData?.role?.[0]?.roleName || "Partner";
   const userId = userData?.id;

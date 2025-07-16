@@ -140,7 +140,9 @@ body {
 
 /* ========== Enhanced Header Section ========== */
 .office-header {
-  background: var(--gradient-header);
+  /* background: var(--gradient-header); */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
   padding: 15px 20px;
   position: relative;
   overflow: hidden;

@@ -5,6 +5,7 @@ import "../login/login.css";
 import axios from "axios";
 import { BASE_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
+
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +27,6 @@ const Login = () => {
         return;
       }
 
-      // Identify user object based on non-null role
       let user = null;
       let role = "";
 
@@ -45,6 +45,9 @@ const Login = () => {
       } else if (response.data.accountant) {
         user = response.data.accountant;
         role = user.role?.[0]?.roleName || "Accountant";
+      } else if (response.data.engineerResponse) {
+        user = response.data.engineerResponse;
+        role = user.role?.[0]?.roleName || "Engineer";
       } else {
         alert("Login failed: user role not supported.");
         return;

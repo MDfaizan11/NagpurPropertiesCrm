@@ -467,12 +467,15 @@ function Land() {
 
   async function GetAllPartner() {
     try {
-      const response = await axiosInstance.get(`${BASE_URL}/AllPartner-show`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axiosInstance.get(
+        `${BASE_URL}/show-ActivePartner`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       console.log(response.data);
       if (response.status === 200) {
         setPartnersdata(response.data);

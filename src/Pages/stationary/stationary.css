@@ -47,7 +47,9 @@ body {
 }
 
 .stationary-header {
-  background: var(--header-gradient);
+  /* background: var(--header-gradient); */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
   padding: 14px 20px;
   position: relative;
   overflow: hidden;

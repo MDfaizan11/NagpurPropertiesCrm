@@ -13,7 +13,6 @@ import Labour from "./Pages/labour/Labour";
 import Plot from "./Pages/Plot/Plot";
 import PlotDetails from "./Pages/Plot/PlotDetails";
 import Material from "./Pages/Material/Material";
-
 import Machine from "./Pages/Machine/Machine";
 import Project from "./Pages/Project/Project";
 import Finance from "./Pages/Finance/Finance";
@@ -38,6 +37,8 @@ import MaterialVendorDetails from "./Pages/Material/MaterialVendorDetails";
 import MaterialLogDetails from "./Pages/Material/MaterialLogDetails";
 import MaterialPurches from "./Pages/Material/MaterialPurches";
 import MaterialAllDetails from "./Pages/Material/MaterialAllDetails";
+import VehicleMaterial from "./Pages/Material/VehicleMaterial";
+import MaterialStock from "./Pages/Material/MaterialStock";
 function App() {
   return (
     <>
@@ -83,6 +84,8 @@ function App() {
                   path="/MaterialAllDetails/:ProjectId/:ProjectName"
                   element={<MaterialAllDetails />}
                 />
+                <Route path="/vehicleMaterial" element={<VehicleMaterial />} />
+                <Route path="/MaterialStock" element={<MaterialStock />} />
                 <Route path="machine" element={<Machine />} />
                 <Route path="project" element={<Project />} />
                 <Route path="finance" element={<Finance />} />

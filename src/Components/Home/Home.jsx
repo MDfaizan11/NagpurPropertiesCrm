@@ -138,6 +138,8 @@ function Home() {
       return sections.filter((sec) => sec.name === "Land Management");
     if (userRole === "Employee")
       return sections.filter((sec) => sec.name === "Task Management");
+    if (userRole === "Engineer")
+      return sections.filter((sec) => sec.name === "Material Management");
     return [];
   }, [userRole]);
 

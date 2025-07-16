@@ -5,10 +5,14 @@ import { BASE_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
 function Material() {
   const navigate = useNavigate();
-  const token = JSON.parse(localStorage.getItem("NagpurProperties"))?.token;
+  const { token, role, allowedSite } =
+    JSON.parse(localStorage.getItem("NagpurProperties")) || {};
   const [Project, setProject] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const roleName = role[0].roleName;
+  console.log(roleName);
+  console.log(allowedSite);
 
   useEffect(() => {
     async function fetchProject() {
@@ -25,7 +29,14 @@ function Material() {
           },
         });
 
-        setProject(response.data);
+        if (allowedSite) {
+          setProject(allowedSite);
+        } else {
+          setProject(response.data);
+        }
+        // console.log(response.data);
+        // setProject(response.data);
+
         setError(null);
       } catch (error) {
         console.error("Failed to fetch plots:", error);
@@ -122,34 +133,41 @@ function Material() {
                   project.status
                 )}`}
               >
-                {project.status}
+                {project.status || "ACTIVE"}
               </div>
             </div>
 
             <div className="material-card-content">
               <h2 className="material-card-title">{project.name}</h2>
 
-              <div className="material-card-details">
-                <div className="material-detail-item">
-                  <span className="material-detail-icon">📍</span>
-                  <div className="material-detail-content">
-                    <span className="material-detail-label">Location</span>
-                    <span className="material-detail-value">
-                      {project.location}
-                    </span>
+              {role?.some(
+                (r) => r.roleName === "Admin" || r.roleName === "Head"
+              ) && (
+                <div className="material-card-details">
+                  <div className="material-detail-item">
+                    <span className="material-detail-icon">📍</span>
+                    <div className="material-detail-content">
+                      <span className="material-detail-label">Location</span>
+                      <span className="material-detail-value">
+                        {project.location}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className="material-card-footer">
-              <button
-                className="material-view-button"
-                onClick={() => handleViewDetails(project.id, project.name)}
-              >
-                <span className="material-button-text">View Details</span>
-                <span className="material-button-icon">→</span>
-              </button>
+              {role?.[0]?.roleName === "Admin" &&
+                "Head" && ( // Condition: Show button only for Engineer
+                  <button
+                    className="material-view-button"
+                    onClick={() => handleViewDetails(project.id, project.name)}
+                  >
+                    <span className="material-button-text">View Details</span>
+                    <span className="material-button-icon">→</span>
+                  </button>
+                )}
             </div>
 
             <div className="material-card-overlay"></div>

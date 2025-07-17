@@ -39,6 +39,7 @@ import MaterialPurches from "./Pages/Material/MaterialPurches";
 import MaterialAllDetails from "./Pages/Material/MaterialAllDetails";
 import VehicleMaterial from "./Pages/Material/VehicleMaterial";
 import MaterialStock from "./Pages/Material/MaterialStock";
+import Holiday from "../src/Pages/Employee/Holiday";
 function App() {
   return (
     <>
@@ -121,6 +122,7 @@ function App() {
                 <Route path="/empList" element={<EmpList />} />
                 <Route path="/attentance" element={<Attendence />} />
                 <Route path="/monthlyReport" element={<MonthlyReport />} />
+                <Route path="/holiday" element={<Holiday />} />
               </Route>
             </Route>
           </Routes>

@@ -576,11 +576,11 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           icon: <FileText size={18} />,
           path: "/MaterialStock",
         },
-        {
-          name: "Supplier Management",
-          icon: <Truck size={18} />,
-          // path: "/material/suppliers",
-        },
+        // {
+        //   name: "Supplier Management",
+        //   icon: <Truck size={18} />,
+        //   // path: "/material/suppliers",
+        // },
       ],
     },
     {
@@ -588,15 +588,36 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       icon: <Users size={22} />,
       color: "indigo",
       count: 36,
-      path: "/getDepartment",
+      hasSubmenu: true,
+      subItems: [
+        {
+          name: "Add Department",
+          icon: <Package size={18} />,
+          path: "/getDepartment",
+        },
+        {
+          name: "Attendance",
+          icon: <FileText size={18} />,
+          path: "/empList",
+        },
+        {
+          name: "Add Holiday",
+          icon: <Hammer size={18} />,
+          path: "/holiday",
+        },
+        // {
+        //   name: " Stock Transfer",
+        //   icon: <FileText size={18} />,
+        //   path: "/MaterialStock",
+        // },
+        // {
+        //   name: "Supplier Management",
+        //   icon: <Truck size={18} />,
+        //   // path: "/material/suppliers",
+        // },
+      ],
     },
-    {
-      name: "Attendance Management",
-      icon: <FileText size={22} />,
-      color: "amber",
-      count: 14,
-      path: "/empList",
-    },
+
     {
       name: "Contractor Management",
       icon: <Handshake size={22} />,

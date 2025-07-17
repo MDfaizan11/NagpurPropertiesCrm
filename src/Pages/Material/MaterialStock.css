@@ -1,0 +1,707 @@
+:root {
+  --primary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  --secondary-gradient: linear-gradient(135deg, #f857a6 0%, #ff5858 100%);
+  --success-gradient: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+  --header-gradient: linear-gradient(135deg, #4776e6 0%, #8e54e9 100%);
+  --card-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 20px;
+  --border-radius-xl: 30px;
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --font-primary: "Poppins", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-tertiary: #94a3b8;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-primary: #6a11cb;
+  --color-secondary: #f857a6;
+  --color-success: #00b09b;
+  --color-danger: #ff5858;
+  --color-warning: #ffd166;
+  --color-info: #4facfe;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-primary);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+/* Main Container */
+.MaterialStock-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  min-height: 100vh;
+}
+
+/* Header Section */
+.MaterialStock-header {
+  background: var(--header-gradient);
+  border-radius: var(--border-radius-md);
+  padding: 2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-md);
+  color: white;
+  text-align: center;
+}
+
+.MaterialStock-header-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.MaterialStock-header-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.MaterialStock-header-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.MaterialStock-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.MaterialStock-header-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+/* Controls Section */
+.MaterialStock-controls-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.MaterialStock-search-container {
+  position: relative;
+  flex: 1;
+  max-width: 350px;
+}
+
+.MaterialStock-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-text-tertiary);
+}
+
+.MaterialStock-search-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.875rem;
+  background: var(--color-bg-primary);
+  transition: var(--transition-fast);
+  box-sizing: border-box;
+}
+
+.MaterialStock-search-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+}
+
+.MaterialStock-control-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Buttons */
+.MaterialStock-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+
+.MaterialStock-btn-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.MaterialStock-btn-xs {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.MaterialStock-btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.MaterialStock-btn-primary {
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.MaterialStock-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.MaterialStock-btn-secondary {
+  background: var(--secondary-gradient);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.MaterialStock-btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.MaterialStock-btn-outline {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.MaterialStock-btn-outline:hover {
+  background: var(--color-bg-tertiary);
+  border-color: var(--color-text-secondary);
+}
+
+.MaterialStock-btn-danger {
+  background: linear-gradient(135deg, #ff5858 0%, #ff4757 100%);
+  color: white;
+}
+
+.MaterialStock-btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.MaterialStock-btn-icon {
+  padding: 0.375rem;
+  width: auto;
+  height: auto;
+}
+
+.MaterialStock-btn-edit {
+  background: var(--success-gradient);
+  color: white;
+}
+
+.MaterialStock-btn-delete {
+  background: var(--secondary-gradient);
+  color: white;
+}
+
+/* Modal */
+.MaterialStock-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.MaterialStock-modal-container {
+  background: var(--color-bg-primary);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.MaterialStock-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.MaterialStock-modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.MaterialStock-modal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.375rem;
+  border-radius: var(--border-radius-sm);
+  color: var(--color-text-secondary);
+  transition: var(--transition-fast);
+}
+
+.MaterialStock-modal-close-btn:hover {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+/* Form */
+.MaterialStock-transfer-form {
+  padding: 1.5rem;
+}
+
+.MaterialStock-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.MaterialStock-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.MaterialStock-form-group label {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.MaterialStock-form-input,
+.MaterialStock-form-select {
+  padding: 0.625rem 0.75rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.875rem;
+  background: var(--color-bg-primary);
+  transition: var(--transition-fast);
+}
+
+.MaterialStock-form-input:focus,
+.MaterialStock-form-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+}
+
+/* Materials Section */
+.MaterialStock-materials-section {
+  margin-bottom: 1.5rem;
+}
+
+.MaterialStock-materials-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  margin-top: 10px;
+}
+
+.MaterialStock-materials-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.MaterialStock-materials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.MaterialStock-material-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 1rem;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.MaterialStock-material-inputs {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 5px;
+  flex: 1;
+}
+
+.MaterialStock-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Transfers Section */
+.MaterialStock-transfers-section {
+  background: var(--color-bg-primary);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.MaterialStock-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: var(--card-gradient);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.MaterialStock-section-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.MaterialStock-transfer-count {
+  background: var(--primary-gradient);
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--border-radius-xl);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Table */
+.MaterialStock-table-container {
+  overflow-x: auto;
+}
+
+.MaterialStock-transfers-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.MaterialStock-transfers-table th {
+  background: var(--color-bg-tertiary);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.MaterialStock-transfers-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+  font-size: 0.875rem;
+}
+
+.MaterialStock-transfers-table tr:hover {
+  background: var(--color-bg-secondary);
+}
+
+.MaterialStock-date-text {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.MaterialStock-site-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.MaterialStock-site-name {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.MaterialStock-note-text {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.MaterialStock-material-name {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.MaterialStock-qty,
+.MaterialStock-cost,
+.MaterialStock-total {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.MaterialStock-total {
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+.MaterialStock-action-buttons {
+  display: flex;
+  gap: 0.375rem;
+}
+
+/* Grand Total Section */
+.MaterialStock-grand-total-section {
+  padding: 1.5rem;
+  background: var(--card-gradient);
+  border-top: 1px solid var(--color-border);
+}
+
+.MaterialStock-grand-total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.MaterialStock-grand-total-label {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.MaterialStock-grand-total-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-success);
+  background: var(--color-bg-primary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Empty State */
+.MaterialStock-empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--color-bg-primary);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.MaterialStock-empty-icon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--color-text-tertiary);
+  margin-bottom: 1rem;
+}
+
+.MaterialStock-empty-state h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.MaterialStock-empty-state p {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+/* Print Styles */
+@media print {
+  .MaterialStock-no-print {
+    display: none !important;
+  }
+
+  .MaterialStock-container {
+    padding: 0;
+    max-width: none;
+  }
+
+  .MaterialStock-header {
+    background: none !important;
+    color: black !important;
+    box-shadow: none !important;
+    border: 2px solid black;
+  }
+
+  .MaterialStock-controls-section {
+    display: none !important;
+  }
+
+  .MaterialStock-transfers-table {
+    font-size: 12px;
+    border: 1px solid black;
+  }
+
+  .MaterialStock-transfers-table th,
+  .MaterialStock-transfers-table td {
+    padding: 8px;
+    border: 1px solid black;
+  }
+
+  .MaterialStock-transfers-table th {
+    background: #f0f0f0 !important;
+  }
+
+  .MaterialStock-grand-total-section {
+    background: none !important;
+    border: 2px solid black;
+    margin-top: 20px;
+  }
+
+  .MaterialStock-grand-total-amount {
+    background: none !important;
+    box-shadow: none !important;
+    border: 1px solid black;
+  }
+
+  .MaterialStock-section-header {
+    background: none !important;
+    border: 2px solid black;
+  }
+
+  .MaterialStock-transfer-count {
+    background: black !important;
+    color: white !important;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .MaterialStock-container {
+    padding: 1rem;
+  }
+
+  .MaterialStock-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .MaterialStock-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .MaterialStock-controls-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .MaterialStock-search-container {
+    max-width: none;
+  }
+
+  .MaterialStock-control-buttons {
+    justify-content: center;
+  }
+
+  .MaterialStock-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .MaterialStock-material-inputs {
+    grid-template-columns: 1fr;
+  }
+
+  .MaterialStock-material-item {
+    flex-direction: column;
+  }
+
+  .MaterialStock-form-actions {
+    flex-direction: column;
+  }
+
+  .MaterialStock-section-header {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .MaterialStock-transfers-table {
+    font-size: 0.75rem;
+  }
+
+  .MaterialStock-transfers-table th,
+  .MaterialStock-transfers-table td {
+    padding: 0.5rem;
+  }
+
+  .MaterialStock-action-buttons {
+    flex-direction: column;
+  }
+
+  .MaterialStock-grand-total {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .MaterialStock-modal-overlay {
+    padding: 0.5rem;
+  }
+
+  .MaterialStock-modal-header,
+  .MaterialStock-transfer-form {
+    padding: 1rem;
+  }
+
+  .MaterialStock-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .MaterialStock-header-title {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .MaterialStock-btn {
+    font-size: 0.75rem;
+  }
+
+  .MaterialStock-btn-xs {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.625rem;
+  }
+}
+
+.MaterialStock-no-print {
+  /* display: ; */
+}

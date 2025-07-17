@@ -137,10 +137,15 @@ function MaterialPurches() {
     setShowForm(true);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (order) => {
+    const status = order.orderItemStatus;
+    if (status === "DELIVERED") {
+      alert("Cannot delete a delivered order");
+      return;
+    }
     if (window.confirm("Are you sure you want to delete this order?")) {
       try {
-        await axiosInstance.delete(`${BASE_URL}/purchase-orders/${id}`, {
+        await axiosInstance.delete(`${BASE_URL}/purchase-orders/${order.id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -167,8 +172,32 @@ function MaterialPurches() {
     if (
       window.confirm(`Are you sure you want to delete ${item.materialName}?`)
     ) {
-      console.log("Delete item:", itemIndex, item);
-      alert(`Delete item: ${item.materialName}`);
+      try {
+        await axiosInstance.delete(
+          `${BASE_URL}/purchase-orders/orderItemDelete/${item.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        alert("Delete Order Item Successfully");
+        getPurchesOrder();
+
+        const updatedOrder = purchesOrders.find(
+          (order) => order.id === viewOrder.id
+        );
+        if (updatedOrder) {
+          const updatedItems = updatedOrder.orderItems.filter(
+            (orderItem) => orderItem.id !== item.id
+          );
+          setViewOrder({ ...updatedOrder, orderItems: updatedItems });
+        }
+      } catch (error) {
+        console.error("Error deleting order item:", error);
+        alert("Failed to delete order item");
+      }
     }
   };
 
@@ -310,7 +339,7 @@ function MaterialPurches() {
             .MaterialPurches-itemHeaderLeft { display: flex; align-items: center; gap: 8px; }
             .MaterialPurches-itemNumber { font-weight: bold; }
             .MaterialPurches-itemName { font-size: 1rem; }
-            .MaterialPurches-itemActions { display: none; } /* Hide edit/delete buttons in print */
+            .MaterialPurches-itemDeleteButton,.MaterialPurches-itemEditButton { display: none; } /* Hide edit/delete buttons in print */
             .MaterialPurches-itemDetails { display: flex; gap: 16px; margin-top: 8px; }
             .MaterialPurches-itemDetailItem { display: flex; gap: 8px; }
             .MaterialPurches-itemDetailLabel { color: #6b7280; }
@@ -1245,7 +1274,7 @@ function MaterialPurches() {
                               <option value="RECEIVED">Received</option>
                             </select>
 
-                            <button
+                            {/* <button
                               className="MaterialPurches-itemEditButton"
                               onClick={() => handleEditOrderItem(idx, item)}
                               title="Edit Item"
@@ -1267,7 +1296,7 @@ function MaterialPurches() {
                                   strokeWidth="2"
                                 />
                               </svg>
-                            </button>
+                            </button> */}
                             <button
                               className="MaterialPurches-itemDeleteButton"
                               onClick={() => handleDeleteOrderItem(idx, item)}
@@ -1569,7 +1598,7 @@ function MaterialPurches() {
                         </button>
                         <button
                           className="MaterialPurches-deleteButton"
-                          onClick={() => handleDelete(order.id)}
+                          onClick={() => handleDelete(order)}
                           title="Delete Order"
                         >
                           <svg

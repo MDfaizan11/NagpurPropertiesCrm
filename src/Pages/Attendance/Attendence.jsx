@@ -78,8 +78,12 @@ function Attendence() {
       setMarked(false);
       setError(null);
     } catch (err) {
-      console.error("Failed to fetch employee data", err);
-      setError("Error fetching employee data.");
+      const serverMessage =
+        err?.response?.data?.message ||
+        "An error occurred while fetching employee data.";
+
+      setError(serverMessage);
+      alert(serverMessage);
     } finally {
       setLoading(false);
     }

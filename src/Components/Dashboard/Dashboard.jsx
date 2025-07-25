@@ -153,37 +153,7 @@ export default function Dashboard() {
     },
   ];
 
-  const statistics = [
-    {
-      title: "Total Projects",
-      value: "128",
-      icon: <BarChart3 size={24} />,
-      change: "+12%",
-      color: "blue",
-    },
-    {
-      title: "Active Tasks",
-      value: "64",
-      icon: <CheckSquare size={24} />,
-      change: "+8%",
-      color: "green",
-    },
-    {
-      title: "Revenue",
-      value: "$48.5k",
-      icon: <TrendingUp size={24} />,
-      change: "+24%",
-      color: "emerald",
-    },
-    {
-      title: "Pending Tasks",
-      value: "23",
-      icon: <Clock size={24} />,
-      change: "-5%",
-      color: "amber",
-      isNegative: true,
-    },
-  ];
+
 
   const filteredSections = sections.filter((section) =>
     section.name.toLowerCase().includes(searchQuery.toLowerCase())

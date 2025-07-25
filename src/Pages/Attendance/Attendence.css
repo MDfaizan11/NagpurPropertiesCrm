@@ -122,12 +122,12 @@ body {
 .Attendence-header {
   font-size: 2rem;
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: #000000;
   margin: 0 0 1rem 0;
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  /* background: var(--primary-gradient); */
+  /* -webkit-background-clip: text; */
+  /* -webkit-text-fill-color: transparent; */
+  /* background-clip: text; */
 }
 
 .Attendence-header-decoration {
@@ -241,7 +241,7 @@ body {
 }
 
 .Attendence-button-load {
-  background: var(--primary-gradient);
+  background: linear-gradient(135deg, #0d5787 0%, #91c8e4 100%);
   color: white;
   box-shadow: var(--shadow-sm);
 }
@@ -252,7 +252,8 @@ body {
 }
 
 .Attendence-button-submit {
-  background: var(--success-gradient);
+  /* background: var(--success-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   font-size: 1.1rem;
   padding: 1rem 2rem;
@@ -491,8 +492,9 @@ body {
 }
 
 .Attendence-table thead {
-  background: var(--header-gradient);
-  color: white;
+  /* background: var(--header-gradient); */
+  color: #000000;
+  background: #d1cccc;
 }
 
 .Attendence-table th {
@@ -566,8 +568,8 @@ body {
 }
 
 .Attendence-designation-badge {
-  background: var(--cold-gradient);
-  color: white;
+  /* background: var(--cold-gradient); */
+  color: rgb(0, 0, 0);
   padding: 0.375rem 0.75rem;
   border-radius: var(--border-radius-xl);
   font-size: 0.85rem;

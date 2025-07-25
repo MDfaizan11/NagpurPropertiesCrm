@@ -161,7 +161,7 @@ function LeadProject() {
     };
     try {
       const response = await axiosInstance.put(
-        `${BASE_URL}/update-project/${EditProjectId}`,
+        ` ${BASE_URL}/update-project/${EditProjectId}`,
         ProjectData,
         {
           headers: {
@@ -195,10 +195,12 @@ function LeadProject() {
 
     try {
       const response = await axiosInstance.delete(
-        `${BASE_URL}/delete-project/${id}`,
+        ` ${BASE_URL}/delete-project/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `
+              
+            `,
             "Content-Type": "application/json",
           },
         }
@@ -232,7 +234,7 @@ function LeadProject() {
 
         <div className="lead_project_controls">
           <div
-            className={`search-container ${
+            className={`lead-search-container ${
               isSearchFocused ? "search-focused" : ""
             }`}
           >
@@ -247,7 +249,7 @@ function LeadProject() {
             />
           </div>
           <button className="add-project-btn" onClick={handleAddNewProject}>
-            <Plus className="btn-icon" /> Add New Project
+            <Plus className="btn-icon" /> Add Project
           </button>
         </div>
 
@@ -316,7 +318,7 @@ function LeadProject() {
             <div className="leadproject-grid">
               {filteredProjects.map((project, index) => (
                 <div key={index} className="leadproject-card">
-                  <div className="card-top-gradient"></div>
+                  {/* <div className="card-top-gradient"></div> */}
                   <div
                     className={`project-status-badge ${getStatusClass(
                       project.status
@@ -332,7 +334,7 @@ function LeadProject() {
                     {project.name && (
                       <div className="detail_item_lead_project">
                         <div className="detail-icon-wrapper">
-                          <MapPin className="detail-icon" />
+                          <MapPin className="lead-detail-icon" />
                         </div>
                         <p>
                           <span>{project.location || "n/a"}</span>
@@ -353,18 +355,19 @@ function LeadProject() {
                     >
                       View Details <ChevronRight className="btn-icon" />
                     </button>
+
                     <div className="action-buttons">
                       <button
                         className="edit-btn"
                         onClick={() => handleEditLeadProject(project.id)}
                       >
-                        <Edit className="action-icon" /> Edit
+                        <Edit className="action-icon" />
                       </button>
                       <button
                         className="delete-btn"
                         onClick={() => handleDeleteLeadProject(project.id)}
                       >
-                        <Trash2 className="action-icon" /> Delete
+                        <Trash2 className="action-icon" />
                       </button>
                     </div>
                   </div>

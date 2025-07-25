@@ -71,7 +71,7 @@
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --land-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --land-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  --land-shadow-xl: 0 20px 25px -5px rgbavar(--land-transition) (0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
   --land-radius-sm: 0.375rem;
   --land-radius-md: 0.5rem;
@@ -125,7 +125,7 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
-  background: var(--land-primary-dark);
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border: none;
   border-radius: var(--land-radius-lg);
@@ -137,15 +137,15 @@ body {
   margin-top: -20px;
 }
 .land-header {
-  position: relative;
+  /* position: relative; */
   /* background: var(--land-gradient-purple); */
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 1rem 1.2rem;
-  overflow: hidden;
-  margin-bottom: 2rem;
-  border-radius: 0 0 2rem 2rem;
-  box-shadow: var(--land-shadow-lg);
+  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+  color: black;
+  padding: 1rem 1rem;
+  /* overflow: hidden; */
+  margin-bottom: 1.5rem;
+  /* border-radius: 0 0 0rem 0rem; */
+  /* box-shadow: var(--land-shadow-lg); */
 }
 
 .land-header-bg {
@@ -215,20 +215,21 @@ body {
 }
 
 .land-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 1rem;
-  background: linear-gradient(45deg, #fff, #e0e7ff);
-  -webkit-background-clip: text;
+  /* margin-bottom: 1rem; */
+  /* background: linear-gradient(45deg, #fff, #e0e7ff); */
+  /* -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-clip: text; */
+  /* text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+  color: black;
 }
 
 .land-subtitle {
-  font-size: 1.25rem;
+  font-size: 1rem;
   opacity: 0.9;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   font-weight: 300;
 }
 
@@ -276,7 +277,7 @@ body {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  margin: 0 2rem 2rem;
+  margin: 0 2rem 1rem;
   flex-wrap: wrap;
 }
 
@@ -305,8 +306,10 @@ body {
 }
 
 .land-search-bar:focus {
-  border-color: var(--land-primary-color);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  /* border-color: var(--land-primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); */
+  border-color: #0d5787;
+  box-shadow: 0 0 0 2px rgba(13, 87, 135, 0.3);
 }
 
 .land-search-icon {
@@ -324,7 +327,8 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 0.875rem 1.5rem;
-  background: var(--land-gradient-secondary);
+  /* background: var(--land-gradient-secondary); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border: none;
   border-radius: var(--land-radius-lg);
@@ -409,7 +413,7 @@ body {
   left: 0;
   width: 0;
   height: 3px;
-  background: var(--land-gradient-primary);
+  background: #0d5787;
   transition: var(--land-transition);
   border-radius: var(--land-radius-sm) var(--land-radius-sm) 0 0;
 }
@@ -423,7 +427,7 @@ body {
 }
 
 .land-tab.active {
-  color: var(--land-primary-color);
+  color: #0d5787;
   font-weight: 600;
 }
 
@@ -503,7 +507,8 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: var(--land-gradient-secondary);
+  /* background: var(--land-gradient-secondary); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border: none;
   border-radius: var(--land-radius-lg);
@@ -741,9 +746,9 @@ body {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem;
-  background-color: var(--land-bg-tertiary);
+  background-color: rgba(145, 200, 228, 0.3);
   color: var(--land-text-secondary);
-  border: 1px solid var(--land-border-color);
+  border: 1px solid #0d5787;
   border-radius: var(--land-radius-md);
   font-size: 0.875rem;
   font-weight: 500;
@@ -780,7 +785,8 @@ body {
 }
 
 .land-toggle-btn.active {
-  background: var(--land-gradient-primary);
+  /* background: var(--land-gradient-primary); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border-color: var(--land-primary-dark);
 }
@@ -868,9 +874,11 @@ body {
 }
 
 .land-add-transaction-btn {
-  background: var(--land-gradient-success);
+  /* background: var(--land-gradient-success); */
+  background: linear-gradient(135deg, #0d5787 0%, #91c8e4 100%);
+  border: #0d5787;
   color: white;
-  border-color: var(--land-success-color);
+  /* border-color: var(--land-success-color); */
 }
 
 .land-add-transaction-btn:hover {
@@ -1224,7 +1232,7 @@ body {
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: var(--land-primary-color);
+  color: #0d5787;
 }
 
 .land-form-row {
@@ -1316,7 +1324,7 @@ body {
 }
 
 .land-submit-btn {
-  background: var(--land-gradient-primary);
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border: none;
 }

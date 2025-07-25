@@ -49,15 +49,14 @@ body {
 .MaterialPurches-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 24px;
+  /* padding: 24px; */
   min-height: 100vh;
 }
 
 /* Enhanced Header */
 .MaterialPurches-header {
   background: var(--header-gradient);
-  border-radius: var(--border-radius-lg);
-  padding: 32px;
+  padding: 20px;
   margin-bottom: 32px;
   box-shadow: var(--shadow-lg);
   color: white;
@@ -91,46 +90,19 @@ body {
 }
 
 .MaterialPurches-title {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 700;
   margin: 0 0 8px 0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .MaterialPurches-subtitle {
-  font-size: 1.1rem;
+  font-size: 1rem;
   opacity: 0.9;
   margin: 0;
   font-weight: 400;
-}
-
-.MaterialPurches-statsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  min-width: 300px;
-}
-
-.MaterialPurches-statCard {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border-radius: var(--border-radius-md);
-  padding: 16px;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.MaterialPurches-statNumber {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-.MaterialPurches-statLabel {
-  font-size: 0.85rem;
-  opacity: 0.9;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 /* Enhanced Search Section */
@@ -142,14 +114,16 @@ body {
   margin-bottom: 32px;
   flex-wrap: wrap;
 }
+
 .print_button_material_purches {
   display: flex;
   gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 5px;
 }
 
 .MaterialPurches-searchContainer {
   flex: 1;
-  /* max-width: 600px; */
   display: flex;
   justify-content: space-between;
 }
@@ -608,7 +582,7 @@ body {
   box-shadow: var(--shadow-lg);
 }
 
-/* Enhanced View Modal */
+/* Enhanced View Modal - Redesigned Simple Table View */
 .MaterialPurches-viewOverlay {
   position: fixed;
   top: 0;
@@ -629,7 +603,7 @@ body {
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-xl);
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   max-height: 90vh;
   overflow-y: auto;
   animation: slideInUp 0.4s ease;
@@ -638,28 +612,55 @@ body {
 .MaterialPurches-viewHeader {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 32px 32px 24px 32px;
+  align-items: center;
+  padding: 24px 32px;
   border-bottom: 1px solid var(--color-border);
   background: var(--card-gradient);
   border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
 }
 
-.MaterialPurches-viewHeaderContent {
+.print-header {
   flex: 1;
 }
 
-.MaterialPurches-viewTitle {
+.print-title {
   font-size: 1.75rem;
   font-weight: 700;
   margin: 0 0 8px 0;
   color: var(--color-text-primary);
 }
 
-.MaterialPurches-viewSubtitle {
+.print-subtitle {
   font-size: 1rem;
   color: var(--color-text-secondary);
   margin: 0;
+}
+
+.print-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.MaterialPurches-printButton {
+  background: var(--success-gradient);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.MaterialPurches-printButton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .MaterialPurches-closeViewButton {
@@ -674,7 +675,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 16px;
 }
 
 .MaterialPurches-closeViewButton:hover {
@@ -683,222 +683,190 @@ body {
   transform: scale(1.05);
 }
 
-.MaterialPurches-purchaseOrderCard {
+.MaterialPurches-viewContent {
   padding: 32px;
 }
 
-.MaterialPurches-orderInfo {
+/* Order Information Section */
+.order-info {
   margin-bottom: 32px;
 }
 
-.MaterialPurches-orderNumber {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px;
-  background: var(--primary-gradient);
-  color: white;
-  border-radius: var(--border-radius-md);
-  margin-bottom: 24px;
-}
-
-.MaterialPurches-orderNumberContent {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.MaterialPurches-orderLabel {
-  font-size: 0.9rem;
-  opacity: 0.9;
-  font-weight: 500;
-}
-
-.MaterialPurches-orderValue {
-  font-size: 1.3rem;
-  font-weight: 700;
-}
-
-.MaterialPurches-orderDetails {
+.info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
   margin-bottom: 24px;
 }
 
-.MaterialPurches-orderDetail {
+.info-item {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 20px;
+  align-items: center;
+  padding: 16px;
   background: var(--color-bg-tertiary);
-  border-radius: var(--border-radius-md);
-  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  border-left: 4px solid var(--color-primary);
 }
 
-.MaterialPurches-detailIcon {
-  color: var(--color-primary);
-  margin-top: 2px;
-}
-
-.MaterialPurches-detailContent {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.MaterialPurches-detailLabel {
-  font-size: 0.85rem;
+.info-label {
   font-weight: 600;
   color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  min-width: 120px;
+  font-size: 0.9rem;
 }
 
-.MaterialPurches-detailValue {
-  font-size: 1rem;
+.info-value {
   font-weight: 600;
   color: var(--color-text-primary);
+  font-size: 1rem;
 }
 
-.MaterialPurches-statusBadge {
-  padding: 8px 16px;
+.status-badge {
+  padding: 6px 12px;
   border-radius: var(--border-radius-xl);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  display: inline-block;
 }
 
-.MaterialPurches-status-pending {
+.status-pending {
   background: rgba(255, 209, 102, 0.2);
   color: #b45309;
   border: 1px solid rgba(180, 83, 9, 0.3);
 }
 
-.MaterialPurches-status-delivered {
+.status-delivered {
   background: rgba(0, 176, 155, 0.2);
   color: #00b09b;
   border: 1px solid rgba(0, 176, 155, 0.3);
 }
 
-.MaterialPurches-status-cancelled {
+.status-cancelled {
   background: rgba(255, 88, 88, 0.2);
   color: #ff5858;
   border: 1px solid rgba(255, 88, 88, 0.3);
 }
 
-.MaterialPurches-orderNote {
-  padding: 24px;
+.status-received {
+  background: rgba(34, 197, 94, 0.2);
+  color: #16a34a;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.note-section {
+  padding: 20px;
   background: var(--color-bg-tertiary);
-  border-radius: var(--border-radius-md);
-  border-left: 4px solid var(--color-primary);
+  border-radius: var(--border-radius-sm);
+  border-left: 4px solid var(--color-info);
 }
 
-.MaterialPurches-noteHeader {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.MaterialPurches-noteLabel {
+.note-title {
   font-weight: 600;
   color: var(--color-text-primary);
+  margin-bottom: 8px;
   font-size: 1rem;
 }
 
-.MaterialPurches-noteText {
-  margin: 0;
+.note-content {
   color: var(--color-text-secondary);
   line-height: 1.6;
   font-size: 0.95rem;
 }
 
-.MaterialPurches-itemsSection {
-  border-top: 1px solid var(--color-border);
-  padding-top: 32px;
+/* Items Table Section */
+.MaterialPurches-itemsTableSection {
+  margin-top: 32px;
 }
 
-.MaterialPurches-itemsSectionHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.MaterialPurches-itemsTitle {
+.MaterialPurches-itemsTableTitle {
   font-size: 1.5rem;
   font-weight: 700;
-  margin: 0;
+  margin: 0 0 20px 0;
   color: var(--color-text-primary);
 }
 
-.MaterialPurches-itemList {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
-.MaterialPurches-item {
-  padding: 20px;
-  background: var(--color-bg-tertiary);
-  border-radius: var(--border-radius-md);
-  border-left: 4px solid var(--color-success);
-  transition: var(--transition-normal);
-}
-
-.MaterialPurches-item:hover {
-  box-shadow: var(--shadow-sm);
-  transform: translateX(4px);
-}
-
-.MaterialPurches-itemInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.MaterialPurches-itemHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.MaterialPurches-itemHeaderLeft {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.MaterialPurches-itemNumber {
-  background: var(--color-success);
-  color: white;
-  padding: 4px 8px;
+.MaterialPurches-itemsTableWrapper {
+  overflow-x: auto;
   border-radius: var(--border-radius-sm);
-  font-size: 0.8rem;
-  font-weight: 600;
-  min-width: 32px;
-  text-align: center;
+  box-shadow: var(--shadow-sm);
 }
 
-.MaterialPurches-itemName {
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-bg-primary);
+  font-family: var(--font-primary);
+}
+
+.items-table thead {
+  background: var(--color-bg-tertiary);
+}
+
+.items-table th {
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.items-table td {
+  padding: 16px 12px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+.items-table tbody tr:hover {
+  background: var(--color-bg-tertiary);
+}
+
+.MaterialPurches-materialName {
   font-weight: 600;
-  font-size: 1.1rem;
   color: var(--color-text-primary);
 }
 
-.MaterialPurches-itemActions {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+.MaterialPurches-itemStatusSelect {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: white;
+  border: 2px solid var(--color-border);
+  padding: 6px 24px 6px 10px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  min-width: 100px;
 }
 
-.MaterialPurches-itemEditButton,
+.MaterialPurches-itemStatusSelect:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+}
+
+.MaterialPurches-itemStatusSelect.status-pending {
+  color: #b45309;
+  background: rgba(255, 209, 102, 0.1);
+  border-color: rgba(180, 83, 9, 0.3);
+}
+
+.MaterialPurches-itemStatusSelect.status-received {
+  color: #16a34a;
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
 .MaterialPurches-itemDeleteButton {
-  background: none;
+  background: var(--color-danger);
+  color: white;
   border: none;
   padding: 8px;
   border-radius: var(--border-radius-sm);
@@ -907,83 +875,24 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-}
-
-.MaterialPurches-itemEditButton {
-  color: var(--color-warning);
-  background: rgba(255, 209, 102, 0.1);
-}
-
-.MaterialPurches-itemEditButton:hover {
-  background: rgba(255, 209, 102, 0.2);
-  transform: scale(1.1);
-}
-
-.MaterialPurches-itemDeleteButton {
-  color: var(--color-danger);
-  background: rgba(255, 88, 88, 0.1);
+  width: 32px;
+  height: 32px;
 }
 
 .MaterialPurches-itemDeleteButton:hover {
-  background: rgba(255, 88, 88, 0.2);
+  background: #e53e3e;
   transform: scale(1.1);
 }
 
-.MaterialPurches-itemDetails {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.MaterialPurches-itemDetailItem {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.MaterialPurches-itemDetailLabel {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.MaterialPurches-itemDetailValue {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-}
-
-.MaterialPurches-itemTotalAmount .MaterialPurches-itemDetailValue {
-  color: var(--color-success);
-  font-size: 1rem;
-}
-
-.MaterialPurches-grandTotal {
-  background: var(--success-gradient);
-  color: white;
-  border-radius: var(--border-radius-md);
-  padding: 24px;
-  box-shadow: var(--shadow-md);
-}
-
-.MaterialPurches-grandTotalContent {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.MaterialPurches-grandTotalLabel {
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.MaterialPurches-grandTotalAmount {
-  font-size: 1.8rem;
+.total-row {
+  background: var(--color-bg-tertiary);
   font-weight: 700;
+  border-top: 2px solid var(--color-border);
+}
+
+.total-row td {
+  padding: 20px 12px;
+  font-size: 1.1rem;
 }
 
 /* Enhanced Table */
@@ -1234,16 +1143,11 @@ body {
     gap: 24px;
     text-align: center;
   }
-
-  .MaterialPurches-statsGrid {
-    min-width: auto;
-    width: 100%;
-  }
 }
 
 @media (max-width: 768px) {
   .MaterialPurches-container {
-    padding: 16px;
+    /* padding: 16px; */
   }
 
   .MaterialPurches-header {
@@ -1272,13 +1176,8 @@ body {
     gap: 16px;
   }
 
-  .MaterialPurches-orderDetails {
+  .info-grid {
     grid-template-columns: 1fr;
-  }
-
-  .MaterialPurches-itemDetails {
-    flex-direction: column;
-    gap: 12px;
   }
 
   .MaterialPurches-actionButtons {
@@ -1290,20 +1189,19 @@ body {
     flex-direction: column;
   }
 
-  .MaterialPurches-grandTotalContent {
-    flex-direction: column;
-    gap: 12px;
-    text-align: center;
-  }
-
   .MaterialPurches-tableHeader {
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
   }
 
-  .MaterialPurches-statsGrid {
-    grid-template-columns: 1fr;
+  .items-table {
+    font-size: 0.85rem;
+  }
+
+  .items-table th,
+  .items-table td {
+    padding: 12px 8px;
   }
 }
 
@@ -1326,7 +1224,7 @@ body {
   }
 
   .MaterialPurches-form,
-  .MaterialPurches-purchaseOrderCard {
+  .MaterialPurches-viewContent {
     padding: 24px;
   }
 
@@ -1334,16 +1232,6 @@ body {
   .MaterialPurches-tableCell {
     padding: 12px 8px;
     font-size: 0.85rem;
-  }
-
-  .MaterialPurches-itemHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .MaterialPurches-itemActions {
-    align-self: flex-end;
   }
 
   .MaterialPurches-actionButtons {
@@ -1357,40 +1245,42 @@ body {
     width: 36px;
     height: 36px;
   }
+
+  .print-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 
+/* Print Styles */
 @media print {
-  body * {
-    visibility: hidden;
+  .print-actions {
+    display: none !important;
   }
-  .MaterialPurches-tableWrapper,
-  .MaterialPurches-tableWrapper * {
-    visibility: visible;
+
+  .MaterialPurches-itemDeleteButton {
+    display: none !important;
   }
-  .MaterialPurches-tableWrapper {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-  }
+
   .MaterialPurches-actionsCell {
-    display: none;
+    display: none !important;
   }
-  .MaterialPurches-statusSelectWrapper select {
-    appearance: none;
-    border: none;
-    background: none;
+
+  .MaterialPurches-tableHeaderCell:nth-child(6) {
+    display: none !important;
   }
-  .MaterialPurches-statusSelectArrow {
-    display: none;
+
+  .items-table th:last-child,
+  .items-table td:last-child {
+    display: none !important;
   }
-  .MaterialPurches-table {
-    width: 100%;
-    border-collapse: collapse;
+
+  body {
+    background: white !important;
   }
-  .MaterialPurches-table th,
-  .MaterialPurches-table td {
-    border: 1px solid #000;
-    padding: 8px;
+
+  .MaterialPurches-viewContainer {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
   }
 }

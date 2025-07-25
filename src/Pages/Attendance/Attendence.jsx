@@ -197,7 +197,7 @@ function Attendence() {
           <div className="Attendence-controls">
             <div className="Attendence-form-group">
               <label className="Attendence-label" htmlFor="departmentSelect">
-                <span className="Attendence-label-icon">🏢</span>
+                {/* <span className="Attendence-label-icon">🏢</span> */}
                 Department
               </label>
               <div className="Attendence-select-wrapper">
@@ -220,7 +220,7 @@ function Attendence() {
 
             <div className="Attendence-form-group">
               <label className="Attendence-label" htmlFor="dateSelect">
-                <span className="Attendence-label-icon">📅</span>
+                {/* <span className="Attendence-label-icon">📅</span> */}
                 Date
               </label>
               <input
@@ -248,7 +248,7 @@ function Attendence() {
                 </>
               ) : (
                 <>
-                  <span className="Attendence-button-icon">👥</span>
+                  <span className="Attendence-button-icon"></span>
                   {marked ? "Refresh Attendance" : "Load Employees"}
                 </>
               )}
@@ -271,7 +271,7 @@ function Attendence() {
 
         {employees.length > 0 && (
           <div className="Attendence-table-wrapper">
-            <div className="Attendence-summary">
+            {/* <div className="Attendence-summary">
               <div className="Attendence-summary-card Attendence-present">
                 <div className="Attendence-icon">✅</div>
                 <div className="Attendence-info">
@@ -319,7 +319,7 @@ function Attendence() {
                 </div>
                 <div className="Attendence-card-bg"></div>
               </div>
-            </div>
+            </div> */}
 
             <div className="Attendence-table-container">
               <table
@@ -418,7 +418,7 @@ function Attendence() {
                     </>
                   ) : (
                     <>
-                      <span className="Attendence-button-icon">💾</span>
+                      {/* <span className="Attendence-button-icon">💾</span> */}
                       Submit Attendance
                     </>
                   )}

@@ -50,9 +50,9 @@
 
 .finance-finance-header {
   /* background: var(--header-gradient); */
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
 
-  padding: 2rem 2rem;
+  /* padding: 1rem 1rem; */
   margin-bottom: 2rem;
   position: relative;
   overflow: hidden;
@@ -77,17 +77,17 @@
 }
 
 .finance-finance-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: white;
-  margin: 0 0 0.5rem 0;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: rgb(0, 0, 0);
+  /* margin: 0 0 0.5rem 0; */
+  /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   text-align: center;
 }
 
 .finance-finance-subtitle {
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(0, 0, 0, 0.9);
   margin: 0;
   font-weight: 400;
   text-align: center;
@@ -113,6 +113,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  width: 500px;
 }
 
 .finance-search-icon {
@@ -137,13 +138,14 @@
 
 .finance-finance-search-input:focus {
   outline: none;
-  border-color: #6a11cb;
-  box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+  /* border-color: #6a11cb; */
+  /* box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1); */
   transform: translateY(-1px);
 }
 
 .finance-finance-add-btn {
-  background: var(--primary-gradient);
+  /* background: var(--primary-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -315,7 +317,8 @@
 }
 
 .finance-btn-primary {
-  background: var(--primary-gradient);
+  /* background: var(--primary-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   box-shadow: var(--shadow-sm);
 }
@@ -391,7 +394,8 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: var(--primary-gradient);
+  /* background: var(--primary-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -467,8 +471,8 @@
 }
 
 .finance-edit-btn {
-  background: var(--warm-gradient);
-  color: white;
+  /* background: var(--warm-gradient); */
+  color: rgb(0, 0, 0);
 }
 
 .finance-edit-btn:hover {
@@ -477,8 +481,8 @@
 }
 
 .finance-view-btn {
-  background: var(--cold-gradient);
-  color: white;
+  /* background: var(--cold-gradient); */
+  color: rgb(0, 0, 0);
 }
 
 .finance-view-btn:hover {
@@ -487,8 +491,8 @@
 }
 
 .finance-delete-btn {
-  background: var(--hot-gradient);
-  color: white;
+  /* background: var(--hot-gradient); */
+  color: rgb(0, 0, 0);
 }
 
 .finance-delete-btn:hover {

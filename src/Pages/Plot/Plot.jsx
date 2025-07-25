@@ -111,16 +111,10 @@ function Plot() {
               onBlur={() => setIsSearchFocused(false)}
             />
           </div>
-          {/* <button className="add-plot-btn" onClick={handleAddNewPlot}>
-            <Plus className="btn-icon" /> Add New Plot
-          </button> */}
-        </div>
-
-        <div className="plot-container">
           <div className="plot-filters-container">
             <div className="filter-label">
               <Filter className="filter-icon" />
-              <span>Filter by Status:</span>
+              <span>Filter:</span>
             </div>
             <div className="plot-filters">
               {categories.map((category) => {
@@ -145,7 +139,9 @@ function Plot() {
               })}
             </div>
           </div>
+        </div>
 
+        <div className="plot-container">
           {loading ? (
             <div className="plot-loading">
               <div className="loading-spinner">
@@ -175,7 +171,7 @@ function Plot() {
             <div className="plot-grid">
               {filteredPlots.map((plot, index) => (
                 <div key={index} className="plot-card">
-                  <div className="card-top-gradient"></div>
+                  {/* <div className="card-top-gradient"></div> */}
                   <div
                     className={`plot-status-badge ${getStatusClass(
                       plot.status

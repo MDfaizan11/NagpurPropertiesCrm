@@ -180,7 +180,20 @@ function Land() {
   }, [token, userId, role, refreshKey]);
 
   const toggle = (key) => {
-    setToggleSection((prev) => ({ ...prev, [key]: !prev[key] }));
+    const isTxnToggle = key.includes("-txn");
+
+    setToggleSection((prev) => {
+      if (isTxnToggle) {
+        return {
+          ...prev,
+          [key]: !prev[key],
+        };
+      } else {
+        // If clicking the same open section, close it
+        const isAlreadyOpen = prev[key];
+        return isAlreadyOpen ? {} : { [key]: true };
+      }
+    });
   };
 
   const filteredLandData =
@@ -652,7 +665,8 @@ function Land() {
     setPaymentMethod("");
     setShowOwnerTransactionModal(true);
   }
-  async function handleSubmitOwnerTransaction() {
+  async function handleSubmitOwnerTransaction(e) {
+    e.preventDefault();
     const body = {
       transactionDate,
       transactionAmount: parseFloat(transactionAmount),
@@ -957,12 +971,6 @@ function Land() {
     <>
       {/* Header Section */}
       <div className="land-header">
-        <div className="land-header-bg">
-          <div className="land-animated-shape land-shape-1"></div>
-          <div className="land-animated-shape land-shape-2"></div>
-          <div className="land-animated-shape land-shape-3"></div>
-          <div className="land-animated-shape land-shape-4"></div>
-        </div>
         <div className="land-header-content">
           <h1 className="land-title">Land Management System</h1>
           <p className="land-subtitle">
@@ -1786,6 +1794,7 @@ function Land() {
                         placeholder="Area"
                         value={area}
                         onChange={(e) => setArea(e.target.value)}
+                        required
                       />
                     </div>
                     <div className="land-form-group">
@@ -1795,6 +1804,7 @@ function Land() {
                         placeholder="Total Amount"
                         value={totalAmount}
                         onChange={(e) => setTotalAmount(e.target.value)}
+                        required
                       />
                     </div>
                   </div>
@@ -1806,6 +1816,7 @@ function Land() {
                         placeholder="Token Date"
                         value={tokenDate}
                         onChange={(e) => setTokenDate(e.target.value)}
+                        required
                       />
                     </div>
                     <div className="land-form-group">
@@ -1815,6 +1826,7 @@ function Land() {
                         placeholder="Token Amount"
                         value={tokenAmount}
                         onChange={(e) => setTokenAmount(e.target.value)}
+                        required
                       />
                     </div>
                   </div>
@@ -1827,6 +1839,7 @@ function Land() {
                         placeholder="Agreement Amount"
                         value={agreementAmount}
                         onChange={(e) => setAgreementAmount(e.target.value)}
+                        required
                       />
                     </div>
                     <div className="land-form-group">
@@ -1836,6 +1849,7 @@ function Land() {
                         placeholder="Agreement Date"
                         value={agreementDate}
                         onChange={(e) => setAgreementDate(e.target.value)}
+                        required
                       />
                     </div>
                   </div>
@@ -1871,6 +1885,7 @@ function Land() {
                         placeholder="Owner Name"
                         value={ownerName}
                         onChange={(e) => setOwnerName(e.target.value)}
+                        required
                       />
                     </div>
                     <div className="land-form-group">
@@ -1915,6 +1930,7 @@ function Land() {
                         placeholder="Purchaser Name"
                         value={purchaserName}
                         onChange={(e) => setPurchaserName(e.target.value)}
+                        required
                       />
                     </div>
                     <div className="land-form-group">

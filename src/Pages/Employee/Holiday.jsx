@@ -218,7 +218,7 @@ function Holiday() {
       <div className="Holiday-header">
         <div className="Holiday-header-content">
           <div className="Holiday-header-title">
-            <Calendar className="Holiday-header-icon" />
+            {/* <Calendar className="Holiday-header-icon" /> */}
             <h1 className="Holiday-title">Holiday Management</h1>
           </div>
           <p className="Holiday-header-subtitle">

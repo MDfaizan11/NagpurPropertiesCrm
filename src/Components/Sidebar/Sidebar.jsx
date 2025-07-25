@@ -605,16 +605,6 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           icon: <Hammer size={18} />,
           path: "/holiday",
         },
-        // {
-        //   name: " Stock Transfer",
-        //   icon: <FileText size={18} />,
-        //   path: "/MaterialStock",
-        // },
-        // {
-        //   name: "Supplier Management",
-        //   icon: <Truck size={18} />,
-        //   // path: "/material/suppliers",
-        // },
       ],
     },
 
@@ -659,6 +649,13 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       color: "violet",
       count: 9,
       path: "/stationary",
+    },
+    {
+      name: "Registration",
+      icon: <FileText size={22} />,
+      color: "cyan",
+      count: 5,
+      path: "/registration",
     },
   ];
 

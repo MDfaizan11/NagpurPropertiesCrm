@@ -145,7 +145,8 @@
   cursor: pointer;
   transition: all var(--transition-normal);
   border: none;
-  background: var(--primary-gradient);
+  /* background: var(--primary-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #91c8e4 100%);
   color: white;
   box-shadow: var(--shadow-sm);
   font-family: var(--font-primary);

@@ -35,6 +35,7 @@ function Home() {
       return "Partner";
     }
   }, []);
+
   const sections = [
     {
       name: "Land Management",
@@ -183,32 +184,30 @@ function Home() {
           <h1>Management Dashboard</h1>
           <p>Welcome back! Here's an overview of your management modules</p>
         </div>
-        {userRole === "Admin" ||
-          (userRole === "Head" && (
-            <div className="dashboard-actions">
-              <button className="action-button primary">
-                <Plus size={16} />
-                <span>New Project</span>
-              </button>
-            </div>
-          ))}
-      </div>
-      {userRole === "Admin" ||
-        (userRole === "Head" && (
-          <div className="statistics-row">
-            {statistics.map((stat, index) => (
-              <StatisticCard
-                key={index}
-                title={stat.title}
-                value={stat.value}
-                icon={stat.icon}
-                change={stat.change}
-                color={stat.color}
-                isNegative={stat.isNegative}
-              />
-            ))}
+        {(userRole === "Admin" || userRole === "Head") && (
+          <div className="dashboard-actions">
+            <button className="action-button primary">
+              <Plus size={16} />
+              <span>New Project</span>
+            </button>
           </div>
-        ))}
+        )}
+      </div>
+      {(userRole === "Admin" || userRole === "Head") && (
+        <div className="statistics-row">
+          {statistics.map((stat, index) => (
+            <StatisticCard
+              key={index}
+              title={stat.title}
+              value={stat.value}
+              icon={stat.icon}
+              change={stat.change}
+              color={stat.color}
+              isNegative={stat.isNegative}
+            />
+          ))}
+        </div>
+      )}
       {userRole === "Partner" && (
         <hr style={{ backgroundColor: "lightgrey" }} />
       )}

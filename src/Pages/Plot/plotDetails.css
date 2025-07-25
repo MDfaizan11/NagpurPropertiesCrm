@@ -6,13 +6,13 @@
 
 /* Header Styles */
 .plotDetailsHeader {
-  background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%);
-  padding: 30px 20px;
-  color: white;
+  /* background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%); */
+  /* padding: 30px 20px; */
+  color: #000000;
   text-align: center;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); */
   margin-bottom: 40px;
   border-radius: 15px;
 }
@@ -48,10 +48,10 @@
 
 .plotDetailsTitle {
   font-size: 28px;
-  font-weight: 800;
-  margin-bottom: 12px;
+  font-weight: 700;
+  /* margin-bottom: 12px; */
   letter-spacing: -0.5px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
 }
 
 .plotDetailsSubtitle {
@@ -73,7 +73,7 @@
   margin-bottom: 30px;
   background: white;
   border-radius: 15px;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
 }
 
@@ -82,14 +82,13 @@
   justify-content: space-around;
   gap: 20px;
 }
-
 .plotDetailsStatItem {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 15px 25px;
+  padding: 10px 11px;
   border-radius: 12px;
-  min-width: 150px;
+  /* min-width: 150px; */
   transition: all 0.3s ease;
 }
 
@@ -98,7 +97,7 @@
 }
 
 .plotDetailsStatValue {
-  font-size: 32px;
+  font-size: 21px;
   font-weight: 700;
   margin-bottom: 5px;
 }
@@ -149,7 +148,8 @@
   font-weight: 600;
   letter-spacing: 0.3px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(to right, #6a11cb, #2575fc);
+  /* background: linear-gradient(to right, #6a11cb, #2575fc); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   border-radius: 10px;
   color: white;
   outline: none;
@@ -162,6 +162,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  max-width: 600px;
 }
 
 .plotDetailsSearchIcon {
@@ -185,8 +186,8 @@
 
 .plotDetailsSearchInput:focus {
   outline: none;
-  border-color: #6a11cb;
-  box-shadow: 0 5px 15px rgba(106, 17, 203, 0.1);
+  /* border-color: #6a11cb; */
+  /* box-shadow: 0 5px 15px rgba(106, 17, 203, 0.1); */
 }
 
 .plotDetailsClearSearch {
@@ -314,7 +315,7 @@
   gap: 15px;
 }
 
-.plotDetailsCardTopGradient {
+/* .plotDetailsCardTopGradient {
   position: absolute;
   top: 0;
   left: 0;
@@ -323,7 +324,7 @@
   background: linear-gradient(to right, #6a11cb, #2575fc);
   opacity: 0.8;
   transition: all 0.3s ease;
-}
+} */
 
 .plotDetailsCard:hover {
   transform: translateY(-10px);
@@ -458,20 +459,22 @@
 }
 
 .plotDetailsViewCustomerBtn {
-  background: linear-gradient(to right, #6a11cb, #2575fc);
+  /* background: linear-gradient(to right, #6a11cb, #2575fc); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
 }
 
 .plotDetailsViewCustomerBtn:hover {
-  background: linear-gradient(to right, #5a0fa9, #1f63d6);
+  /* background: linear-gradient(to right, #5a0fa9, #1f63d6); */
   transform: translateY(-2px);
 }
 
 .plotDetailsAddCustomerBtn {
-  background: linear-gradient(to right, #ff5f6d, #ffc371);
+  /* background: linear-gradient(to right, #ff5f6d, #ffc371); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
 }
 
 .plotDetailsAddCustomerBtn:hover {
-  background: linear-gradient(to right, #e55361, #e6a965);
+  /* background: linear-gradient(to right, #e55361, #e6a965); */
   transform: translateY(-2px);
 }
 
@@ -607,7 +610,9 @@
 
 .plotDetailsPopupHeader {
   padding: 20px 30px;
-  background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%);
+  /* background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
+
   color: white;
   display: flex;
   align-items: center;
@@ -677,7 +682,7 @@
 .plotDetailsCustomerSection h3 {
   font-size: 18px;
   font-weight: 600;
-  color: #6a11cb;
+  color: #000000;
   margin-top: 0;
   margin-bottom: 15px;
   padding-bottom: 10px;
@@ -729,7 +734,8 @@
 }
 
 .plotDetailsPrintBtn {
-  background: linear-gradient(to right, #6a11cb, #2575fc);
+  /* background: linear-gradient(to right, #6a11cb, #2575fc); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
 }
 

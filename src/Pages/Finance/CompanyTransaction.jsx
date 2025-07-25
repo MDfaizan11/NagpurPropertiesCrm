@@ -222,9 +222,9 @@ function CompanyTransaction() {
             </div>
             <h3>No Transactions Found</h3>
             <p>No transactions available for the selected date range.</p>
-            {error && (
+            {/* {error && (
               <p className="company-transaction-error-message">{error}</p>
-            )}
+            )} */}
           </div>
         ) : (
           <div className="company-transaction-print-area" ref={printRef}>

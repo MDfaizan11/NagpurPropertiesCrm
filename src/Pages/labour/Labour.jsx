@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from "react";
 import "../labour/labour.css";
 import axiosInstance from "../../utils/axiosInstance";
@@ -18,13 +16,26 @@ function Labour() {
   const [patnerEmail, setPatnerEmail] = useState("");
   const [patnerPassword, setPatnerPassword] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [editPartnerId, setEditPartnerId] = useState(null);
+  const [BlockStatus, setBlockStatus] = useState("");
   function handleShowPartnerRegistration() {
     setPartnerRegistrationForm(true);
   }
 
   async function handleSubmitPartnerRegistration(e) {
     e.preventDefault();
+    setEditPartnerId(null);
+    if (
+      !patnerName ||
+      !patnerCity ||
+      !patnerPhone ||
+      !patnerAadhar ||
+      !patnerEmail ||
+      !patnerPassword
+    ) {
+      alert("Please fill all the fields");
+      return;
+    }
     const PartnerData = {
       name: patnerName,
       city: patnerCity,
@@ -90,6 +101,124 @@ function Labour() {
       partner.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  function handleEdirtPartner(partner) {
+    console.log(partner);
+    setEditPartnerId(partner.id);
+    setPatnerName(partner.name);
+    setPatnerCity(partner.city);
+    setPatnerPhone(partner.phoneNumber);
+    setPatnerAadhar(partner.addharNumber);
+    setPatnerEmail(partner.email);
+    setPatnerPassword(partner.password);
+    setPartnerRegistrationForm(true);
+  }
+
+  function handleSubmitEditPartnerRegistration(e) {
+    e.preventDefault();
+    const PartnerData = {
+      name: patnerName,
+      city: patnerCity,
+      phoneNumber: patnerPhone,
+      addharNumber: patnerAadhar,
+      email: patnerEmail,
+      password: patnerPassword,
+    };
+    axiosInstance
+      .put(`${BASE_URL}/updatePartner/${editPartnerId}`, PartnerData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          alert("Partner details updated successfully");
+          setPartnerRegistrationForm(false);
+          setPatnerName("");
+          setPatnerCity("");
+          setPatnerPhone("");
+          setPatnerAadhar("");
+          setPatnerEmail("");
+          setPatnerPassword("");
+          GetAllPartner();
+          setEditPartnerId(null);
+          setPartnerRegistrationForm(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function handlepartnerBlock(partnerId) {
+    const confirmBlock = window.confirm(
+      "Are you sure you want to block this partner."
+    );
+    if (confirmBlock) {
+      axiosInstance
+        .post(
+          `${BASE_URL}/blockPartner/${partnerId}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data.partnerStatus);
+          setBlockStatus(response.data.partnerStatus);
+          if (response.status === 200) {
+            alert("Partner blocked successfully");
+            GetAllPartner();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+
+  function handlepartnerUnBlock(partnerId) {
+    const confirmUnBlock = window.confirm(
+      "Are you sure you want to unblock this partner."
+    );
+    if (confirmUnBlock) {
+      axiosInstance
+        .post(
+          `${BASE_URL}/UnblockPartner/${partnerId}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            alert("Partner unblocked successfully");
+            GetAllPartner();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+
+  function handleClosePartnerRegistrationForm() {
+    setPartnerRegistrationForm(false);
+    setEditPartnerId(null);
+    setPatnerName("");
+    setPatnerCity("");
+    setPatnerPhone("");
+    setPatnerAadhar("");
+    setPatnerEmail("");
+    setPatnerPassword("");
+  }
+
   return (
     <div className="partner_labour_main_container">
       <div className="partner_labour_header">
@@ -137,7 +266,7 @@ function Labour() {
               <line x1="12" y1="5" x2="12" y2="19"></line>
               <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            Add New Partner
+            Add Partner
           </button>
         </div>
       </div>
@@ -146,11 +275,16 @@ function Labour() {
         <div className="Partner_registration_form_container">
           <form
             className="Partner_registration_form"
-            onSubmit={handleSubmitPartnerRegistration}
+            onSubmit={
+              editPartnerId
+                ? handleSubmitEditPartnerRegistration
+                : handleSubmitPartnerRegistration
+            }
           >
             <button
               className="Partner_registration_form_close_button"
-              onClick={() => setPartnerRegistrationForm(false)}
+              // onClick={() => setPartnerRegistrationForm(false)}
+              onClick={handleClosePartnerRegistrationForm}
               type="button"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -160,9 +294,15 @@ function Labour() {
             </button>
 
             <div className="partner_form_header">
-              <h2 className="partner_form_title">Partner Registration</h2>
+              <h2 className="partner_form_title">
+                {editPartnerId
+                  ? "Edit Partner Details"
+                  : "Register New Partner"}
+              </h2>
               <p className="partner_form_subtitle">
-                Fill in the details to register a new partner
+                {editPartnerId
+                  ? "Update the details of the partner"
+                  : "Fill in the details to register a new partner"}
               </p>
             </div>
 
@@ -258,7 +398,8 @@ function Labour() {
               >
                 <polyline points="20,6 9,17 4,12"></polyline>
               </svg>
-              Register Partner
+
+              {editPartnerId ? "Update Partner Details" : "Register Partner"}
             </button>
           </form>
         </div>
@@ -352,7 +493,7 @@ function Labour() {
                           </svg>
                           <span className="partner_info_text">
                             {partner.addharNumber
-                              ? `${partner.addharNumber}`
+                              ? ` ${partner.addharNumber}`
                               : "N/A"}
                           </span>
                         </div>
@@ -360,7 +501,10 @@ function Labour() {
                     </div>
 
                     <div className="partner_card_footer">
-                      <button className="partner_action_button partner_edit_button">
+                      <button
+                        className="partner_action_button partner_edit_button"
+                        onClick={() => handleEdirtPartner(partner)}
+                      >
                         <svg
                           viewBox="0 0 24 24"
                           fill="none"
@@ -371,37 +515,44 @@ function Labour() {
                         </svg>
                         Edit
                       </button>
-                      <button className="partner_action_button partner_delete_button">
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
+
+                      {partner.partnerStatus === "BLOCK" ? (
+                        <button
+                          className="partner_action_button partner_unblock_button"
+                          onClick={() => handlepartnerUnBlock(partner.id)}
                         >
-                          <polyline points="3,6 5,6 21,6"></polyline>
-                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        </svg>
-                        Delete
-                      </button>
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                          >
+                            <polyline points="3,6 5,6 21,6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                          </svg>
+                          Unblock
+                        </button>
+                      ) : (
+                        <button
+                          className="partner_action_button partner_block_button"
+                          onClick={() => handlepartnerBlock(partner.id)}
+                        >
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                          >
+                            <polyline points="3,6 5,6 21,6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                          </svg>
+                          Block
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))
               ) : (
                 <div className="partner_no_results">
-                  <svg
-                    className="partner_no_results_icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                  >
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                  </svg>
-                  <h3 className="partner_no_results_title">
-                    No partners found
-                  </h3>
-                  <p className="partner_no_results_text">
-                    Try adjusting your search criteria or add a new partner.
-                  </p>
+                  <p>No partners found matching your search criteria.</p>
                 </div>
               )}
             </div>

@@ -8,13 +8,13 @@
 
 /* Header Styles */
 .PlotQuatation-header {
-  background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%);
-  padding: 30px 20px;
-  color: white;
+  /* background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%); */
+  /* padding: 30px 20px; */
+  color: rgb(0, 0, 0);
   text-align: center;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); */
   margin-bottom: 40px;
   border-radius: 15px;
 }
@@ -34,14 +34,14 @@
   animation: PlotQuatation-pulse 15s infinite linear;
 }
 
-@keyframes PlotQuatation-pulse {
+/* @keyframes PlotQuatation-pulse {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
   }
-}
+} */
 
 .PlotQuatation-header-content {
   position: relative;
@@ -50,10 +50,10 @@
 
 .PlotQuatation-title {
   font-size: 28px;
-  font-weight: 800;
-  margin-bottom: 12px;
+  font-weight: 600;
+  /* margin-bottom: 12px; */
   letter-spacing: -0.5px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
 }
 
 .PlotQuatation-subtitle {
@@ -240,7 +240,7 @@
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
-.PlotQuatation-card::before {
+/* .PlotQuatation-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -248,7 +248,7 @@
   right: 0;
   height: 6px;
   background: linear-gradient(to right, #6a11cb, #2575fc);
-}
+} */
 
 .PlotQuatation-card-header {
   padding: 20px;
@@ -338,7 +338,8 @@
 .PlotQuatation-view-details-btn {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
+  /* background: linear-gradient(to right, #6a11cb, #2575fc); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -348,7 +349,7 @@
 }
 
 .PlotQuatation-view-details-btn:hover {
-  background: linear-gradient(to right, #5a0fa9, #1f63d6);
+  /* background: linear-gradient(to right, #5a0fa9, #1f63d6); */
   box-shadow: 0 5px 15px rgba(106, 17, 203, 0.2);
 }
 
@@ -402,7 +403,8 @@
 
 .PlotQuatation-modal-header {
   padding: 20px 30px;
-  background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%);
+  /* background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   display: flex;
   align-items: center;
@@ -503,22 +505,24 @@
 }
 
 .PlotQuatation-print-btn {
-  background: linear-gradient(to right, #6a11cb, #2575fc);
+  /* background: linear-gradient(to right, #6a11cb, #2575fc); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
 }
 
 .PlotQuatation-print-btn:hover {
-  box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+  /* box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3); */
   transform: translateY(-2px);
 }
 
 .PlotQuatation-edit-btn {
-  background: linear-gradient(to right, #0d6efd, #6610f2);
+  /* background: linear-gradient(to right, #0d6efd, #6610f2); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
 }
 
 .PlotQuatation-edit-btn:hover {
-  box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+  /* box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3); */
   transform: translateY(-2px);
 }
 

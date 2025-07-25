@@ -64,7 +64,7 @@ const Login = () => {
       console.log("📦 Saved to localStorage:", userdata);
 
       alert("Login successful");
-      navigate("/"); // or navigate based on role
+      navigate("/");
     } catch (error) {
       console.error(" Login error:", error);
       alert("Login failed. Check credentials.");

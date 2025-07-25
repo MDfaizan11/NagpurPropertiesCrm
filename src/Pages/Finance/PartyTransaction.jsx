@@ -209,7 +209,7 @@ function PartyTransaction() {
         </div>
       </div>
 
-      {error && <div className="PartyTransaction-error-message">{error}</div>}
+      {/* {error && <div className="PartyTransaction-error-message">{error}</div>} */}
 
       {loading ? (
         <div className="PartyTransaction-loading">Loading transactions...</div>

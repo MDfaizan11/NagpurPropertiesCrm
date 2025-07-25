@@ -26,6 +26,7 @@ function PlotDetails() {
   const token = JSON.parse(localStorage.getItem("NagpurProperties"))?.token;
   const [refreshKey, setrefreshKey] = useState(0);
   const [plotData, setPlotData] = useState([]);
+  const [PlotType, setPlotType] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [expandedCards, setExpandedCards] = useState({});
@@ -464,6 +465,7 @@ function PlotDetails() {
       plotNo: addplotNo,
       size: addplotSize,
       plotAreaSqMt: addplotAreaSqMt,
+      plotType: PlotType,
       projectId: ProjectId,
     };
     try {
@@ -714,7 +716,7 @@ function PlotDetails() {
                 <div className="plotDetailsGrid">
                   {filteredData.map((item, index) => (
                     <div key={index} className="plotDetailsCard">
-                      <div className="plotDetailsCardTopGradient"></div>
+                      {/* <div className="plotDetailsCardTopGradient"></div> */}
                       <div
                         className={`plotDetailsStatusBadge ${
                           item.layoutStatus === "BOOKED"
@@ -2077,6 +2079,23 @@ function PlotDetails() {
                 onChange={(e) => setAddplotAreaSqMt(e.target.value)}
                 required
               />
+              <label htmlFor="plotArea" className="plotDetailsAddPlotFormLabel">
+                Plot Type
+              </label>
+              <select
+                name=""
+                id=""
+                className="plotDetailsAddPlotFormInput"
+                value={PlotType}
+                onChange={(e) => setPlotType(e.target.value)}
+                required
+              >
+                <option value="" disabled>
+                  Select Plot Type
+                </option>
+                <option value="COMMERCIAL">COMMERCIAL</option>
+                <option value="RESIDENTIAL">RESIDENTIAL</option>
+              </select>
               <button
                 type="submit"
                 className="plotDetailsAddPlotFormSubmitButton"
@@ -2137,6 +2156,23 @@ function PlotDetails() {
                 onChange={(e) => seteditAddplotAreaSqMt(e.target.value)}
                 required
               />
+              <label htmlFor="plotType" className="plotDetailsAddPlotFormLabel">
+                Plot Type
+              </label>
+              <select
+                name=""
+                id=""
+                className="plotDetailsAddPlotFormInput"
+                value={PlotType}
+                onChange={(e) => setPlotType(e.target.value)}
+                required
+              >
+                <option value="" disabled>
+                  Select Plot Type
+                </option>
+                <option value="COMMERCIAL">COMMERCIAL</option>
+                <option value="RESIDENTIAL">RESIDENTIAL</option>
+              </select>
               <button
                 type="submit"
                 className="plotDetailsAddPlotFormSubmitButton"

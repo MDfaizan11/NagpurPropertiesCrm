@@ -106,13 +106,10 @@ function Contractor() {
             onBlur={() => setIsSearchFocused(false)}
           />
         </div>
-      </div>
-
-      <div className="plot-container">
         <div className="plot-filters-container">
           <div className="filter-label">
             <Filter className="filter-icon" />
-            <span>Filter by Status:</span>
+            <span>Filter :</span>
           </div>
           <div className="plot-filters">
             {categories.map((cat) => {
@@ -136,7 +133,9 @@ function Contractor() {
             })}
           </div>
         </div>
+      </div>
 
+      <div className="plot-container">
         {loading ? (
           <div className="plot-loading">
             <Loader2 className="loading-icon" />

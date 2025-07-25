@@ -35,8 +35,8 @@
 
 /* Header Section */
 .company-transaction-header {
-  background: var(--header-gradient);
-  padding: 2rem;
+  /* background: var(--header-gradient); */
+  /* padding: 2rem; */
   margin-bottom: 2rem;
   position: relative;
   overflow: hidden;
@@ -56,10 +56,11 @@
 .company-transaction-title {
   font-size: 2rem;
   font-weight: 700;
-  color: white;
+  color: rgb(0, 0, 0);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-width: 1200px;
   margin: 0 auto;
+  text-align: center;
 }
 
 /* Transactions Section */
@@ -136,7 +137,9 @@
   cursor: pointer;
   transition: all var(--transition-normal);
   border: none;
-  background: var(--primary-gradient);
+  /* background: var(--primary-gradient); */
+
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   box-shadow: var(--shadow-sm);
   font-family: var(--font-primary);

@@ -237,7 +237,7 @@ function MaterialStock() {
   return (
     <div className="MaterialStock-container">
       {/* Header Section */}
-      <div className="MaterialStock-header">
+      {/* <div className="MaterialStock-header">
         <div className="MaterialStock-header-content">
           <div className="MaterialStock-header-title">
             <Package className="MaterialStock-header-icon" />
@@ -247,7 +247,7 @@ function MaterialStock() {
             Manage and track material transfers between sites
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* Controls Section */}
       <div className="MaterialStock-controls-section">

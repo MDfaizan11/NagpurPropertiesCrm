@@ -1,0 +1,132 @@
+.MaterialOrderSummary-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  font-family: Arial, sans-serif;
+}
+
+.MaterialOrderSummary-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.MaterialOrderSummary-no-data {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 2rem;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+}
+
+.MaterialOrderSummary-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.MaterialOrderSummary-table-header {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: 600;
+  padding: 0.75rem;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.MaterialOrderSummary-table-row {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.MaterialOrderSummary-table-row:last-child {
+  border-bottom: none;
+}
+
+.MaterialOrderSummary-table-cell {
+  padding: 0.75rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.MaterialOrderSummary-action-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin: 0 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.MaterialOrderSummary-action-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Responsive styles for mobile (up to 600px) */
+@media (max-width: 600px) {
+  .MaterialOrderSummary-container {
+    padding: 1rem;
+  }
+
+  .MaterialOrderSummary-title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .MaterialOrderSummary-no-data {
+    font-size: 1rem;
+    padding: 1.5rem;
+  }
+
+  .MaterialOrderSummary-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .MaterialOrderSummary-table-header,
+  .MaterialOrderSummary-table-cell {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+    min-width: 100px;
+  }
+
+  .MaterialOrderSummary-action-button {
+    padding: 0.3rem;
+  }
+}
+
+/* Responsive styles for tablets (601px to 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .MaterialOrderSummary-container {
+    padding: 1.25rem;
+  }
+
+  .MaterialOrderSummary-title {
+    font-size: 1.6rem;
+  }
+
+  .MaterialOrderSummary-table-header,
+  .MaterialOrderSummary-table-cell {
+    font-size: 0.9rem;
+    padding: 0.65rem;
+  }
+}
+
+/* Styles for desktop (1025px and above) */
+@media (min-width: 1025px) {
+  .MaterialOrderSummary-table-header,
+  .MaterialOrderSummary-table-cell {
+    padding: 1rem;
+  }
+
+  .MaterialOrderSummary-action-button {
+    padding: 0.6rem;
+  }
+}

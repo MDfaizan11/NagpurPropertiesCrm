@@ -89,7 +89,8 @@
   cursor: pointer;
   transition: all var(--transition-normal);
   border: none;
-  background: var(--primary-gradient);
+  /* background: var(--primary-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   box-shadow: var(--shadow-sm);
   font-family: var(--font-primary);
@@ -240,7 +241,8 @@
 }
 
 .getdepartment-add-button {
-  background: var(--success-gradient);
+  /* background: var(--success-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   box-shadow: var(--shadow-sm);
 }
@@ -462,7 +464,8 @@
 }
 
 .getdepartment-modal-button {
-  background: var(--success-gradient);
+  /* background: var(--success-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   box-shadow: var(--shadow-sm);
 }

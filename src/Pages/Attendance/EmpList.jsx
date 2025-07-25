@@ -162,7 +162,7 @@ function EmpList() {
                     <option value="NOT_WORKING_RESIGNED">Resigned</option>
                     <option value="NOT_WORKING_TERMINATED">Terminated</option>
                     <option value="NOT_WORKING_RETIRED">Retired</option>
-                    <option value="ON_LEAVE">On Leave</option>
+                    {/* <option value="ON_LEAVE">On Leave</option> */}
                   </select>
                   {loadingStatusId === emp.employeeId && (
                     <span className="EmpList-statusUpdating">Updating...</span>

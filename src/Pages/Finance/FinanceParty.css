@@ -42,8 +42,8 @@
 
 /* Header Section */
 .financeparty-header {
-  background: var(--header-gradient);
-  padding: 2rem 2rem;
+  /* background: var(--header-gradient); */
+  /* padding: 2rem 2rem; */
   margin-bottom: 2rem;
   position: relative;
   overflow: hidden;
@@ -63,12 +63,13 @@
 .financeparty-title {
   font-size: 2rem;
   font-weight: 700;
-  color: white;
+  color: rgb(0, 0, 0);
   margin: 0 0 0.5rem 0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
 }
 
 /* Controls Section */
@@ -126,7 +127,8 @@
 }
 
 .financeparty-add-btn {
-  background: var(--primary-gradient);
+  /* background: var(--primary-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -468,8 +470,8 @@
 }
 
 .financeparty-edit-btn {
-  background: var(--warm-gradient);
-  color: white;
+  /* background: var(--warm-gradient); */
+  color: rgb(0, 0, 0);
 }
 
 .financeparty-edit-btn:hover {
@@ -478,8 +480,8 @@
 }
 
 .financeparty-view-btn {
-  background: var(--cold-gradient);
-  color: white;
+  /* background: var(--cold-gradient); */
+  color: rgb(0, 0, 0);
 }
 
 .financeparty-view-btn:hover {
@@ -488,8 +490,8 @@
 }
 
 .financeparty-delete-btn {
-  background: var(--hot-gradient);
-  color: white;
+  /* background: var(--hot-gradient); */
+  color: rgb(0, 0, 0);
 }
 
 .financeparty-delete-btn:hover {

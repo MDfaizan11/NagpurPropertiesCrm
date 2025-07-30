@@ -1,0 +1,10 @@
+.registration_button {
+  padding: 10px 15px;
+  margin-left: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  color: white;
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
+  cursor: pointer;
+}

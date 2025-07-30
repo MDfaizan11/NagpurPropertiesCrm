@@ -278,14 +278,14 @@ export default function Header({
       )}
 
       <div className="search-container">
-        <Search className="search-icon" size={20} />
+        {/* <Search className="search-icon" size={20} />
         <input
           type="text"
           placeholder="Search modules, projects, tasks..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="search-input"
-        />
+        /> */}
       </div>
 
       <div className="header-actions">

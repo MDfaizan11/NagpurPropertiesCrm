@@ -4,17 +4,21 @@ import { BASE_URL } from "../../config";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Loader2,
+  AlertCircle,
+  Search,
   User,
   FileText,
   Edit,
   Trash2,
   XCircle,
-  ChevronDown,
   ChevronUp,
+  ChevronDown,
   X,
-  Search,
   Filter,
+  Timer,
+  Eye,
 } from "lucide-react";
+
 import "./plotDetails.css";
 import { useRef } from "react";
 import * as html2pdf from "html2pdf.js";
@@ -679,7 +683,9 @@ function PlotDetails() {
             </div>
           ) : error ? (
             <div className="plotDetailsError">
-              <div className="plotDetailsErrorIcon">!</div>
+              <div className="plotDetailsErrorIcon">
+                <AlertCircle />
+              </div>
               <h3>Something went wrong</h3>
               <p>{error}</p>
               <button
@@ -699,7 +705,9 @@ function PlotDetails() {
             <>
               {filteredData.length === 0 ? (
                 <div className="plotDetailsNoResults">
-                  <div className="plotDetailsNoResultsIcon">🔍</div>
+                  <div className="plotDetailsNoResultsIcon">
+                    <Search />
+                  </div>
                   <h3>No matching plots found</h3>
                   <p>Try adjusting your search or filter criteria</p>
                   <button
@@ -716,7 +724,6 @@ function PlotDetails() {
                 <div className="plotDetailsGrid">
                   {filteredData.map((item, index) => (
                     <div key={index} className="plotDetailsCard">
-                      {/* <div className="plotDetailsCardTopGradient"></div> */}
                       <div
                         className={`plotDetailsStatusBadge ${
                           item.layoutStatus === "BOOKED"
@@ -743,70 +750,66 @@ function PlotDetails() {
                         </div>
                       </div>
 
-                      {/* Primary Action Button */}
-                      {item.layoutStatus === "BOOKED" ? (
-                        <button
-                          className="plotDetailsActionBtn plotDetailsViewCustomerBtn plotDetailsPrimaryAction"
-                          onClick={() => handleViewCustomer(item)}
-                        >
-                          <User className="plotDetailsBtnIcon" /> View Customer
-                          Details
-                        </button>
-                      ) : (
-                        <button
-                          className="plotDetailsActionBtn plotDetailsAddCustomerBtn plotDetailsPrimaryAction"
-                          onClick={() => handleAddCustomer(item.id)}
-                        >
-                          <User className="plotDetailsBtnIcon" /> Add Customer
-                        </button>
-                      )}
-
-                      {/* Show More/Less Button */}
-                      <button
-                        className="plotDetailsShowMoreBtn"
-                        onClick={() => toggleCardExpansion(item.plotNo)}
-                      >
-                        {expandedCards[item.plotNo] ? (
-                          <>
-                            Show Less{" "}
-                            <ChevronUp className="plotDetailsBtnIcon" />
-                          </>
+                      <div className="plotDetailsButtonContainer">
+                        {item.layoutStatus === "BOOKED" ? (
+                          <button
+                            className="plotDetailsActionBtn plotDetailsViewCustomerBtn"
+                            onClick={() => handleViewCustomer(item)}
+                            title="View Customer"
+                          >
+                            <Eye className="plotDetailsBtnIcon" />
+                          </button>
                         ) : (
-                          <>
-                            Show More{" "}
-                            <ChevronDown className="plotDetailsBtnIcon" />
-                          </>
+                          <button
+                            className="plotDetailsActionBtn plotDetailsAddCustomerBtn"
+                            onClick={() => handleAddCustomer(item.id)}
+                            title="Add Customer"
+                          >
+                            <User className="plotDetailsBtnIcon" /> 
+                          </button>
                         )}
-                      </button>
+                        <button
+                          className="plotDetailsShowMoreBtn"
+                          onClick={() => toggleCardExpansion(item.plotNo)}
+                        >
+                          {expandedCards[item.plotNo] ? (
+                            <ChevronUp className="plotDetailsBtnIcon" />
+                          ) : (
+                            <ChevronDown className="plotDetailsBtnIcon" />
+                          )}
+                        </button>
+                      </div>
 
-                      {/* Additional Action Buttons */}
                       {expandedCards[item.plotNo] && (
-                        <div className="plotDetailsActionButtonsGrid">
+                        <div className="plotDetailsActionPopup">
                           <button
                             className="plotDetailsActionBtn plotDetailsAddQuotationBtn"
                             onClick={() => handleAddQuotation(item.id)}
+                            title="Add Quatation"
                           >
-                            <FileText className="plotDetailsBtnIcon" /> Add
-                            Quotation
+                            <FileText className="plotDetailsBtnIcon" />
                           </button>
                           <button
                             className="plotDetailsActionBtn plotDetailsViewQuotationBtn"
                             onClick={() => handleViewQuotation(item.id)}
+                            title=" View
+                            Quotation"
                           >
-                            <FileText className="plotDetailsBtnIcon" /> View
-                            Quotation
+                            <FileText className="plotDetailsBtnIcon" />
                           </button>
                           <button
                             className="plotDetailsActionBtn plotDetailsEditBtn"
                             onClick={() => handleEditPlot(item.id)}
+                            title=" Edit"
                           >
-                            <Edit className="plotDetailsBtnIcon" /> Edit
+                            <Edit className="plotDetailsBtnIcon" />
                           </button>
                           <button
                             className="plotDetailsActionBtn plotDetailsDeleteBtn"
                             onClick={() => handleDeletePlot(item.id)}
+                            title="Delete"
                           >
-                            <Trash2 className="plotDetailsBtnIcon" /> Delete
+                            <Trash2 className="plotDetailsBtnIcon" />
                           </button>
                           {item.layoutStatus === "BOOKED" && (
                             <button
@@ -816,9 +819,10 @@ function PlotDetails() {
                                   item?.bookings[item.bookings.length - 1]?.id
                                 )
                               }
+                              title="Cancel
+                              Plot"
                             >
-                              <XCircle className="plotDetailsBtnIcon" /> Cancel
-                              Plot
+                              <XCircle className="plotDetailsBtnIcon" />
                             </button>
                           )}
                           <button
@@ -826,8 +830,9 @@ function PlotDetails() {
                             onClick={() =>
                               handleShowCancelBookingHistory(item.id)
                             }
+                            title="   Booking History"
                           >
-                            Booking History
+                            <Timer className="plotDetailsBtnIcon" />
                           </button>
                         </div>
                       )}

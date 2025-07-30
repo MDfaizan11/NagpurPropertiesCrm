@@ -522,7 +522,7 @@ body {
 .lead-customer-actions {
   display: flex;
   gap: 10px;
-  border-top: 1px solid var(--lead-color-border);
+  /* border-top: 1px solid var(--lead-color-border); */
   padding-top: 15px;
 }
 
@@ -543,23 +543,23 @@ body {
 }
 
 .lead-view-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
   color: white;
 }
 
 .lead-call-btn {
-  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  /* background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); */
   color: white;
 }
 
 .lead-whatsapp-btn {
-  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  /* background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); */
   color: white;
 }
 
 .lead-action-btn:hover {
   transform: translateY(-2px);
-  box-shadow: var(--lead-shadow-sm);
+  /* box-shadow: var(--lead-shadow-sm); */
 }
 
 /* Detail Popup Styles */
@@ -626,7 +626,7 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #8b5cf6;
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -654,6 +654,7 @@ body {
   align-items: center;
   gap: 15px;
   flex-wrap: wrap;
+  margin-right: 21px;
 }
 
 .lead-status-badge-popup {
@@ -673,7 +674,7 @@ body {
 }
 
 .lead-popup-btn {
-  padding: 8px 16px;
+  padding: 6px 14px;
   border: none;
   border-radius: 6px;
   font-size: clamp(0.8rem, 2vw, 0.9rem);
@@ -684,7 +685,7 @@ body {
 }
 
 .lead-call-btn-new {
-  background: #10b981;
+  /* background: #10b981; */
   color: white;
 }
 
@@ -694,7 +695,7 @@ body {
 }
 
 .lead-whatsapp-btn-new {
-  background: #25d366;
+  /* background: #25d366; */
   color: white;
 }
 
@@ -991,11 +992,11 @@ body {
 
 .lead-remarks-textarea:focus {
   outline: none;
-  border-color: #8b5cf6;
+  /* border-color: #8b5cf6; */
 }
 
 .lead-add-remark-btn-new {
-  background: #8b5cf6;
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -1007,7 +1008,7 @@ body {
 }
 
 .lead-add-remark-btn-new:hover {
-  background: #7c3aed;
+  /* background: #7c3aed; */
 }
 
 /* Lead Logs Table */

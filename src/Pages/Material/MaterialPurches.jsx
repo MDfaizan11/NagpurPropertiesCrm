@@ -2496,9 +2496,9 @@ function MaterialPurches() {
                   {orderItems.map((item, index) => (
                     <div key={index} className="MaterialPurches-orderItemCard">
                       <div className="MaterialPurches-orderItemHeader">
-                        <span className="MaterialPurches-itemNumber">
+                        {/* <span className="MaterialPurches-itemNumber">
                           Item {index + 1}
-                        </span>
+                        </span> */}
                         {!isEditMode && orderItems.length > 1 && (
                           <button
                             type="button"

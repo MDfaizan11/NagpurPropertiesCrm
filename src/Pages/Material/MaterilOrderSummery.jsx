@@ -3,12 +3,17 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { BASE_URL } from "../../config";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, X } from "lucide-react";
 
 function MaterialOrderSummary() {
   const { token } = JSON.parse(localStorage.getItem("NagpurProperties")) || {};
   const { id, name } = useParams();
   const [materialOrderSummary, setMaterialOrderSummary] = useState([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const [vehicleNumber, setVehicleNumber] = useState("");
+  const [deliveredQty, setDeliveredQty] = useState("");
+  const [formErrors, setFormErrors] = useState({});
 
   useEffect(() => {
     async function getAllMaterialOrderSummary() {
@@ -22,13 +27,14 @@ function MaterialOrderSummary() {
             },
           }
         );
+        console.log(response.data);
         setMaterialOrderSummary(response.data);
       } catch (error) {
         console.error("Error fetching material order summary:", error);
       }
     }
     getAllMaterialOrderSummary();
-  }, [id]);
+  }, [id, token]);
 
   // Function to format date to DD-MM-YYYY
   const formatDate = (dateString) => {
@@ -62,15 +68,92 @@ function MaterialOrderSummary() {
   };
 
   // Handle edit button click
-  const handleEdit = (itemId) => {
-    console.log(`Edit item with ID: ${itemId}`);
-    // Add your edit logic here (e.g., open a modal or navigate to an edit page)
+  const handleEdit = (item) => {
+    console.log(item);
+    // setEditItem({
+    //   id: item.id,
+    //   deliveredQty: item.deliveredQty || "",
+    //   vehicleNo: item.vehicleNo || "",
+    // });
+    setEditId(item.id);
+    setVehicleNumber(item.vehicleNo || "");
+    setDeliveredQty(item.deliveredQty || "");
+    setIsEditModalOpen(true);
+  };
+
+  // Handle form input changes
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const body = {
+      deliveredQty: deliveredQty,
+      vehicleNo: vehicleNumber,
+    };
+    try {
+      const response = await axiosInstance.put(
+        `${BASE_URL}/deliveries/delivery-log/delivery-log/${editId}`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200) {
+        setMaterialOrderSummary((prev) =>
+          prev.map((item) =>
+            item.id === editId
+              ? { ...item, deliveredQty, vehicleNo: vehicleNumber }
+              : item
+          )
+        );
+        alert("Item updated successfully");
+        closeModal();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Handle delete button click
-  const handleDelete = (itemId) => {
-    console.log(`Delete item with ID: ${itemId}`);
-    // Add your delete logic here (e.g., API call to delete the item)
+  const handleDelete = async (itemId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
+    if (!confirmDelete) return;
+    try {
+      const response = await axiosInstance.delete(
+        `${BASE_URL}/deliveries/delivery-log/${itemId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200) {
+        setMaterialOrderSummary((prev) =>
+          prev.filter((item) => item.id !== itemId)
+        );
+        alert("Item deleted successfully");
+      } else {
+        alert("Failed to delete item");
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      alert("Error deleting item");
+    }
+  };
+
+  // Close modal
+  const closeModal = () => {
+    setIsEditModalOpen(false);
+    setEditId(null);
+    setVehicleNumber("");
+    setDeliveredQty("");
+    setFormErrors({});
   };
 
   return (
@@ -107,7 +190,7 @@ function MaterialOrderSummary() {
                 <td className="MaterialOrderSummary-table-cell MaterialOrderSummary-actions">
                   <button
                     className="MaterialOrderSummary-action-button MaterialOrderSummary-edit-button"
-                    onClick={() => handleEdit(item.id)}
+                    onClick={() => handleEdit(item)}
                     title="Edit"
                   >
                     <Pencil size={16} />
@@ -124,6 +207,87 @@ function MaterialOrderSummary() {
             ))}
           </tbody>
         </table>
+      )}
+
+      {isEditModalOpen && (
+        <div className="MaterialOrderSummary-modal-overlay">
+          <div className="MaterialOrderSummary-modal">
+            <div className="MaterialOrderSummary-modal-header">
+              <h2 className="MaterialOrderSummary-modal-title">
+                Edit Delivery Log
+              </h2>
+              <button
+                className="MaterialOrderSummary-action-button MaterialOrderSummary-close-button"
+                onClick={closeModal}
+                title="Close"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <form onSubmit={handleSubmit} className="MaterialOrderSummary-form">
+              <div className="MaterialOrderSummary-form-group">
+                <label
+                  className="MaterialOrderSummary-form-label"
+                  htmlFor="deliveredQty"
+                >
+                  Quantity
+                </label>
+                <input
+                  type="number"
+                  id="deliveredQty"
+                  name="deliveredQty"
+                  value={deliveredQty}
+                  onChange={(e) => setDeliveredQty(e.target.value)}
+                  className="MaterialOrderSummary-form-input"
+                  min="1"
+                  required
+                />
+                {formErrors.deliveredQty && (
+                  <span className="MaterialOrderSummary-form-error">
+                    {formErrors.deliveredQty}
+                  </span>
+                )}
+              </div>
+              <div className="MaterialOrderSummary-form-group">
+                <label
+                  className="MaterialOrderSummary-form-label"
+                  htmlFor="vehicleNo"
+                >
+                  Vehicle Number
+                </label>
+                <input
+                  type="text"
+                  id="vehicleNo"
+                  name="vehicleNo"
+                  value={vehicleNumber}
+                  onChange={(e) => setVehicleNumber(e.target.value)}
+                  className="MaterialOrderSummary-form-input"
+                  required
+                />
+                {formErrors.vehicleNo && (
+                  <span className="MaterialOrderSummary-form-error">
+                    {formErrors.vehicleNo}
+                  </span>
+                )}
+              </div>
+              <div className="MaterialOrderSummary-form-actions">
+                <button
+                  type="button"
+                  className="MaterialOrderSummary-action-button MaterialOrderSummary-cancel-button"
+                  onClick={closeModal}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="MaterialOrderSummary-action-button MaterialOrderSummary-submit-button"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
     </div>
   );

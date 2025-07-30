@@ -1,4 +1,9 @@
 import "./App.css";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Lead from "./Pages/Lead/Lead";
 import Land from "./Pages/Land/Land";
@@ -42,11 +47,33 @@ import MaterialStock from "./Pages/Material/MaterialStock";
 import Holiday from "../src/Pages/Employee/Holiday";
 import Registration from "./Pages/Registration/Registration";
 import MaterilOrderSummery from "./Pages/Material/MaterilOrderSummery";
+import {
+  getFcmToken,
+  requestNotificationPermission,
+  setupForegroundMessaging,
+} from "./firebase/firebase-messaging";
+
+import Engineer from "./Pages/Registration/Engineer";
+import Vendor from "./Pages/Registration/Vendor";
 function App() {
+  useEffect(() => {
+    async function initFcm() {
+      const permission = await requestNotificationPermission();
+      if (permission === "granted") {
+        const token = await getFcmToken();
+        console.log("FCM Token:", token);
+        if (token) {
+          setupForegroundMessaging();
+        }
+      }
+    }
+    initFcm();
+  }, []);
   return (
     <>
       <>
         <BrowserRouter>
+          {/* <ToastContainer position="top-right" autoClose={5000} /> */}
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route element={<Protected />}>
@@ -130,6 +157,8 @@ function App() {
                 <Route path="/monthlyReport" element={<MonthlyReport />} />
                 <Route path="/holiday" element={<Holiday />} />
                 <Route path="/registration" element={<Registration />} />
+                <Route path="/engineer" element={<Engineer />} />
+                <Route path="/Vendor" element={<Vendor />} />
               </Route>
             </Route>
           </Routes>

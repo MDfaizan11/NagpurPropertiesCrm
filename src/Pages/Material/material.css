@@ -83,7 +83,8 @@ body {
 }
 
 .material-tab.active {
-  background: var(--success-gradient);
+  /* background: var(--success-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   font-weight: 600;
 }
@@ -302,7 +303,7 @@ body {
 
 .material-card:hover {
   transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
+  /* box-shadow: var(--shadow-lg); */
 }
 
 .material-card:hover .material-card-overlay {
@@ -315,7 +316,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--primary-gradient);
+  /* background: var(--primary-gradient); */
   opacity: 0;
   transition: all var(--transition-normal);
   pointer-events: none;
@@ -344,10 +345,11 @@ body {
 }
 
 .material-status-success {
-  background: linear-gradient(to right, #6a11cb, #2575fc);
+  /* background: linear-gradient(to right, #6a11cb, #2575fc);. */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border: none;
-  box-shadow: 0 4px 10px rgba(106, 17, 203, 0.2);
+  /* box-shadow: 0 4px 10px rgba(106, 17, 203, 0.2); */
 }
 
 .material-status-info {
@@ -399,7 +401,7 @@ body {
 }
 
 .material-detail-item:hover {
-  background: var(--color-bg-secondary);
+  /* background: var(--color-bg-secondary); */
   transform: translateX(5px);
 }
 

@@ -1,47 +1,3 @@
-/* .land_search_section {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 25px;
-}
-.Land_search_bar {
-  width: 550px;
-  padding: 15px 20px 15px 50px;
-  border-radius: var(--border-radius-xl, 8px);
-  border: 2px solid var(--color-border, #ccc);
-  font-size: 1rem;
-  background-color: var(--color-bg-primary, #fff);
-  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1));
-  transition: all var(--transition-normal, 0.3s ease);
-  outline: none;
-}
-
-.Land_search_bar:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
-}
-
-.AddLand_button_wrapper {
-  display: flex;
-}
-.land_add_property_button {
-  background: var(--secondary-gradient);
-  color: white;
-  padding: 12px 25px;
-  border-radius: var(--border-radius-md);
-  border: none;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 8px;
-  transition: all var(--transition-normal);
-  box-shadow: var(--shadow-sm);
-} */
-
-/* Land Management System Styles */
 :root {
   --land-primary-color: #6366f1;
   --land-primary-dark: #4f46e5;
@@ -217,12 +173,6 @@ body {
 .land-title {
   font-size: 1.5rem;
   font-weight: 700;
-  /* margin-bottom: 1rem; */
-  /* background: linear-gradient(45deg, #fff, #e0e7ff); */
-  /* -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text; */
-  /* text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
   color: black;
 }
 
@@ -1536,89 +1486,178 @@ body {
 }
 
 .Add_newPatner_form {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  background: var(--color-bg-primary);
+  padding: 1.5rem;
+  border-radius: var(--border-radius-md);
+  width: 100%;
+  max-width: 500px;
+  box-shadow: var(--shadow-md);
   position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: auto;
-  justify-content: center;
 }
 
-/* Circular close button */
 .Add_newPatner_popup_form_close_button {
   position: absolute;
-  top: 10px;
-  right: 15px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: #f44336;
+  top: 1rem;
+  right: 1rem;
+  background: var(--color-danger);
   color: white;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  transition: background 0.3s ease;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
 }
 
 .Add_newPatner_popup_form_close_button:hover {
   background: #d32f2f;
+  transform: scale(1.1);
 }
 
-/* Input fields */
-.Add_newPatner_form_input {
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+.Add_newPatner_popup_form_close_button svg {
+  width: 16px;
+  height: 16px;
 }
 
-/* Focus state */
-.Add_newPatner_form_input:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+.Add_newPatner_form_title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
-/* Submit button */
-.Add_newPatner_form_submit_button {
-  padding: 0.75rem;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 8px;
-  font-size: 1rem;
+.partner_checkbox_container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.partner_checkbox_label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.partner_checkbox_list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  background: var(--color-bg-secondary);
+}
+
+.partner_checkbox_item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  transition: var(--transition-fast);
+}
+
+.partner_checkbox_item:hover {
+  background: var(--color-bg-primary);
+}
+
+.partner_checkbox_input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
   cursor: pointer;
-  transition: background 0.3s ease;
+}
+
+.partner_checkbox_text {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.no_partners_text {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.Add_newPatner_form_submit_button {
+  padding: 0.8rem;
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-sm);
 }
 
 .Add_newPatner_form_submit_button:hover {
-  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
-/* Responsive behavior */
-@media (max-width: 500px) {
+/* Responsive Design */
+@media (max-width: 768px) {
   .Add_newPatner_form {
-    padding: 1.5rem 1rem;
-    width: 95%;
+    margin: 0.5rem;
+    padding: 1rem;
+    max-width: 90%;
   }
 
-  .Add_newPatner_form_input {
-    font-size: 0.9rem;
+  .Add_newPatner_form_title {
+    font-size: 1.3rem;
+  }
+
+  .partner_checkbox_list {
+    max-height: 250px;
+  }
+
+  .partner_checkbox_item {
+    padding: 0.4rem;
+  }
+
+  .partner_checkbox_text {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .Add_newPatner_form {
+    padding: 0.8rem;
+  }
+
+  .Add_newPatner_form_title {
+    font-size: 1.2rem;
+  }
+
+  .partner_checkbox_label {
+    font-size: 0.85rem;
+  }
+
+  .partner_checkbox_input {
+    width: 14px;
+    height: 14px;
+  }
+
+  .partner_checkbox_text {
+    font-size: 0.8rem;
   }
 
   .Add_newPatner_form_submit_button {
-    font-size: 0.95rem;
+    padding: 0.6rem;
+    font-size: 0.85rem;
   }
 }
 

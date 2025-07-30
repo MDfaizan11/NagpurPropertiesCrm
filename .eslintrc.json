@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "react-app",
+    "react-app/jest"
+  ],
+  "env": {
+    "browser": true,
+    "serviceworker": true
+  },
+  "globals": {
+    "importScripts": "readonly",
+    "self": "readonly",
+    "firebase": "readonly"
+  }
+}

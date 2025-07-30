@@ -967,16 +967,23 @@ function Land() {
     }
   }
 
+  const handleCheckboxChange = (partnerId) => {
+    setSelectedPartner((prev) =>
+      prev.includes(partnerId)
+        ? prev.filter((id) => id !== partnerId)
+        : [...prev, partnerId]
+    );
+  };
   return (
     <>
       {/* Header Section */}
       <div className="land-header">
         <div className="land-header-content">
           <h1 className="land-title">Land Management System</h1>
-          <p className="land-subtitle">
+          {/* <p className="land-subtitle">
             Comprehensive property management with advanced analytics and
             seamless tracking
-          </p>
+          </p> */}
         </div>
       </div>
 
@@ -2501,7 +2508,7 @@ function Land() {
       {showAddpatnerForm && (
         <>
           <div className="Add_newPatner_popup_form_overlay">
-            <form className="Add_newPatner_form" onSubmit={handleAddPatner}>
+            {/* <form className="Add_newPatner_form" onSubmit={handleAddPatner}>
               <button
                 type="button"
                 onClick={() => setShowAddPatnerForm(false)}
@@ -2541,6 +2548,51 @@ function Land() {
                 type="submit"
               >
                 Add Patner
+              </button>
+            </form> */}
+
+            <form className="Add_newPatner_form" onSubmit={handleAddPatner}>
+              <button
+                type="button"
+                onClick={() => setShowAddPatnerForm(false)}
+                className="Add_newPatner_popup_form_close_button"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+              <h2 className="Add_newPatner_form_title">Add New Partner</h2>
+              <div className="partner_checkbox_container">
+                <label className="partner_checkbox_label">
+                  Select Partner(s)
+                </label>
+                <div className="partner_checkbox_list">
+                  {partnersdata.length > 0 ? (
+                    partnersdata.map((partner) => (
+                      <label key={partner.id} className="partner_checkbox_item">
+                        <input
+                          type="checkbox"
+                          value={partner.id}
+                          checked={SelectedPartner.includes(partner.id)}
+                          onChange={() => handleCheckboxChange(partner.id)}
+                          className="partner_checkbox_input"
+                        />
+                        <span className="partner_checkbox_text">
+                          {partner.name}
+                        </span>
+                      </label>
+                    ))
+                  ) : (
+                    <p className="no_partners_text">No partners available</p>
+                  )}
+                </div>
+              </div>
+              <button
+                className="Add_newPatner_form_submit_button"
+                type="submit"
+              >
+                Add Partner
               </button>
             </form>
           </div>

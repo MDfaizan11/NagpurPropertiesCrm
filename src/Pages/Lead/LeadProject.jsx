@@ -226,9 +226,9 @@ function LeadProject() {
         <div className="leadproject-header">
           <div className="header-content">
             <h1 className="leadproject-title">Lead Dashboard</h1>
-            <p className="leadproject-subtitle">
+            {/* <p className="leadproject-subtitle">
               Manage and track all your property development projects
-            </p>
+            </p> */}
           </div>
         </div>
 

@@ -1,11 +1,17 @@
-"use client";
-
 import { useCallback, useEffect, useState } from "react";
 import "../Lead/lead.css";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { BASE_URL } from "../../config";
-
+import {
+  Eye,
+  Phone,
+  MapPin,
+  ChartNoAxesCombined,
+  SquarePen,
+  Trash,
+} from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 const Lead = () => {
   const { ProjectId, ProjectName } = useParams();
   const userData = JSON.parse(localStorage.getItem("NagpurProperties")) || {};
@@ -161,7 +167,7 @@ const Lead = () => {
             "Content-Type": "application/json",
           },
         });
-
+        console.log(response.data);
         setProjectLeads(response.data || []);
       } catch (error) {
         console.error("Error fetching leads:", error);
@@ -664,17 +670,41 @@ const Lead = () => {
                   <div className="lead-customer-card-body">
                     <div className="lead-customer-details">
                       <div className="lead-detail-row">
-                        <span className="lead-detail-icon">📧</span>
+                        <span className="lead-detail-icon">
+                          <Phone
+                            style={{
+                              color: "black",
+                              height: "16px",
+                              width: "16px",
+                            }}
+                          />
+                        </span>
                         <span className="lead-detail-text">{lead.phone}</span>
                       </div>
                       <div className="lead-detail-row">
-                        <span className="lead-detail-icon">📍</span>
+                        <span className="lead-detail-icon">
+                          <MapPin
+                            style={{
+                              color: "black",
+                              height: "16px",
+                              width: "16px",
+                            }}
+                          />
+                        </span>
                         <span className="lead-detail-text">
                           {lead.city}, {lead.area}
                         </span>
                       </div>
                       <div className="lead-detail-row">
-                        <span className="lead-detail-icon">📊</span>
+                        <span className="lead-detail-icon">
+                          <ChartNoAxesCombined
+                            style={{
+                              color: "black",
+                              height: "16px",
+                              width: "16px",
+                            }}
+                          />
+                        </span>
                         <span className="lead-detail-text">{lead.status}</span>
                       </div>
                     </div>
@@ -683,19 +713,21 @@ const Lead = () => {
                         className="lead-action-btn lead-view-btn"
                         onClick={() => handleViewDetails(lead)}
                       >
-                        View
+                        <Eye style={{ color: "black" }} />
                       </button>
                       <button
                         className="lead-action-btn lead-call-btn"
                         onClick={() => handleCall(lead.phone)}
                       >
-                        📞
+                        <Phone style={{ color: "black" }} />
                       </button>
                       <button
                         className="lead-action-btn lead-whatsapp-btn"
                         onClick={() => handleWhatsApp(lead.phone)}
                       >
-                        💬
+                        <FaWhatsapp
+                          style={{ fontSize: "24px", color: "black" }}
+                        />
                       </button>
                     </div>
                   </div>
@@ -801,19 +833,19 @@ const Lead = () => {
                     className="lead-popup-btn lead-call-btn-new"
                     onClick={() => handleCall(selectedLeadForDetail.phone)}
                   >
-                    📞 Call
+                    <Phone style={{ color: "black" }} />
                   </button>
-                  <button
+                  {/* <button
                     className="lead-popup-btn lead-email-btn-new"
                     onClick={() => handleEmail(selectedLeadForDetail.email)}
                   >
                     📧 Email
-                  </button>
+                  </button> */}
                   <button
                     className="lead-popup-btn lead-whatsapp-btn-new"
                     onClick={() => handleWhatsApp(selectedLeadForDetail.phone)}
                   >
-                    💬 WhatsApp
+                    <FaWhatsapp style={{ fontSize: "24px", color: "black" }} />
                   </button>
                 </div>
               </div>
@@ -881,23 +913,30 @@ const Lead = () => {
                         {selectedLeadForDetail.siteName}
                       </span>
                     </div>
-                    <div className="lead-property-item">
+                    {/* <div className="lead-property-item">
                       <span className="lead-property-icon">₹</span>
                       <span className="lead-property-text">
                         {selectedLeadForDetail.budget || "20"}
                       </span>
-                    </div>
+                    </div> */}
                     <div className="lead-property-item">
                       <span className="lead-property-icon">👤</span>
                       <span className="lead-property-text">
                         Assigned to: {selectedLeadForDetail.executedName}
                       </span>
                     </div>
+                    <div className="lead-property-item">
+                      <span className="lead-property-icon">👤</span>
+                      <span className="lead-property-text">
+                        Budget :
+                        {selectedLeadForDetail.budget?.toLocaleString("en-GB")}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
                 {/* Timeline */}
-                <div className="lead-popup-section-new">
+                {/* <div className="lead-popup-section-new">
                   <div className="lead-section-header-new">
                     <span className="lead-section-icon">📅</span>
                     <h3>Timeline</h3>
@@ -932,11 +971,11 @@ const Lead = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               {/* Middle Column - Call History */}
-              <div className="lead-popup-column">
+              {/* <div className="lead-popup-column">
                 <div className="lead-popup-section-new">
                   <div className="lead-section-header-new">
                     <span className="lead-section-icon">📞</span>
@@ -962,7 +1001,7 @@ const Lead = () => {
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* Right Column - Remarks & Notes */}
               <div className="lead-popup-column">
@@ -972,12 +1011,12 @@ const Lead = () => {
                     <h3>Remarks & Notes</h3>
                   </div>
                   <div className="lead-remarks-section-new">
-                    <textarea
+                    {/* <textarea
                       placeholder="Add a remark..."
                       className="lead-remarks-textarea"
                       rows="4"
                       defaultValue={selectedLeadForDetail.remark}
-                    ></textarea>
+                    ></textarea> */}
                     <button
                       className="lead-add-remark-btn-new"
                       onClick={() => {
@@ -1045,7 +1084,7 @@ const Lead = () => {
                   handleUpdateLead(selectedLeadForDetail.id);
                 }}
               >
-                ✏️ Edit Lead
+                <SquarePen />
               </button>
               <button
                 className="lead-popup-bottom-btn lead-delete-btn-bottom"
@@ -1054,7 +1093,7 @@ const Lead = () => {
                   handleDeleteLead(selectedLeadForDetail.id);
                 }}
               >
-                🗑️ Delete Lead
+                <Trash />
               </button>
             </div>
           </div>

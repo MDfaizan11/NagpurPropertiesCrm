@@ -3,11 +3,11 @@ import "./material.css";
 import axiosInstance from "../../utils/axiosInstance";
 import { BASE_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
-import { Search, Eye, Edit, Trash2, Plus } from "lucide-react";
 import MaterialPurches from "./MaterialPurches";
 import VehicleMaterial from "./VehicleMaterial";
 import MaterialStock from "./MaterialStock";
 import { Package, Wrench, Truck, TruckElectric } from "lucide-react";
+import StockSummary from "./StockSummary";
 function Material() {
   const navigate = useNavigate();
   const { token, role, allowedSite } =
@@ -186,6 +186,17 @@ function Material() {
             </span>
             Stock Entry
           </button>
+          <button
+            className={`material-tab ${
+              activeTab === "stockSummary" ? "active" : ""
+            }`}
+            onClick={() => setActiveTab("stockSummary")}
+          >
+            <span className="material-tab-icon">
+              <Package />
+            </span>
+            Stock Summary
+          </button>
         </div>
 
         {/* Overview Tab Content */}
@@ -262,6 +273,11 @@ function Material() {
         {activeTab === "stock-Transfer" && (
           <>
             <MaterialStock />
+          </>
+        )}
+        {activeTab === "stockSummary" && (
+          <>
+            <StockSummary />
           </>
         )}
       </div>

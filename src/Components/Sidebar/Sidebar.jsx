@@ -979,6 +979,11 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           icon: <FileText size={18} />,
           path: "/MaterialStock",
         },
+        {
+          name: "Stock Summary",
+          icon: <Wrench size={18} />,
+          path: "/StockSummary",
+        },
       ],
     },
     {
@@ -1121,7 +1126,11 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 if (actualRole === "Partner")
                   return section.name === "Land Management";
                 if (actualRole === "Employee")
-                  return section.name === "Task Management";
+                  return ["Task Management", "Lead Management"].includes(
+                    section.name
+                  );
+                if (actualRole === "Engineer")
+                  return section.name === "Material Management";
                 return false;
               })
               .map((section) => (

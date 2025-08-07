@@ -335,9 +335,6 @@ export default function SectionCard({
           >
             <span>Manage</span>
           </button>
-          {/* <button className="card-action-button secondary">
-            <ExternalLink size={16} />
-          </button> */}
         </div>
       </div>
     </div>

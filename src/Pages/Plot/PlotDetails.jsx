@@ -765,7 +765,7 @@ function PlotDetails() {
                             onClick={() => handleAddCustomer(item.id)}
                             title="Add Customer"
                           >
-                            <User className="plotDetailsBtnIcon" /> 
+                            <User className="plotDetailsBtnIcon" />
                           </button>
                         )}
                         <button
@@ -795,7 +795,7 @@ function PlotDetails() {
                             title=" View
                             Quotation"
                           >
-                            <FileText className="plotDetailsBtnIcon" />
+                            <Eye className="plotDetailsBtnIcon" />
                           </button>
                           <button
                             className="plotDetailsActionBtn plotDetailsEditBtn"

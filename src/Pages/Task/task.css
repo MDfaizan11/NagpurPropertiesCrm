@@ -364,8 +364,7 @@
   box-shadow: var(--task-shadow-md);
   overflow-x: auto;
   margin-top: 1rem;
-  max-height: 60vh; /* Optional: Add max height with scroll if needed */
-  overflow-y: auto; /* Optional: Enable vertical scroll */
+  /* max-height: 60vh; */
 }
 
 .task-table {

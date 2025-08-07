@@ -2156,11 +2156,15 @@ function VehicleMaterial() {
           },
         }
       );
-      setFormSuccess("Vehicle entry created successfully!");
-      setFormData({ vehicleNo: "", poNumber: "", file: null });
-      if (fileInputRef.current) {
-        fileInputRef.current.value = null;
+      if (response.status === 200) {
+        alert("Vehicle entry created successfully!");
+        setFormData({ vehicleNo: "", poNumber: "", file: null });
+        setShowAddForm(false);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = null;
+        }
       }
+
       const vehicleResponse = await axiosInstance.get(
         `${BASE_URL}/vehicle-entries`,
         {

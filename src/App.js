@@ -44,31 +44,48 @@ import MaterialPurches from "./Pages/Material/MaterialPurches";
 import MaterialAllDetails from "./Pages/Material/MaterialAllDetails";
 import VehicleMaterial from "./Pages/Material/VehicleMaterial";
 import MaterialStock from "./Pages/Material/MaterialStock";
+import StockSummary from "./Pages/Material/StockSummary";
 import Holiday from "../src/Pages/Employee/Holiday";
 import Registration from "./Pages/Registration/Registration";
 import MaterilOrderSummery from "./Pages/Material/MaterilOrderSummery";
 import {
-  getFcmToken,
+  registerServiceWorker,
   requestNotificationPermission,
+  getFcmToken,
   setupForegroundMessaging,
 } from "./firebase/firebase-messaging";
 
 import Engineer from "./Pages/Registration/Engineer";
 import Vendor from "./Pages/Registration/Vendor";
+import Accountant from "./Pages/Registration/Accountant";
 function App() {
   useEffect(() => {
-    async function initFcm() {
-      const permission = await requestNotificationPermission();
-      if (permission === "granted") {
-        const token = await getFcmToken();
-        console.log("FCM Token:", token);
-        if (token) {
-          setupForegroundMessaging();
+    const initFCM = async () => {
+      try {
+        console.log("Initializing FCM...");
+        await registerServiceWorker();
+        const permission = await requestNotificationPermission();
+        if (permission === "granted") {
+          const token = await getFcmToken();
+          if (token) {
+            console.log(
+              "FCM setup complete, setting up foreground messaging..."
+            );
+            setupForegroundMessaging();
+          } else {
+            console.warn("Failed to retrieve FCM token");
+          }
+        } else {
+          console.warn("Notification permission denied");
         }
+      } catch (error) {
+        console.error("FCM initialization failed:", error);
       }
-    }
-    initFcm();
+    };
+
+    initFCM();
   }, []);
+
   return (
     <>
       <>
@@ -120,6 +137,7 @@ function App() {
                   path="/MaterilOrderSummery/:id/:name"
                   element={<MaterilOrderSummery />}
                 />
+                <Route element={<StockSummary />} path="/StockSummary" />
                 <Route path="machine" element={<Machine />} />
                 <Route path="project" element={<Project />} />
                 <Route path="finance" element={<Finance />} />
@@ -159,6 +177,7 @@ function App() {
                 <Route path="/registration" element={<Registration />} />
                 <Route path="/engineer" element={<Engineer />} />
                 <Route path="/Vendor" element={<Vendor />} />
+                <Route element={<Accountant />} path="/Accountant" />
               </Route>
             </Route>
           </Routes>

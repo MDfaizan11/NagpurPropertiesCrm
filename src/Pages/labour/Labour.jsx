@@ -254,9 +254,9 @@ function Labour() {
       <div className="partner_labour_header">
         <div className="partner_header_content">
           <h1 className="partner_labour_title">Partner Management</h1>
-          <p className="partner_labour_subtitle">
+          {/* <p className="partner_labour_subtitle">
             Manage and register your business partners efficiently
-          </p>
+          </p> */}
         </div>
         <div className="partner_header_decoration"></div>
       </div>

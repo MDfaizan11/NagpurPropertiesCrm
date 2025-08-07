@@ -23,6 +23,7 @@ function MaterialStock() {
   const [editingTransfer, setEditingTransfer] = useState(null);
   const [siteNameList, setSiteNameList] = useState([]);
   const [selectedSiteFrom, setSelectedSiteFrom] = useState("");
+  console.log(selectedSiteFrom);
   const [selectedSiteTo, setSelectedSiteTo] = useState("");
   const [note, setNote] = useState("");
   const [orderItems, setOrderItems] = useState([
@@ -30,6 +31,12 @@ function MaterialStock() {
   ]);
   const [getTransferStock, setGetTransferStock] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedMaterialName, setSelectedMaterialName] = useState([]);
+  const [materialName, setMaterialName] = useState([]);
+  const [MaterialQuantity, setMaterialQuantity] = useState("");
+  console.log(MaterialQuantity);
+  const [TransferQuantity, setTransferQuantity] = useState("");
+  const [showSiteName, setShowSiteName] = useState([]);
 
   useEffect(() => {
     const fetchSiteNames = async () => {
@@ -49,6 +56,27 @@ function MaterialStock() {
       }
     };
     fetchSiteNames();
+  }, [token]);
+
+  useEffect(() => {
+    async function getAllSiteName() {
+      try {
+        const response = await axiosInstance.get(
+          `${BASE_URL}/show-AllProject`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(response.data);
+        setShowSiteName(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getAllSiteName();
   }, [token]);
 
   const handleAddItem = () => {
@@ -80,47 +108,35 @@ function MaterialStock() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = {
+
+    const body = {
+      materialName: materialName,
       fromsite: selectedSiteFrom,
       tosite: selectedSiteTo,
-      note: note.trim(),
-      orderItems: orderItems.map((item) => ({
-        materialName: item.materialName.trim(),
-        orderQty: Number.parseInt(item.orderQty),
-        unitCost: Number.parseFloat(item.unitCost),
-      })),
+      transferQty: TransferQuantity,
+      note: note,
     };
-
+    console.log(body);
     try {
-      const url = editingTransfer
-        ? `${BASE_URL}/purchase-orders/stockTransfer/${editingTransfer.id}`
-        : `${BASE_URL}/purchase-orders/stockTransfer`;
-
-      const method = editingTransfer ? "put" : "post";
-
-      const response = await axiosInstance[method](url, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
+      const response = await axiosInstance.post(
+        `${BASE_URL}/StockTransfer`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (response.status === 200) {
-        alert(
-          `Material transfer ${
-            editingTransfer ? "updated" : "submitted"
-          } successfully!`
-        );
-        resetForm();
+        alert("Stock Transfer Successfully");
+        setSelectedSiteFrom("");
+        setSelectedSiteTo("");
+        setNote("");
         setShowTransferStockForm(false);
-        setShowEditForm(false);
-        getAllTransferStock();
       }
     } catch (error) {
-      console.error("Error submitting transfer:", error);
-      alert(
-        `Failed to ${editingTransfer ? "update" : "submit"} material transfer.`
-      );
+      console.log(error);
     }
   };
 
@@ -163,15 +179,12 @@ function MaterialStock() {
 
   async function getAllTransferStock() {
     try {
-      const response = await axiosInstance.get(
-        `${BASE_URL}/purchase-orders/stockTransfers`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axiosInstance.get(`${BASE_URL}/StockTransfer`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       console.log(response.data);
       setGetTransferStock(response.data);
     } catch (error) {
@@ -234,21 +247,39 @@ function MaterialStock() {
     }
   };
 
+  async function getMaterialName() {
+    try {
+      const response = await axiosInstance.get(
+        `${BASE_URL}/Transfer-material-summary/${selectedSiteFrom}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data);
+      setSelectedMaterialName(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    getMaterialName();
+  }, [selectedSiteFrom, token]);
+
+  function handleQualtityWithMaterial(e) {
+    const selectedName = e.target.value;
+    setMaterialName(selectedName);
+
+    const Quantity = selectedMaterialName.find(
+      (item) => item.materialName === selectedName
+    );
+    console.log(Quantity.totalReceivedQty);
+    setMaterialQuantity(Quantity.totalReceivedQty);
+  }
   return (
     <div className="MaterialStock-container">
-      {/* Header Section */}
-      {/* <div className="MaterialStock-header">
-        <div className="MaterialStock-header-content">
-          <div className="MaterialStock-header-title">
-            <Package className="MaterialStock-header-icon" />
-            <h1>Material Stock Transfer</h1>
-          </div>
-          <p className="MaterialStock-header-subtitle">
-            Manage and track material transfers between sites
-          </p>
-        </div>
-      </div> */}
-
       {/* Controls Section */}
       <div className="MaterialStock-controls-section">
         <div className="MaterialStock-search-container">
@@ -329,93 +360,64 @@ function MaterialStock() {
                     className="MaterialStock-form-select"
                   >
                     <option value="">Select Destination Site</option>
-                    {siteNameList.map((site) => (
-                      <option key={site.id} value={site.siteName}>
-                        {site.siteName}
+                    {showSiteName.map((site) => (
+                      <option key={site.id} value={site.name}>
+                        {site.name}
                       </option>
                     ))}
                   </select>
                 </div>
               </div>
 
-              <div className="MaterialStock-form-group">
-                <label htmlFor="note">Transfer Note</label>
-                <input
-                  type="text"
-                  id="note"
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                  placeholder="Enter transfer notes (optional)"
-                  className="MaterialStock-form-input"
-                />
-              </div>
-
               <div className="MaterialStock-materials-section">
                 <div className="MaterialStock-materials-header">
                   <h3>Materials to Transfer</h3>
-                  <button
-                    type="button"
-                    className="MaterialStock-btn MaterialStock-btn-secondary MaterialStock-btn-xs"
-                    onClick={handleAddItem}
-                  >
-                    <Plus className="MaterialStock-btn-icon" />
-                    Add Material
-                  </button>
                 </div>
 
                 <div className="MaterialStock-materials-list">
-                  {orderItems.map((item, index) => (
-                    <div key={index} className="MaterialStock-material-item">
-                      <div className="MaterialStock-material-inputs">
-                        <input
-                          type="text"
-                          placeholder="Material Name"
-                          value={item.materialName}
-                          onChange={(e) =>
-                            handleChangeItem(
-                              index,
-                              "materialName",
-                              e.target.value
-                            )
-                          }
-                          required
-                          className="MaterialStock-form-input"
-                        />
-                        <input
-                          type="number"
-                          placeholder="Quantity"
-                          value={item.orderQty}
-                          onChange={(e) =>
-                            handleChangeItem(index, "orderQty", e.target.value)
-                          }
-                          required
-                          min="1"
-                          className="MaterialStock-form-input"
-                        />
-                        <input
-                          type="number"
-                          placeholder="Unit Cost"
-                          value={item.unitCost}
-                          onChange={(e) =>
-                            handleChangeItem(index, "unitCost", e.target.value)
-                          }
-                          required
-                          min="0"
-                          step="0.01"
-                          className="MaterialStock-form-input"
-                        />
-                      </div>
-                      {orderItems.length > 1 && (
-                        <button
-                          type="button"
-                          className="MaterialStock-btn MaterialStock-btn-danger MaterialStock-btn-xs"
-                          onClick={() => handleRemoveItem(index)}
-                        >
-                          <Minus className="MaterialStock-btn-icon" />
-                        </button>
-                      )}
+                  <div className="MaterialStock-material-item">
+                    <div className="MaterialStock-material-inputs">
+                      <select
+                        name=""
+                        id=""
+                        value={materialName}
+                        onChange={handleQualtityWithMaterial}
+                        className="MaterialStock-form-select"
+                      >
+                        <option value=""> Select Material name</option>
+                        {selectedMaterialName.map((item, index) => (
+                          <option value={item.materialName} key={index}>
+                            {item.materialName}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        type="number"
+                        placeholder="Quantity"
+                        value={MaterialQuantity || 0}
+                        className="MaterialStock-form-input"
+                      />
+                      <input
+                        type="number"
+                        placeholder="Transfer Stock"
+                        className="MaterialStock-form-input"
+                        value={TransferQuantity}
+                        onChange={(e) => setTransferQuantity(e.target.value)}
+                      />
                     </div>
-                  ))}
+                  </div>
+
+                  <div className="MaterialStock-form-group">
+                    <label htmlFor="note">Transfer Note</label>
+                    <input
+                      type="text"
+                      id="note"
+                      value={note}
+                      onChange={(e) => setNote(e.target.value)}
+                      placeholder="Enter transfer notes (optional)"
+                      className="MaterialStock-form-input"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -607,17 +609,13 @@ function MaterialStock() {
         </div>
       )}
 
+      <div className="MaterialStock-section-header">
+        <h2>Transfer History</h2>
+      </div>
+
       {/* Transfer Stock List */}
       {filteredTransferStock.length > 0 && (
         <div className="MaterialStock-transfers-section">
-          <div className="MaterialStock-section-header">
-            <h2>Transfer History</h2>
-            <span className="MaterialStock-transfer-count">
-              {filteredTransferStock.length} transfer
-              {filteredTransferStock.length !== 1 ? "s" : ""}
-            </span>
-          </div>
-
           <div
             className="MaterialStock-table-container"
             id="MaterialStock-printable-table"
@@ -632,108 +630,75 @@ function MaterialStock() {
                   <th>Note</th>
                   <th>Material Name</th>
                   <th>Quantity</th>
-                  <th>Unit Cost</th>
-                  <th>Total Amount</th>
-                  <th className="MaterialStock-no-print">Actions</th>
+
+                  {/* <th className="MaterialStock-no-print">Actions</th> */}
                 </tr>
               </thead>
               <tbody>
-                {filteredTransferStock.map((transfer, index) => {
-                  const transferTotal = transfer.orderItems.reduce(
-                    (sum, item) => {
-                      return (
-                        sum + (item.totalCost || item.orderQty * item.unitCost)
-                      );
-                    },
-                    0
-                  );
+                {filteredTransferStock.map((transfer, index) => (
+                  <tr key={transfer.id}>
+                    <td>
+                      <span className="MaterialStock-date-text">
+                        {new Date(transfer.todayDate).toLocaleDateString(
+                          "en-IN",
+                          {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          }
+                        )}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="MaterialStock-site-cell">
+                        <span className="MaterialStock-site-name">
+                          {transfer.fromsite}
+                        </span>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="MaterialStock-site-cell">
+                        <span className="MaterialStock-site-name">
+                          {transfer.tosite}
+                        </span>
+                      </div>
+                    </td>
+                    <td>
+                      <span className="MaterialStock-note-text">
+                        {transfer.note || "No notes"}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="MaterialStock-material-name">
+                        {transfer.materialName}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="MaterialStock-qty">
+                        {transfer.transferQty}
+                      </span>
+                    </td>
 
-                  return transfer.orderItems.map((item, itemIndex) => (
-                    <tr key={`${index}-${itemIndex}`}>
-                      {itemIndex === 0 && (
-                        <>
-                          <td rowSpan={transfer.orderItems.length}>
-                            <span className="MaterialStock-date-text">
-                              {new Date(transfer.todayDate).toLocaleDateString(
-                                "en-IN",
-                                {
-                                  day: "2-digit",
-                                  month: "2-digit",
-                                  year: "numeric",
-                                }
-                              )}
-                            </span>
-                          </td>
-                          <td rowSpan={transfer.orderItems.length}>
-                            <div className="MaterialStock-site-cell">
-                              <span className="MaterialStock-site-name">
-                                {transfer.fromsite}
-                              </span>
-                            </div>
-                          </td>
-                          <td rowSpan={transfer.orderItems.length}>
-                            <div className="MaterialStock-site-cell">
-                              <span className="MaterialStock-site-name">
-                                {transfer.tosite}
-                              </span>
-                            </div>
-                          </td>
-                          <td rowSpan={transfer.orderItems.length}>
-                            <span className="MaterialStock-note-text">
-                              {transfer.note || "No notes"}
-                            </span>
-                          </td>
-                        </>
-                      )}
-                      <td>
-                        <span className="MaterialStock-material-name">
-                          {item.materialName}
-                        </span>
-                      </td>
-                      <td>
-                        <span className="MaterialStock-qty">
-                          {item.orderQty}
-                        </span>
-                      </td>
-                      <td>
-                        <span className="MaterialStock-cost">
-                          ₹{item.unitCost}
-                        </span>
-                      </td>
-                      <td>
-                        <span className="MaterialStock-total">
-                          ₹
-                          {(
-                            item.totalCost || item.orderQty * item.unitCost
-                          ).toLocaleString()}
-                        </span>
-                      </td>
-                      {itemIndex === 0 && (
-                        <td
-                          rowSpan={transfer.orderItems.length}
-                          className="MaterialStock-no-print"
+                    {/* <td className="MaterialStock-no-print">
+                      <div className="MaterialStock-action-buttons">
+                        <button
+                          className="MaterialStock-btn MaterialStock-btn-icon MaterialStock-btn-edit MaterialStock-btn-xs"
+                          title="Edit"
+                          onClick={() => handleEdit(transfer)}
                         >
-                          <div className="MaterialStock-action-buttons">
-                            <button
-                              className="MaterialStock-btn MaterialStock-btn-icon MaterialStock-btn-edit MaterialStock-btn-xs"
-                              title="Edit"
-                              onClick={() => handleEdit(transfer)}
-                            >
-                              <Edit />
-                            </button>
-                            <button
-                              className="MaterialStock-btn MaterialStock-btn-icon MaterialStock-btn-delete MaterialStock-btn-xs"
-                              title="Delete"
-                              onClick={() => handleDelete(transfer.id)}
-                            >
-                              <Trash2 />
-                            </button>
-                          </div>
-                        </td>
-                      )}
-                    </tr>
-                  ));
-                })}
+                          <Edit />
+                        </button>
+                        <button
+                          className="MaterialStock-btn MaterialStock-btn-icon MaterialStock-btn-delete MaterialStock-btn-xs"
+                          title="Delete"
+                          onClick={() => handleDelete(transfer.id)}
+                        >
+                          <Trash2 />
+                        </button>
+                      </div>
+                    </td> */}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

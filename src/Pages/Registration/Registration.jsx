@@ -18,8 +18,13 @@ function Registration() {
         onClick={() => navigate("/Vendor")}
         className="registration_button"
       >
-        {" "}
-        Vendor Registration{" "}
+        Vendor Registration
+      </button>
+      <button
+        onClick={() => navigate("/Accountant")}
+        className="registration_button"
+      >
+        Accountant Registration
       </button>
     </>
   );

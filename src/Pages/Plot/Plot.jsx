@@ -89,9 +89,9 @@ function Plot() {
         <div className="plot-header">
           <div className="header-content">
             <h1 className="plot-title">Plot Dashboard</h1>
-            <p className="plot-subtitle">
+            {/* <p className="plot-subtitle">
               Manage and track all your property development plots
-            </p>
+            </p> */}
           </div>
         </div>
 

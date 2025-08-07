@@ -356,6 +356,7 @@ function Home() {
       {(userRole === "Partner" || userRole === "Employee") && (
         <hr style={{ backgroundColor: "lightgrey" }} />
       )}
+
       <div className="section-header">
         <h2>Management Modules</h2>
         <div className="section-controls">

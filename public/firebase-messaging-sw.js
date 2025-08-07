@@ -1,37 +1,81 @@
-// public/firebase-messaging-sw.js
-
 /* eslint-env serviceworker */
-/* global importScripts, self, firebase */
-
+/* eslint-disable no-restricted-globals */
 importScripts(
-  "https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"
+  "https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"
 );
 importScripts(
-  "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"
+  "https://www.gstatic.com/firebasejs/10.13.1/firebase-messaging-compat.js"
 );
 
-const firebaseConfig = {
+firebase.initializeApp({
   apiKey: "AIzaSyBp5k-WVnCbfuq5sRwdEC5h8Ap4lConc0E",
   authDomain: "nagpurproperty-fdd80.firebaseapp.com",
   projectId: "nagpurproperty-fdd80",
-  storageBucket: "nagpurproperty-fdd80.firebasestorage.app",
+  storageBucket: "nagpurproperty-fdd80.appspot.com",
   messagingSenderId: "238421181794",
   appId: "1:238421181794:web:832723f4399a923822583b",
-};
+});
 
-firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(function (payload) {
+messaging.onBackgroundMessage((payload) => {
   console.log(
-    "[firebase-messaging-sw.js] Received background message ",
-    payload
+    "[firebase-messaging-sw.js] Received background message:",
+    JSON.stringify(payload, null, 2)
   );
-  const notificationTitle = payload.notification.title;
+
+  if (!payload || (!payload.notification && !payload.data)) {
+    console.warn("Invalid or empty payload, skipping notification.");
+    return;
+  }
+
+  const notificationTitle =
+    payload.notification?.title ||
+    payload.data?.title ||
+    "Default Notification";
   const notificationOptions = {
-    body: payload.notification.body,
-    icon: "/firebase-logo.png", // optional icon path
+    body:
+      payload.notification?.body ||
+      payload.data?.body ||
+      "You have a new message.",
+    icon: "/icon.png",
   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+  if (
+    !self.registration ||
+    typeof self.registration.showNotification !== "function"
+  ) {
+    console.error(
+      "showNotification is not supported or registration is invalid."
+    );
+    return;
+  }
+
+  if (self.Notification.permission !== "granted") {
+    console.warn(
+      "Notification permission not granted:",
+      self.Notification.permission
+    );
+    return;
+  }
+
+  try {
+    const notificationPromise = self.registration.showNotification(
+      notificationTitle,
+      notificationOptions
+    );
+    if (notificationPromise && typeof notificationPromise.then === "function") {
+      notificationPromise
+        .then(() => {
+          console.log("Background notification displayed successfully");
+        })
+        .catch((error) => {
+          console.error("Failed to display background notification:", error);
+        });
+    } else {
+      console.log("Notification triggered (non-Promise result)");
+    }
+  } catch (error) {
+    console.error("Error in showNotification:", error);
+  }
 });

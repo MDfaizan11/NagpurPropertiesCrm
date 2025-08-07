@@ -387,12 +387,13 @@ body {
 }
 
 .MaterialStock-section-header {
-  display: flex;
+  /* display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: center; */
   padding: 1.5rem;
-  background: var(--card-gradient);
-  border-bottom: 1px solid var(--color-border);
+  text-align: center;
+  /* background: var(--card-gradient); */
+  /* border-bottom: 1px solid var(--color-border); */
 }
 
 .MaterialStock-section-header h2 {
@@ -419,6 +420,14 @@ body {
 .MaterialStock-transfers-table {
   width: 100%;
   border-collapse: collapse;
+
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-md);
+  overflow-x: auto;
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
 .MaterialStock-transfers-table th {

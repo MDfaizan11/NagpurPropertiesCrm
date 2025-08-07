@@ -56,7 +56,7 @@ body {
 /* Enhanced Header */
 .MaterialPurches-header {
   /* background: var(--header-gradient); */
-  padding: 20px;
+  padding: 10px;
   /* margin-bottom: 32px; */
   /* box-shadow: var(--shadow-lg); */
   color: #000000;
@@ -90,11 +90,15 @@ body {
 }
 
 .MaterialPurches-title {
-  font-size: 1.5rem;
-  font-weight: 700;
+  /* font-size: 1.5rem; */
+  /* font-weight: 700; */
   /* margin: 0 0 8px 0; */
   /* text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .MaterialPurches-subtitle {
@@ -275,7 +279,7 @@ body {
 }
 
 .MaterialPurches-form {
-  padding: 32px;
+  padding: 12px;
 }
 
 .MaterialPurches-formGrid {
@@ -431,7 +435,7 @@ body {
 
 .MaterialPurches-orderItemHeader {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
   margin-bottom: 16px;
   padding-bottom: 12px;
@@ -494,12 +498,12 @@ body {
 }
 
 .MaterialPurches-removeItemButton {
-  background: var(--color-danger);
-  color: white;
+  /* background: var(--color-danger); */
+  color: red;
   border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  /* width: 40px; */
+  /* height: 40px; */
+  /* border-radius: 50%; */
   cursor: pointer;
   transition: var(--transition-fast);
   display: flex;
@@ -507,10 +511,10 @@ body {
   justify-content: center;
 }
 
-.MaterialPurches-removeItemButton:hover {
+/* .MaterialPurches-removeItemButton:hover {
   background: #e53e3e;
   transform: scale(1.1);
-}
+} */
 
 .MaterialPurches-orderSummary {
   margin-top: 24px;
@@ -700,11 +704,10 @@ body {
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 16px;
   margin-bottom: 24px;
 }
-
 .info-item {
   display: flex;
   align-items: center;
@@ -766,7 +769,7 @@ body {
   /* background: var(--color-bg-tertiary); */
   /* border-radius: var(--border-radius-sm); */
   /* border-left: 4px solid var(--color-info); */
-  text-align: center;
+  text-align: start;
 }
 
 .note-title {
@@ -1185,7 +1188,7 @@ body {
   }
 
   .info-grid {
-    grid-template-columns: 1fr;
+    /* grid-template-columns: 1fr; */
   }
 
   .MaterialPurches-actionButtons {

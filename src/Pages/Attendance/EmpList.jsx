@@ -77,8 +77,10 @@ function EmpList() {
 
   return (
     <div className="EmpList-container">
+      <h2 className="EmpList-title">Employee List</h2>
+
       <div className="EmpList-header-container">
-        <h2 className="EmpList-title">Employee List</h2>
+
         <div className="EmpList-controls">
           <form className="EmpList-search-form">
             <input
@@ -92,22 +94,27 @@ function EmpList() {
             />
           </form>
 
-          <button
-            className="EmpList-markAttendance"
-            aria-label="Mark attendance"
-            onClick={() => navigate("/attentance")}
-          >
-            + Mark Attendance
-          </button>
-          <button
-            className="EmpList-markAttendance"
-            aria-label="Mark attendance"
-            onClick={() => navigate("/monthlyReport")}
-          >
-            + Monthly Report
-          </button>
+          <div className="empBtn">
+            <button
+              className="EmpList-markAttendance"
+              aria-label="Mark attendance"
+              onClick={() => navigate("/attentance")}
+            >
+              + Mark Attendance
+            </button>
+            <button
+              className="EmpList-markAttendance"
+              aria-label="Mark attendance"
+              onClick={() => navigate("/monthlyReport")}
+            >
+              + Monthly Report
+            </button>
+          </div>
         </div>
+
       </div>
+
+      
       {filteredEmployees.length === 0 && (
         <div className="EmpList-empty-state">
           <div className="EmpList-empty-state-icon">

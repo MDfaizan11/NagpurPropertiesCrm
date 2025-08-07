@@ -165,12 +165,14 @@ body {
 }
 
 .MaterialStock-btn-sm {
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
+  padding: 4px 16px;
   font-size: 0.875rem;
 }
 
 .MaterialStock-btn-primary {
-  background: var(--primary-gradient);
+  /* background: var(--primary-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   box-shadow: var(--shadow-sm);
 }
@@ -181,7 +183,8 @@ body {
 }
 
 .MaterialStock-btn-secondary {
-  background: var(--secondary-gradient);
+  /* background: var(--secondary-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   box-shadow: var(--shadow-sm);
 }
@@ -455,7 +458,8 @@ body {
 
 .MaterialStock-date-text {
   font-weight: 600;
-  color: var(--color-primary);
+  /* color: var(--color-primary); */
+  color: #0d5787;
 }
 
 .MaterialStock-site-cell {

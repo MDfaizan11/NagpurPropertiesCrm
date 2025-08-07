@@ -221,9 +221,9 @@ function Holiday() {
             {/* <Calendar className="Holiday-header-icon" /> */}
             <h1 className="Holiday-title">Holiday Management</h1>
           </div>
-          <p className="Holiday-header-subtitle">
+          {/* <p className="Holiday-header-subtitle">
             Manage company holidays and special events
-          </p>
+          </p> */}
         </div>
       </div>
 

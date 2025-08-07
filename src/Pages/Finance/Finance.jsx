@@ -188,9 +188,9 @@ function Finance() {
       <div className="finance-finance-header">
         <div className="finance-finance-header-content">
           <h1 className="finance-finance-title">Finance Management</h1>
-          <p className="finance-finance-subtitle">
+          {/* <p className="finance-finance-subtitle">
             Manage your companies and financial data
-          </p>
+          </p> */}
         </div>
       </div>
 

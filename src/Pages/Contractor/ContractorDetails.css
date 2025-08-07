@@ -217,12 +217,12 @@
 }
 
 .ContractorDetails-add-project-btn {
-  padding: 1rem 2rem;
+  padding: 12px 16px;
   /* background: var(--secondary-gradient); */
   background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border: none;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-md);
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -341,7 +341,7 @@
 .ContractorDetails-contractor-table-container {
   max-width: 1400px;
   margin: 0 auto;
-  /* border-radius: var(--radius-xl); */
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-xl);
   overflow: hidden;
   background: var(--bg-primary);
@@ -355,7 +355,8 @@
 }
 
 .ContractorDetails-contractor-table thead {
-  background: #d4d7de;
+  /* background: #d4d7de; */
+  background: #f3f4f6;
   color: black;
 }
 
@@ -391,9 +392,9 @@
   transition: var(--transition-fast);
 }
 
-.ContractorDetails-contractor-table tbody tr:nth-child(even) {
+/* .ContractorDetails-contractor-table tbody tr:nth-child(even) {
   background: var(--bg-secondary);
-}
+} */
 
 .ContractorDetails-contractor-table tbody tr:hover {
   background: linear-gradient(
@@ -401,8 +402,8 @@
     rgba(102, 126, 234, 0.05),
     rgba(118, 75, 162, 0.05)
   );
-  transform: scale(1.01);
-  box-shadow: var(--shadow-md);
+  /* transform: scale(1.01); */
+  /* box-shadow: var(--shadow-md); */
 }
 
 /* Enhanced table cell styling */
@@ -426,7 +427,8 @@
 }
 .ContractorDetails-amount-cell {
   font-weight: 600;
-  color: var(--success-color);
+  /* color: var(--success-color); */
+  color: #0d5787;
   font-size: 0.95rem;
 }
 

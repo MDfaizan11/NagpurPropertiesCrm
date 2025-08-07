@@ -317,7 +317,8 @@ body {
 .office-total-amount h3 {
   font-size: var(--font-size-lg);
   font-weight: 600;
-  color: var(--color-primary);
+  /* color: var(--color-primary); */
+  color: #0d5787;
   background: var(--color-bg-primary);
   padding: var(--spacing-2) var(--spacing-4);
   border-radius: var(--radius-md);
@@ -695,9 +696,11 @@ body {
 }
 
 .office-pagination-btn.office-active {
-  background: var(--color-primary);
+  /* background: var(--color-primary); */
+  /* border-color: var(--color-primary); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
+  border-color: #0d5787;
   color: white;
-  border-color: var(--color-primary);
 }
 
 /* Form Styles */

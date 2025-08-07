@@ -86,7 +86,7 @@ function Contractor() {
       <div className="plot-header">
         <div className="header-content">
           <h1 className="plot-title">Contractor Management</h1>
-          <p className="plot-subtitle">Manage and track all your property</p>
+          {/* <p className="plot-subtitle">Manage and track all your property</p> */}
         </div>
       </div>
 

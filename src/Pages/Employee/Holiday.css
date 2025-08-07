@@ -77,10 +77,14 @@ body {
 }
 
 .Holiday-title {
-  margin: 0;
+  /* margin: 0;
   font-size: 1.75rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.02em; */
+  font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .Holiday-header-subtitle {

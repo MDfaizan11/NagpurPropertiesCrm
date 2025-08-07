@@ -176,26 +176,27 @@
 }
 
 .stocksummary-print-btn {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  /* box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); */
 }
 
 .stocksummary-print-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+  /* box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4); */
 }
 
 .stocksummary-add-btn {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  /* background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  /* box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); */
   margin-right: 10px;
 }
 
 .stocksummary-add-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+  /* box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4); */
 }
 
 /* Site Title */
@@ -271,7 +272,7 @@
 .stocksummary-quantity-badge {
   display: inline-block;
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: 0.5rem;
   font-size: 12px;
   font-weight: 700;
   background: #e2e8f0;

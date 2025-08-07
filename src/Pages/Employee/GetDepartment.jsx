@@ -210,15 +210,15 @@ const GetDepartment = () => {
 
   return (
     <div className="getdepartment-department-wrapper">
+      <h2 className="getdepartment-header-title">Departments</h2>
       <div className="getdepartment-header-container">
-        <h2 className="getdepartment-header-title">Departments</h2>
         <form className="getdepartment-search-form">
-          <label
+          {/* <label
             className="getdepartment-search-label"
             htmlFor="departmentSearch"
           >
             Search
-          </label>
+          </label> */}
           <input
             type="text"
             id="departmentSearch"

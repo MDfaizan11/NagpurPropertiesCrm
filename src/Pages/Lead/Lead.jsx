@@ -1504,6 +1504,8 @@
 
 // export default Lead;
 
+// ------------------------
+
 import { useCallback, useEffect, useState, useRef } from "react";
 import "../Lead/lead.css";
 import { useParams } from "react-router-dom";
@@ -1893,13 +1895,15 @@ const Lead = () => {
 
   async function handleAddNewLeadLog(e) {
     e.preventDefault();
-    const logData = {
-      logDate: leadLogDate,
-      status: leadLogStatus,
-      remark: leadLogRemark,
-      nextFollowUpDateTime: nextFollowUpDateTime,
-      nextFollowUpType: nextFollowUpType,
-    };
+    const logData = [
+      {
+        logDate: leadLogDate,
+        status: leadLogStatus,
+        remark: leadLogRemark,
+        nextFollowUpDateTime: nextFollowUpDateTime,
+        nextFollowUpType: nextFollowUpType,
+      },
+    ];
 
     try {
       const response = await axiosInstance.post(
@@ -2591,7 +2595,7 @@ const Lead = () => {
                           handleShowLeadLogPopup(selectedLeadForDetail.id);
                         }}
                       >
-                        💬 Add Remark
+                         Add Remark
                       </button>
 
                       <button

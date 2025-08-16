@@ -8,12 +8,12 @@ importScripts(
 );
 
 firebase.initializeApp({
-  apiKey: "AIzaSyBp5k-WVnCbfuq5sRwdEC5h8Ap4lConc0E",
-  authDomain: "nagpurproperty-fdd80.firebaseapp.com",
-  projectId: "nagpurproperty-fdd80",
-  storageBucket: "nagpurproperty-fdd80.appspot.com",
-  messagingSenderId: "238421181794",
-  appId: "1:238421181794:web:832723f4399a923822583b",
+  apiKey: "AIzaSyAxHSXDA6MHsVqz00pHjpo-FlkmorUcK1w",
+  authDomain: "nagpur-properties.firebaseapp.com",
+  projectId: "nagpur-properties",
+  storageBucket: "nagpur-properties.firebasestorage.app",
+  messagingSenderId: "643806571074",
+  appId: "1:643806571074:web:483d53f8afe13da3325bdb"
 });
 
 const messaging = firebase.messaging();

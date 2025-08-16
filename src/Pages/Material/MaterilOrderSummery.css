@@ -316,3 +316,24 @@
     display: none;
   }
 }
+
+.MaterialOrderSummary-table-header-action {
+  background: #ffffff !important;
+  color: #000 !important;
+  border-bottom: 2px solid #e2e8f0;
+}
+.MaterialOrderSummary_print_container {
+  display: flex;
+  justify-content: end;
+}
+.MaterialOrderSummary_print_container button {
+  padding: 10px 30px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #0d5787 0%, #91c8e4 100%);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}

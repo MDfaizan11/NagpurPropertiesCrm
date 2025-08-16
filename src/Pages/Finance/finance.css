@@ -127,7 +127,7 @@
 
 .finance-finance-search-input {
   width: 100%;
-  padding: 1rem 1rem 1rem 3rem;
+  padding: 12px 1rem 12px 3rem;
   border: 2px solid var(--color-border);
   border-radius: var(--border-radius-md);
   font-size: 1rem;
@@ -148,7 +148,7 @@
   background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border: none;
-  padding: 1rem 2rem;
+  padding: 12px 2rem;
   border-radius: var(--border-radius-md);
   font-size: 1rem;
   font-weight: 600;
@@ -482,7 +482,8 @@
 
 .finance-view-btn {
   /* background: var(--cold-gradient); */
-  color: rgb(0, 0, 0);
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
+  color: rgb(255, 255, 255);
 }
 
 .finance-view-btn:hover {

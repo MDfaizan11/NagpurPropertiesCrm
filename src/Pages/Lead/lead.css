@@ -195,7 +195,7 @@ body {
   /* background: var(--lead-secondary-gradient); */
   background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
-  padding: 12px 25px;
+  padding: 9px 25px;
   border-radius: var(--lead-border-radius-md);
   border: none;
   font-size: clamp(0.8rem, 2vw, 0.95rem);
@@ -660,7 +660,8 @@ body {
 
 .lead-popup-property-info {
   margin: 0;
-  color: #94a3b8;
+  /* color: #94a3b8; */
+  color: #333;
   font-size: clamp(0.8rem, 2vw, 0.9rem);
 }
 
@@ -673,7 +674,8 @@ body {
 }
 
 .lead-status-badge-popup {
-  background: #f59e0b;
+  /* background: #f59e0b; */
+  background: #0d5787;
   color: white;
   padding: 6px 12px;
   border-radius: 6px;
@@ -764,14 +766,18 @@ body {
 }
 
 .lead-popup-section-new {
-  background: linear-gradient(135deg, #0d5787 0%, #91c8e4 100%);
+  /* background: linear-gradient(135deg, #0d5787 0%, #91c8e4 100%); */
+  /* background-color: #e0f0f8; */
+  background: #f1f5f9;
   border-radius: 12px;
   padding: 20px;
   max-width: 300px;
 }
 
 .lead-popup-section-new_right {
-  background: linear-gradient(135deg, #0d5787 0%, #91c8e4 100%);
+  /* background: linear-gradient(135deg, #0d5787 0%, #91c8e4 100%); */
+  /* background: #e0f0f8; */
+  background: #f1f5f9;
   border-radius: 12px;
   padding: 20px;
 }
@@ -781,6 +787,8 @@ body {
   align-items: center;
   gap: 10px;
   position: relative;
+  line-height: 1;
+  margin-bottom: 1rem;
 }
 
 .lead-section-title {
@@ -793,20 +801,23 @@ body {
   margin: 0;
   font-size: clamp(0.9rem, 2vw, 1rem);
   font-weight: 600;
-  color: white;
+  /* color: white; */
+  color: #333;
   flex: 1;
 }
 
 .lead-section-icon {
   font-size: 16px;
+  color: #333;
 }
 
 .lead-edit-icon {
   background: transparent;
   border: none;
-  color: #94a3b8;
+  /* color: #94a3b8; */
+  color: #333;
   cursor: pointer;
-  font-size: 14px;
+  /* font-size: 14px; */
 }
 
 .lead-edit-icon:hover {
@@ -817,49 +828,73 @@ body {
 .lead-contact-details {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .lead-contact-item {
   display: flex;
   align-items: center;
   gap: 10px;
+  /* Ensure consistent vertical centering */
+  line-height: 1;
 }
 
 .lead-contact-icon {
-  font-size: 16px;
-  width: 20px;
-  flex-shrink: 0;
+  font-size: 16px; /* Set a small, readable size for the icon */
+  width: 20px; /* Fixed width to maintain consistency */
+  flex-shrink: 0; /* Prevent the icon from shrinking */
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the icon within its container */
 }
 
 .lead-contact-text {
-  color: #e2e8f0;
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
-  word-wrap: break-word;
-  flex: 1;
+  font-size: 14px; /* Match or adjust text size to complement the icon */
+  color: #333;
+  /* Ensure text doesn't wrap unnecessarily */
+  white-space: nowrap;
 }
 
 /* Property Details */
 .lead-property-details {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-}
-
-.lead-property-item {
-  display: flex;
-  align-items: center;
   gap: 10px;
 }
 
+.lead-property-item {
+  /* display: flex;
+  align-items: center;
+  gap: 10px; */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Ensure consistent vertical centering */
+  line-height: 1;
+}
+
 .lead-property-icon {
+  /* font-size: 16px;
+  width: 20px;
+  flex-shrink: 0; */
+  /* display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1; */
+
   font-size: 16px;
   width: 20px;
   flex-shrink: 0;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .lead-property-text {
-  color: #e2e8f0;
+  /* color: #e2e8f0; */
+  color: #333;
   font-size: clamp(0.8rem, 2vw, 0.9rem);
   word-wrap: break-word;
   flex: 1;
@@ -1051,11 +1086,12 @@ body {
   margin-left: 5px;
 }
 .lead-popup-custome-name-new {
-  color: #94a3b8;
+  /* color: #94a3b8; */
+  color: #333;
 }
-.lead-add-remark-btn-new:hover {
-  /* background: #7c3aed; */
-}
+/* .lead-add-remark-btn-new:hover {
+  background: #7c3aed;
+} */
 
 /* Lead Logs Table */
 .lead-lead-logs-section {
@@ -1065,7 +1101,8 @@ body {
 .lead-lead-logs-title {
   font-size: clamp(0.9rem, 2vw, 1rem);
   font-weight: 600;
-  color: white;
+  /* color: white; */
+  color: #333;
   margin-bottom: 10px;
 }
 
@@ -1091,23 +1128,30 @@ body {
 
 .lead-lead-logs-table th {
   /* background: #475569; */
-  color: #333;
-  background: #f0f0f0;
+  /* color: #333; */
+  color: #fff;
+  /* background: #f0f0f0; */
+  /* background: #e0f0f8; */
+  background: #0d5787;
   font-weight: 600;
+  border-bottom: 1px solid #64748b;
 }
 
 .lead-lead-logs-table td {
   /* background: #334155; */
   color: #000;
-  background: #fff5f5;
+  /* background: #fff5f5; */
+  background: #e0f0f8;
   border-bottom: 1px solid #64748b;
 }
 
 .lead-log-status-badge {
   /* background: #8b5cf6;
   color: white; */
-  background: #e6f3e6;
-  color: #2e7d32;
+  /* background: #e6f3e6; */
+  background: #2e7d32bd ;
+  /* color: #2e7d32; */
+  color: #fff;
   border: 1px solid #2e7d32;
   padding: 4px 8px;
   border-radius: 4px;
@@ -1209,9 +1253,9 @@ body {
 }
 
 .lead-pagination-btn.active {
-  background: var(--lead-primary-gradient);
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
-  border-color: transparent;
+  border-color: #69aed2;
 }
 
 .lead-pagination-btn:disabled {
@@ -1366,7 +1410,8 @@ body {
 .lead-addleadformpopup-submit-btn,
 .lead-addleadlogformpopup-submit-btn,
 .lead-leadlogupdateform-submit-button {
-  background: var(--lead-primary-gradient);
+  /* background: var(--lead-primary-gradient); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   padding: 12px 20px;
   border: none;
@@ -1811,3 +1856,5 @@ body {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+/* ************ */

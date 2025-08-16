@@ -103,9 +103,9 @@ function PlotQuatation() {
         <div className="PlotQuatation-header">
           <div className="PlotQuatation-header-content">
             <h1 className="PlotQuatation-title">Plot Quotations</h1>
-            <p className="PlotQuatation-subtitle">
+            {/* <p className="PlotQuatation-subtitle">
               View and manage all quotations for this plot
-            </p>
+            </p> */}
           </div>
         </div>
 
@@ -134,21 +134,29 @@ function PlotQuatation() {
           </div>
         ) : (
           <div className="PlotQuatation-content">
-            <div className="PlotQuatation-count">
+            {/* <div className="PlotQuatation-count">
               <span>{quotationData.length}</span> Quotations Found
-            </div>
-            <div className="PlotQuatation-search-section">
-              <div className="PlotQuatation-search-container">
-                <input
-                  type="search"
-                  value={searchQuatation}
-                  onChange={(e) => setsearchQuatation(e.target.value)}
-                  placeholder="Search quotations by customer name or plot number..."
-                  className="PlotQuatation-search-input"
-                />
-                <span className="PlotQuatation-search-icon">🔍</span>
+            </div> */}
+
+            <div className="PlotQuatation-Section">
+              <div className="PlotQuatation-search-section">
+                <div className="PlotQuatation-search-container">
+                  <input
+                    type="search"
+                    value={searchQuatation}
+                    onChange={(e) => setsearchQuatation(e.target.value)}
+                    placeholder="Search quotations by customer name or plot number..."
+                    className="PlotQuatation-search-input"
+                  />
+                  <span className="PlotQuatation-search-icon">🔍</span>
+                </div>
+              </div>
+
+              <div className="PlotQuatation-count">
+                <span>{quotationData.length} Quotations Found</span>
               </div>
             </div>
+
             <div className="PlotQuatation-grid">
               {filterPlotQuatation.map((item, index) => (
                 <div className="PlotQuatation-card" key={index}>

@@ -281,37 +281,6 @@
   text-align: center;
 }
 
-.stocksummary-quantity-badge.stocksummary-received {
-  /* background: #dcfce7;
-  color: #166534; */
-}
-
-.stocksummary-quantity-badge.stocksummary-transfer {
-  /* background: #dbeafe;
-  color: #1e40af; */
-}
-
-.stocksummary-quantity-badge.stocksummary-total {
-  /* background: #f3e8ff;
-  color: #7c3aed; */
-}
-
-.stocksummary-quantity-badge.stocksummary-used {
-  /* background: #fed7d7;
-  color: #c53030; */
-}
-
-.stocksummary-quantity-badge.stocksummary-remaining {
-  /* background: #d1fae5;
-  color: #065f46; */
-}
-
-.stocksummary-quantity-badge.stocksummary-remaining.stocksummary-low {
-  /* background: #fecaca;
-  color: #dc2626;
-  animation: stocksummary-pulse 2s infinite; */
-}
-
 @keyframes stocksummary-pulse {
   0%,
   100% {
@@ -483,7 +452,7 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .stocksummary-container {
-    padding: 15px;
+    /* padding: 15px; */
   }
 
   .stocksummary-section {
@@ -568,5 +537,179 @@
   .stocksummary-th {
     background: #f0f0f0 !important;
     color: #000 !important;
+  }
+}
+
+/* **** */
+
+/* stocksummary.css */
+
+/* Base styles */
+.stocksummary-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.stocksummary-popup {
+  /* background-color: #ffffff; */
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow-y: auto;
+  /* max-height: 90vh; */
+}
+.Used_button {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
+  color: white;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.stocksummary-form {
+  display: flex;
+  flex-direction: column;
+  /* gap: 1.5rem; */
+}
+
+.stocksummary-title {
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+  text-align: center;
+  color: #333;
+}
+
+.stocksummary-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stocksummary-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.stocksummary-input,
+.stocksummary-select,
+.stocksummary-textarea {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.stocksummary-input:focus,
+.stocksummary-select:focus,
+.stocksummary-textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.stocksummary-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.stocksummary-submit-btn {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.stocksummary-submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.stocksummary-close-btn {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #ff0000;
+  transition: color 0.3s ease;
+}
+
+.stocksummary-close-btn:hover {
+  color: #333;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .stocksummary-popup {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .stocksummary-title {
+    font-size: 1.25rem;
+  }
+
+  .stocksummary-label {
+    font-size: 0.9rem;
+  }
+
+  .stocksummary-input,
+  .stocksummary-select,
+  .stocksummary-textarea {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .stocksummary-submit-btn {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .stocksummary-close-btn {
+    font-size: 1.25rem;
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stocksummary-overlay {
+    padding: 0.5rem;
+  }
+
+  .stocksummary-popup {
+    padding: 1rem;
+    max-height: 95vh;
+  }
+
+  .stocksummary-form {
+    gap: 1rem;
+  }
+
+  .stocksummary-field {
+    gap: 0.3rem;
   }
 }

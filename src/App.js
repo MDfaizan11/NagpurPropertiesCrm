@@ -58,6 +58,7 @@ import {
 import Engineer from "./Pages/Registration/Engineer";
 import Vendor from "./Pages/Registration/Vendor";
 import Accountant from "./Pages/Registration/Accountant";
+import MaterialRegistration from "./Pages/Registration/MaterialRegistration";
 function App() {
   useEffect(() => {
     const initFCM = async () => {
@@ -178,6 +179,10 @@ function App() {
                 <Route path="/engineer" element={<Engineer />} />
                 <Route path="/Vendor" element={<Vendor />} />
                 <Route element={<Accountant />} path="/Accountant" />
+                <Route
+                  element={<MaterialRegistration />}
+                  path="/materialRegistration"
+                />
               </Route>
             </Route>
           </Routes>

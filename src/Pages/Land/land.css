@@ -313,7 +313,7 @@ body {
   margin-top: 1rem;
 
   /* Optional: max height for better UX on small screens */
-  max-height: 60vh;
+  /* max-height: 60vh; */
 
   /* Make sure the container can shrink properly */
   width: 100%;
@@ -562,7 +562,8 @@ body {
 
 .land-dropdown-btn:hover {
   background-color: var(--land-primary-light);
-  color: var(--land-primary-color);
+  /* color: var(--land-primary-color); */
+  color: #0d5787;
 }
 
 .land-dropdown-danger:hover {
@@ -604,7 +605,7 @@ body {
   border-radius: var(--land-radius-xl);
   box-shadow: var(--land-shadow-xl);
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
   max-height: 90vh;
   overflow-y: auto;
   animation: landSlideUp 0.3s ease-out;
@@ -673,10 +674,14 @@ body {
 
 /* Person Details */
 .land-person-details {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 1.5rem; */
+  display: grid;
+  gap: 1rem;
   margin-bottom: 1.5rem;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
 }
 
 .land-detail-item {
@@ -693,13 +698,15 @@ body {
 .land-detail-item:hover {
   transform: translateY(-2px);
   box-shadow: var(--land-shadow-sm);
-  border-color: var(--land-primary-color);
+  /* border-color: var(--land-primary-color); */
+  border-color: #0d5787;
 }
 
 .land-detail-icon {
   width: 1.25rem;
   height: 1.25rem;
-  color: var(--land-primary-color);
+  /* color: var(--land-primary-color); */
+  color: #0d5787;
   flex-shrink: 0;
 }
 
@@ -752,7 +759,8 @@ body {
 }
 
 .land-btn-primary {
-  background: var(--land-gradient-primary);
+  /* background: var(--land-gradient-primary); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
 }
 
@@ -779,8 +787,10 @@ body {
 
 .land-btn-secondary:hover {
   background-color: var(--land-primary-light);
-  color: var(--land-primary-color);
-  border-color: var(--land-primary-color);
+  /* color: var(--land-primary-color); */
+  /* border-color: var(--land-primary-color); */
+  color: #0d5787;
+  border-color: #0d5787;
 }
 
 .land-btn-icon-sm {
@@ -844,8 +854,8 @@ body {
 .land-partner-actions {
   display: flex;
   gap: 0.5rem;
-  justify-content: flex-end;
-  flex-wrap: wrap;
+  /* justify-content: flex-end;
+  flex-wrap: wrap; */
 }
 
 /* Address Grid */
@@ -869,7 +879,8 @@ body {
 .land-address-item:hover {
   transform: translateY(-2px);
   box-shadow: var(--land-shadow-sm);
-  border-color: var(--land-primary-color);
+  /* border-color: var(--land-primary-color); */
+  border-color: #0d5787;
 }
 
 .land-address-label {
@@ -897,9 +908,11 @@ body {
   display: flex;
   gap: 2rem;
   padding: 1.5rem;
-  background: var(--land-gradient-primary);
+  /* background: var(--land-gradient-primary); */
+  background: #e0f0f8;
   border-radius: var(--land-radius-lg);
-  color: white;
+  /* color: white; */
+  color: #333;
 }
 
 .land-summary-item {
@@ -1045,7 +1058,8 @@ body {
 .land-property-value {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--land-success-color);
+  /* color: var(--land-success-color); */
+  color: #0d5787;
   margin-top: 1rem;
 }
 
@@ -1071,8 +1085,10 @@ body {
 }
 
 .land-status-pending {
-  background-color: var(--land-warning-light);
-  color: var(--land-warning-color);
+  /* background-color: var(--land-warning-light); */
+  /* color: var(--land-warning-color); */
+  background: #e0f0f8;
+  color: #0d5787;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -1154,7 +1170,8 @@ body {
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: var(--land-primary-color);
+  /* color: var(--land-primary-color); */
+  color: #0d5787;
 }
 
 .land-form-row {
@@ -1248,7 +1265,8 @@ body {
 }
 
 .land-submit-btn {
-  background: var(--land-gradient-primary);
+  /* background: var(--land-gradient-primary); */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
   color: white;
   border: none;
 }
@@ -1491,14 +1509,14 @@ body {
 /* *********** */
 
 /* Container for the table */
-.land-table-container {
-  /* width: 100%;
+/* .land-table-container {
+  width: 100%;
   background: #ffffff; 
   border-radius: 8px; 
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   border: 1px solid #e5e7eb; 
-  overflow: visible; Ensure dropdown is not clipped */
-}
+  overflow: visible; Ensure dropdown is not clipped 
+} */
 
 /* Wrapper for the table */
 /* .land-table-wrapper {
@@ -1541,8 +1559,8 @@ body {
 }
 
 /* Action button styling */
-.land-action-btn {
-  /* background: none;
+/* .land-action-btn {
+  background: none;
   border: none;
   cursor: pointer;
   padding: 4px;
@@ -1550,12 +1568,12 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  transition: background-color 0.2s ease; */
-}
+  transition: background-color 0.2s ease;
+} */
 
-.land-action-btn:hover {
-  /* background-color: #e5e7eb;  */
-}
+/* .land-action-btn:hover {
+  background-color: #e5e7eb; 
+} */
 
 /* Dropdown menu styling */
 .land-dropdown-menu {

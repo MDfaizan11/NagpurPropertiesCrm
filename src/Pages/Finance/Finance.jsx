@@ -221,15 +221,6 @@ function Finance() {
           className="finance-finance-add-btn"
           onClick={() => setShowAddCompanyForm(true)}
         >
-          <svg
-            className="finance-btn-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-          >
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
           Add Company
         </button>
       </div>
@@ -437,9 +428,9 @@ function Finance() {
         ) : filteredCompanies.length > 0 ? (
           <>
             <div className="finance-companies-header">
-              <h3 className="finance-companies-title">
+              {/* <h3 className="finance-companies-title">
                 Companies ({filteredCompanies.length})
-              </h3>
+              </h3> */}
             </div>
             <div className="finance-companies-grid">
               {filteredCompanies.map((company, index) => (
@@ -500,6 +491,20 @@ function Finance() {
                     </button>
 
                     <button
+                      className="finance-action-btn finance-delete-btn"
+                      onClick={() => handleDeleteCompany(company.companyId)}
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <polyline points="3,6 5,6 21,6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      </svg>
+                      {/* Delete */}
+                    </button>
+                    <button
                       className="finance-action-btn finance-view-btn"
                       onClick={() =>
                         handleViewDetailsCompany(
@@ -516,22 +521,7 @@ function Finance() {
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                         <circle cx="12" cy="12" r="3"></circle>
                       </svg>
-                      {/* View */}
-                    </button>
-
-                    <button
-                      className="finance-action-btn finance-delete-btn"
-                      onClick={() => handleDeleteCompany(company.companyId)}
-                    >
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                      >
-                        <polyline points="3,6 5,6 21,6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                      </svg>
-                      {/* Delete */}
+                      {/* View */} Manage
                     </button>
                   </div>
                 </div>

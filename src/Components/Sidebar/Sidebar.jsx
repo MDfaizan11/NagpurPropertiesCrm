@@ -1023,6 +1023,16 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       color: "gray",
       count: 8,
       path: "/machine",
+      hasSubmenu: true,
+      subItems: [
+        {
+          name: "Add Machine",
+          icon: <Package size={18} />,
+          path: "/machine",
+        },
+        // { name: "Attendance", icon: <FileText size={18} /> },
+        // { name: "Add Holiday", icon: <Hammer size={18} /> },
+      ],
     },
     {
       name: "Letter Head",

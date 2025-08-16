@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { BASE_URL } from "../../config";
 import { useParams, useNavigate } from "react-router-dom";
@@ -167,12 +167,16 @@ function PlotDetails() {
     setFilteredData(filtered);
   }, [plotData, searchTerm, statusFilter]);
 
-  const toggleCardExpansion = (plotNo) => {
-    setExpandedCards((prev) => ({
-      ...prev,
-      [plotNo]: !prev[plotNo],
-    }));
-  };
+  // const toggleCardExpansion = (plotNo) => {
+  //   setExpandedCards((prev) => ({
+  //     ...prev,
+  //     [plotNo]: !prev[plotNo],
+  //   }));
+  // };
+
+  const toggleCardExpansion = useCallback((plotNo) => {
+    setExpandedCards((prev) => ({ ...prev, [plotNo]: !prev[plotNo] }));
+  }, []);
 
   const handleViewCustomer = async (plot) => {
     setBookedPLotId(plot.id);
@@ -607,12 +611,12 @@ function PlotDetails() {
         <div className="plotDetailsHeader">
           <div className="plotDetailsHeaderContent">
             <h1 className="plotDetailsTitle">{ProjectName} Plot Details</h1>
-            <p className="plotDetailsSubtitle">
+            {/* <p className="plotDetailsSubtitle">
               View and manage all plots for this development
-            </p>
+            </p> */}
           </div>
         </div>
-        <div className="plotDetailsStatsBar">
+        {/* <div className="plotDetailsStatsBar">
           <div className="plotDetailsPlotStats">
             <div className="plotDetailsStatItem plotDetailsAvailable">
               <span className="plotDetailsStatValue">
@@ -631,7 +635,8 @@ function PlotDetails() {
               <span className="plotDetailsStatLabel">Total Plots</span>
             </div>
           </div>
-        </div>
+        </div> */}
+
         <div className="plotDetailsFilters">
           <div className="plotDetailsSearchContainer">
             <Search className="plotDetailsSearchIcon" />
@@ -721,6 +726,8 @@ function PlotDetails() {
                   </button>
                 </div>
               ) : (
+                // Drop Down
+
                 <div className="plotDetailsGrid">
                   {filteredData.map((item, index) => (
                     <div key={index} className="plotDetailsCard">
@@ -781,58 +788,60 @@ function PlotDetails() {
                       </div>
 
                       {expandedCards[item.plotNo] && (
-                        <div className="plotDetailsActionPopup">
+                        <div className="plotDetailsActionPopup active">
                           <button
-                            className="plotDetailsActionBtn plotDetailsAddQuotationBtn"
-                            onClick={() => handleAddQuotation(item.id)}
-                            title="Add Quatation"
-                          >
-                            <FileText className="plotDetailsBtnIcon" />
-                          </button>
-                          <button
-                            className="plotDetailsActionBtn plotDetailsViewQuotationBtn"
-                            onClick={() => handleViewQuotation(item.id)}
-                            title=" View
-                            Quotation"
-                          >
-                            <Eye className="plotDetailsBtnIcon" />
-                          </button>
-                          <button
-                            className="plotDetailsActionBtn plotDetailsEditBtn"
+                            className="plotDetailsDropdownItem"
                             onClick={() => handleEditPlot(item.id)}
-                            title=" Edit"
                           >
                             <Edit className="plotDetailsBtnIcon" />
+                            <span>Edit</span>
                           </button>
                           <button
-                            className="plotDetailsActionBtn plotDetailsDeleteBtn"
+                            className="plotDetailsDropdownItem plotDetailsDeleteItem"
                             onClick={() => handleDeletePlot(item.id)}
-                            title="Delete"
                           >
                             <Trash2 className="plotDetailsBtnIcon" />
+                            <span>Delete</span>
                           </button>
+
+                          <div className="plot-dropdown-divider"></div>
+
+                          <button
+                            className="plotDetailsDropdownItem"
+                            onClick={() => handleAddQuotation(item.id)}
+                          >
+                            <FileText className="plotDetailsBtnIcon" />
+                            <span>Add Quotation</span>
+                          </button>
+                          <button
+                            className="plotDetailsDropdownItem"
+                            onClick={() => handleViewQuotation(item.id)}
+                          >
+                            <Eye className="plotDetailsBtnIcon" />
+                            <span>View Quotation</span>
+                          </button>
+
                           {item.layoutStatus === "BOOKED" && (
                             <button
-                              className="plotDetailsActionBtn plotDetailsCancelBtn"
+                              className="plotDetailsDropdownItem"
                               onClick={() =>
                                 handleCancelPlot(
                                   item?.bookings[item.bookings.length - 1]?.id
                                 )
                               }
-                              title="Cancel
-                              Plot"
                             >
                               <XCircle className="plotDetailsBtnIcon" />
+                              <span>Cancel Plot</span>
                             </button>
                           )}
                           <button
-                            className="plotDetailsActionBtn plotDetailsEditBtn"
+                            className="plotDetailsDropdownItem"
                             onClick={() =>
                               handleShowCancelBookingHistory(item.id)
                             }
-                            title="   Booking History"
                           >
                             <Timer className="plotDetailsBtnIcon" />
+                            <span>Booking History</span>
                           </button>
                         </div>
                       )}

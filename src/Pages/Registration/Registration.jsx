@@ -26,6 +26,13 @@ function Registration() {
       >
         Accountant Registration
       </button>
+      <button
+        className="registration_button"
+        onClick={() => navigate("/materialRegistration")}
+      >
+        {" "}
+        Matrial Registration
+      </button>
     </>
   );
 }

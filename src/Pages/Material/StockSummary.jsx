@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { BASE_URL } from "../../config";
 import "./StockSummary.css";
-import { Layers } from "lucide-react";
 
 function StockSummary() {
   const token = JSON.parse(localStorage.getItem("NagpurProperties"))?.token;
@@ -25,6 +24,15 @@ function StockSummary() {
   const [usedData, setUsedData] = useState([]);
   const [usedSearchQuery, setUsedSearchQuery] = useState("");
 
+  const [showUsedForm, setShowUsedForm] = useState(false);
+  const [usedMaterialName, setUsedMaterialName] = useState("");
+  const [UsedMaterialRemainingQuantity, setUsedMaterialRemainingQuantity] =
+    useState("");
+
+  const [usedQuantityNote, setUsedQuantityNote] = useState("");
+  const [newusedQuantity, setNewUsedQuantity] = useState("");
+  const [NewSiteName, setNewSiteName] = useState("");
+  const [OldSiteName, SetOldSiteName] = useState("");
   // Fetch Stock Wise Data
   const getAllSiteData = async () => {
     setLoading(true);
@@ -35,6 +43,7 @@ function StockSummary() {
           "Content-Type": "application/json",
         },
       });
+      console.log(response.data);
       setStockData(response.data || []);
     } catch (error) {
       console.error("Error fetching stock data:", error);
@@ -89,6 +98,7 @@ function StockSummary() {
           "Content-Type": "application/json",
         },
       });
+      console.log(response.data);
       setAllSiteName(response.data || []);
     } catch (error) {
       console.error("Error fetching project names:", error);
@@ -106,6 +116,7 @@ function StockSummary() {
           },
         }
       );
+
       setUsedData(response.data);
     } catch (error) {
       console.log(error);
@@ -254,6 +265,74 @@ function StockSummary() {
     }
   }
 
+  function handleAddUsedMaterial(item) {
+    console.log(item);
+    setShowUsedForm(true);
+    setUsedMaterialName(item.materialName);
+    setUsedMaterialRemainingQuantity(item.remainingQty);
+    SetOldSiteName(item.siteName);
+  }
+
+  async function handleAddUsedStockData(e) {
+    e.preventDefault();
+
+    if (
+      !usedMaterialName ||
+      !OldSiteName ||
+      !usedQuantityNote ||
+      !newusedQuantity
+    ) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+    if (Number.parseFloat(newusedQuantity) <= 0) {
+      alert("Quantity must be greater than zero.");
+      return;
+    }
+    if (UsedMaterialRemainingQuantity === 0) {
+      alert("Insufficient Stock");
+      return;
+    }
+    if (Number.parseFloat(newusedQuantity) > UsedMaterialRemainingQuantity) {
+      alert("Insufficient stock. Please check remaining quantity.");
+      return;
+    }
+
+    const body = {
+      materialName: usedMaterialName, // make sure the state name matches exactly
+      siteName: OldSiteName,
+      usedFor: usedQuantityNote,
+      usedQty: Number.parseFloat(newusedQuantity),
+    };
+
+    console.log("Submitting:", body);
+
+    try {
+      const response = await axiosInstance.post(
+        `${BASE_URL}/deliveries/use-stock`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        alert("Used Stock Successfully");
+        setShowUsedForm(false);
+        // optionally reset fields
+        setNewSiteName("");
+        setNewUsedQuantity("");
+        setUsedQuantityNote("");
+      }
+    } catch (error) {
+      console.error("Error adding used stock:", error);
+      alert("Failed to used stock. Please try again.");
+    }
+  }
+
   return (
     <div className="stocksummary-container">
       {/* Header */}
@@ -277,7 +356,7 @@ function StockSummary() {
           }`}
           onClick={() => setActiveTab("Stock Wise View")}
         >
-          Stock View
+          Site View
         </button>
         <button
           className={`stocksummary-tab ${
@@ -378,108 +457,226 @@ function StockSummary() {
 
       {/* STOCK WISE VIEW */}
       {activeTab === "Stock Wise View" && !loading && (
-        <div className="stocksummary-section">
-          <div className="stocksummary-top-controls">
-            <div className="stocksummary-select-wrapper">
-              <select
-                className="stocksummary-select"
-                value={selectedSite}
-                onChange={(e) => setSelectedSite(e.target.value)}
-              >
-                <option value="">Select a site</option>
-                {siteNames.map((site) => (
-                  <option key={site} value={site}>
-                    {site}
-                  </option>
-                ))}
-              </select>
+        <>
+          <div className="stocksummary-section">
+            <div className="stocksummary-top-controls">
+              <div className="stocksummary-select-wrapper">
+                <select
+                  className="stocksummary-select"
+                  value={selectedSite}
+                  onChange={(e) => setSelectedSite(e.target.value)}
+                >
+                  <option value="">Select a site</option>
+                  {siteNames.map((site) => (
+                    <option key={site} value={site}>
+                      {site}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {selectedSite && (
+                <button
+                  className="stocksummary-print-btn"
+                  onClick={() => handlePrint(stockTableRef)}
+                >
+                  Print Report
+                </button>
+              )}
             </div>
-            {selectedSite && (
-              <button
-                className="stocksummary-print-btn"
-                onClick={() => handlePrint(stockTableRef)}
-              >
-                Print Report
-              </button>
+
+            {selectedSite ? (
+              <div className="stocksummary-table-container" ref={stockTableRef}>
+                <div className="stocksummary-site-title">
+                  Site: {selectedSite}
+                </div>
+                <table className="stocksummary-table">
+                  <thead>
+                    <tr>
+                      <th className="stocksummary-th">Material Name</th>
+                      <th className="stocksummary-th">Total Order</th>
+                      <th className="stocksummary-th">Order Received</th>
+                      <th className="stocksummary-th">Transfer Received</th>
+                      <th className="stocksummary-th">Total Received</th>
+                      <th className="stocksummary-th">Used Qty</th>
+                      <th className="stocksummary-th">Remaining</th>
+                      <th className="stocksummary-th"> Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredSiteData.length > 0 ? (
+                      filteredSiteData.map((item) => (
+                        <tr key={item.id} className="stocksummary-tr">
+                          <td className="stocksummary-td stocksummary-material-name">
+                            {item.materialName}
+                          </td>
+                          <td className="stocksummary-td">
+                            <span className="stocksummary-quantity-badge">
+                              {item.totalOrderQuantity}
+                            </span>
+                          </td>
+                          <td className="stocksummary-td">
+                            <span className="stocksummary-quantity-badge stocksummary-received">
+                              {item.orderReceivedQty}
+                            </span>
+                          </td>
+                          <td className="stocksummary-td">
+                            <span className="stocksummary-quantity-badge stocksummary-transfer">
+                              {item.transferReceivedQty}
+                            </span>
+                          </td>
+                          <td className="stocksummary-td">
+                            <span className="stocksummary-quantity-badge stocksummary-total">
+                              {item.totalReceivedQty}
+                            </span>
+                          </td>
+                          <td className="stocksummary-td">
+                            <span className="stocksummary-quantity-badge stocksummary-used">
+                              {item.usedQty}
+                            </span>
+                          </td>
+                          <td className="stocksummary-td">
+                            <span
+                              className={`stocksummary-quantity-badge stocksummary-remaining ${
+                                item.remainingQty < 10 ? "stocksummary-low" : ""
+                              }`}
+                            >
+                              {item.remainingQty}
+                            </span>
+                          </td>
+                          <td>
+                            <button
+                              onClick={() => handleAddUsedMaterial(item)}
+                              className="Used_button"
+                            >
+                              Add Used
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="7" className="stocksummary-no-data">
+                          No stock data available
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="stocksummary-empty-state">
+                <p>Please select a site to view stock details</p>
+              </div>
             )}
           </div>
 
-          {selectedSite ? (
-            <div className="stocksummary-table-container" ref={stockTableRef}>
-              <div className="stocksummary-site-title">
-                Site: {selectedSite}
+          {showUsedForm && (
+            <div className="stocksummary-overlay">
+              <div className="stocksummary-popup">
+                <form
+                  className="stocksummary-form"
+                  onSubmit={handleAddUsedStockData}
+                >
+                  <button
+                    type="button"
+                    className="stocksummary-close-btn"
+                    onClick={() => setShowUsedForm(false)}
+                  >
+                    ×
+                  </button>
+                  <h2 className="stocksummary-title">Add Used Stock</h2>
+                  <div className="stocksummary-field">
+                    <label
+                      className="stocksummary-label"
+                      htmlFor="material-name"
+                    >
+                      Material Name
+                    </label>
+                    <input
+                      id="material-name"
+                      type="text"
+                      className="stocksummary-input"
+                      value={usedMaterialName}
+                      readOnly
+                    />
+                  </div>
+                  <div className="stocksummary-field">
+                    <label className="stocksummary-label" htmlFor="site-name">
+                      Site Name
+                    </label>
+                    {/* <select
+                      id="site-name"
+                      className="stocksummary-select"
+                      value={NewSiteName}
+                      onChange={(e) => setNewSiteName(e.target.value)}
+                    >
+                      <option value="">Select Site</option>
+                      {allSiteName.length > 0 ? (
+                        allSiteName.map((item, index) => (
+                          <option key={index} value={item.name}>
+                            {item.name}
+                          </option>
+                        ))
+                      ) : (
+                        <option disabled>No Site Found</option>
+                      )}
+                    </select> */}
+                    <input
+                      type="text"
+                      value={OldSiteName}
+                      className="stocksummary-input"
+                    />
+                  </div>
+                  <div className="stocksummary-field">
+                    <label
+                      className="stocksummary-label"
+                      htmlFor="remaining-quantity"
+                    >
+                      Remaining Quantity
+                    </label>
+                    <input
+                      id="remaining-quantity"
+                      type="text"
+                      className="stocksummary-input"
+                      value={UsedMaterialRemainingQuantity}
+                      readOnly
+                    />
+                  </div>
+                  <div className="stocksummary-field">
+                    <label
+                      className="stocksummary-label"
+                      htmlFor="enter-quantity"
+                    >
+                      Enter Quantity
+                    </label>
+                    <input
+                      id="enter-quantity"
+                      type="number"
+                      min={0}
+                      className="stocksummary-input"
+                      value={newusedQuantity}
+                      onChange={(e) => setNewUsedQuantity(e.target.value)}
+                    />
+                  </div>
+                  <div className="stocksummary-field">
+                    <label className="stocksummary-label" htmlFor="note">
+                      Note
+                    </label>
+                    <textarea
+                      id="note"
+                      className="stocksummary-textarea"
+                      value={usedQuantityNote}
+                      onChange={(e) => setUsedQuantityNote(e.target.value)}
+                    ></textarea>
+                  </div>
+                  <button className="stocksummary-submit-btn" type="submit">
+                    Submit
+                  </button>
+                </form>
               </div>
-              <table className="stocksummary-table">
-                <thead>
-                  <tr>
-                    <th className="stocksummary-th">Material Name</th>
-                    <th className="stocksummary-th">Total Order</th>
-                    <th className="stocksummary-th">Order Received</th>
-                    <th className="stocksummary-th">Transfer Received</th>
-                    <th className="stocksummary-th">Total Received</th>
-                    <th className="stocksummary-th">Used Qty</th>
-                    <th className="stocksummary-th">Remaining</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredSiteData.length > 0 ? (
-                    filteredSiteData.map((item) => (
-                      <tr key={item.id} className="stocksummary-tr">
-                        <td className="stocksummary-td stocksummary-material-name">
-                          {item.materialName}
-                        </td>
-                        <td className="stocksummary-td">
-                          <span className="stocksummary-quantity-badge">
-                            {item.totalOrderQuantity}
-                          </span>
-                        </td>
-                        <td className="stocksummary-td">
-                          <span className="stocksummary-quantity-badge stocksummary-received">
-                            {item.orderReceivedQty}
-                          </span>
-                        </td>
-                        <td className="stocksummary-td">
-                          <span className="stocksummary-quantity-badge stocksummary-transfer">
-                            {item.transferReceivedQty}
-                          </span>
-                        </td>
-                        <td className="stocksummary-td">
-                          <span className="stocksummary-quantity-badge stocksummary-total">
-                            {item.totalReceivedQty}
-                          </span>
-                        </td>
-                        <td className="stocksummary-td">
-                          <span className="stocksummary-quantity-badge stocksummary-used">
-                            {item.usedQty}
-                          </span>
-                        </td>
-                        <td className="stocksummary-td">
-                          <span
-                            className={`stocksummary-quantity-badge stocksummary-remaining ${
-                              item.remainingQty < 10 ? "stocksummary-low" : ""
-                            }`}
-                          >
-                            {item.remainingQty}
-                          </span>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="7" className="stocksummary-no-data">
-                        No stock data available
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="stocksummary-empty-state">
-              <p>Please select a site to view stock details</p>
             </div>
           )}
-        </div>
+        </>
       )}
 
       {/* USED MATERIAL VIEW */}

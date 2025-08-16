@@ -1,11 +1,12 @@
 import "./MaterilOrderSummery.css";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { BASE_URL } from "../../config";
 import { Pencil, Trash2, X } from "lucide-react";
 
 function MaterialOrderSummary() {
+  const printRef = useRef();
   const { token } = JSON.parse(localStorage.getItem("NagpurProperties")) || {};
   const { id, name } = useParams();
   const [materialOrderSummary, setMaterialOrderSummary] = useState([]);
@@ -27,7 +28,6 @@ function MaterialOrderSummary() {
             },
           }
         );
-        console.log(response.data);
         setMaterialOrderSummary(response.data);
       } catch (error) {
         console.error("Error fetching material order summary:", error);
@@ -69,19 +69,11 @@ function MaterialOrderSummary() {
 
   // Handle edit button click
   const handleEdit = (item) => {
-    console.log(item);
-    // setEditItem({
-    //   id: item.id,
-    //   deliveredQty: item.deliveredQty || "",
-    //   vehicleNo: item.vehicleNo || "",
-    // });
     setEditId(item.id);
     setVehicleNumber(item.vehicleNo || "");
     setDeliveredQty(item.deliveredQty || "");
     setIsEditModalOpen(true);
   };
-
-  // Handle form input changes
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -92,7 +84,7 @@ function MaterialOrderSummary() {
     };
     try {
       const response = await axiosInstance.put(
-        `${BASE_URL}/deliveries/delivery-log/delivery-log/${editId}`,
+        `${BASE_URL}/deliveries/delivery-log/${editId}`,
         body,
         {
           headers: {
@@ -113,7 +105,8 @@ function MaterialOrderSummary() {
         closeModal();
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error updating item:", error);
+      alert("Error updating item");
     }
   };
 
@@ -156,57 +149,119 @@ function MaterialOrderSummary() {
     setFormErrors({});
   };
 
+  // Enhanced print function
+  const handlePrint = () => {
+    const printContent = printRef.current;
+    // Clone the print content to avoid modifying the original DOM
+    const printContentClone = printContent.cloneNode(true);
+
+    // Remove the Actions column header (th)
+    const header = printContentClone.querySelector(
+      ".MaterialOrderSummary-table-header-action"
+    );
+    if (header) {
+      header.remove();
+    }
+
+    // Remove the Actions column cells (td)
+    const actionCells = printContentClone.querySelectorAll(
+      ".MaterialOrderSummary-actions"
+    );
+    actionCells.forEach((cell) => {
+      cell.remove();
+    });
+
+    // Adjust the table rows to ensure consistent column count
+    const rows = printContentClone.querySelectorAll(
+      ".MaterialOrderSummary-table-row"
+    );
+    rows.forEach((row) => {
+      const cells = row.querySelectorAll("td");
+      if (cells.length > 0) {
+        // Ensure each row has the same number of cells as headers
+        const headerCount = printContentClone.querySelectorAll(
+          ".MaterialOrderSummary-table-header"
+        ).length;
+        if (cells.length > headerCount) {
+          row.removeChild(row.lastChild); // Remove the last cell if it exceeds header count
+        }
+      }
+    });
+
+    const originalContent = document.body.innerHTML;
+    const printArea = `
+    <div style="padding: 20px;">
+      <h3 style="text-align: center; margin-bottom: 20px;">Order Summary for ${name}</h3>
+      ${printContentClone.innerHTML}
+    </div>
+  `;
+
+    document.body.innerHTML = printArea;
+    window.print();
+    document.body.innerHTML = originalContent;
+    window.location.reload(); // Reload to restore React state
+  };
+
   return (
     <div className="MaterialOrderSummary-container">
       <h1 className="MaterialOrderSummary-title">Order Summary for {name}</h1>
+      <div className="MaterialOrderSummary_print_container">
+        <button onClick={handlePrint}>Print</button>
+      </div>
       {materialOrderSummary.length === 0 ? (
         <p className="MaterialOrderSummary-no-data">No summary found</p>
       ) : (
-        <table className="MaterialOrderSummary-table">
-          <thead>
-            <tr>
-              <th className="MaterialOrderSummary-table-header">Date</th>
-              <th className="MaterialOrderSummary-table-header">Time</th>
-              <th className="MaterialOrderSummary-table-header">Quantity</th>
-              <th className="MaterialOrderSummary-table-header">Vehicle No</th>
-              <th className="MaterialOrderSummary-table-header">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {materialOrderSummary.map((item) => (
-              <tr key={item.id} className="MaterialOrderSummary-table-row">
-                <td className="MaterialOrderSummary-table-cell">
-                  {formatDate(item.deliveredDate)}
-                </td>
-                <td className="MaterialOrderSummary-table-cell">
-                  {formatTime(item.deliveredTime)}
-                </td>
-                <td className="MaterialOrderSummary-table-cell">
-                  {item.deliveredQty}
-                </td>
-                <td className="MaterialOrderSummary-table-cell">
-                  {item.vehicleNo}
-                </td>
-                <td className="MaterialOrderSummary-table-cell MaterialOrderSummary-actions">
-                  <button
-                    className="MaterialOrderSummary-action-button MaterialOrderSummary-edit-button"
-                    onClick={() => handleEdit(item)}
-                    title="Edit"
-                  >
-                    <Pencil size={16} />
-                  </button>
-                  <button
-                    className="MaterialOrderSummary-action-button MaterialOrderSummary-delete-button"
-                    onClick={() => handleDelete(item.id)}
-                    title="Delete"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </td>
+        <div ref={printRef}>
+          <table className="MaterialOrderSummary-table">
+            <thead>
+              <tr>
+                <th className="MaterialOrderSummary-table-header">Date</th>
+                <th className="MaterialOrderSummary-table-header">Time</th>
+                <th className="MaterialOrderSummary-table-header">Quantity</th>
+                <th className="MaterialOrderSummary-table-header">
+                  Vehicle No
+                </th>
+                <th className="MaterialOrderSummary-table-header-action">
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {materialOrderSummary.map((item) => (
+                <tr key={item.id} className="MaterialOrderSummary-table-row">
+                  <td className="MaterialOrderSummary-table-cell">
+                    {formatDate(item.deliveredDate)}
+                  </td>
+                  <td className="MaterialOrderSummary-table-cell">
+                    {formatTime(item.deliveredTime)}
+                  </td>
+                  <td className="MaterialOrderSummary-table-cell">
+                    {item.deliveredQty}
+                  </td>
+                  <td className="MaterialOrderSummary-table-cell">
+                    {item.vehicleNo}
+                  </td>
+                  <td className="MaterialOrderSummary-table-cell MaterialOrderSummary-actions">
+                    <button
+                      className="MaterialOrderSummary-action-button MaterialOrderSummary-edit-button"
+                      onClick={() => handleEdit(item)}
+                      title="Edit"
+                    >
+                      <Pencil size={16} />
+                    </button>
+                    <button
+                      className="MaterialOrderSummary-action-button MaterialOrderSummary-delete-button"
+                      onClick={() => handleDelete(item.id)}
+                      title="Delete"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       {isEditModalOpen && (

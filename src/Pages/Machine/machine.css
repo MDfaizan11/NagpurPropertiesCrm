@@ -1,0 +1,814 @@
+/* Machine Management Component Styles */
+
+/* Base Layout */
+.MachineContainer {
+  min-height: 100vh;
+  /* background: linear-gradient(
+    135deg,
+    #f0fdf4 0%,
+    #ffffff 50%,
+    rgba(240, 253, 244, 0.3) 100%
+  ); */
+}
+
+/* Header Section */
+.MachineHeader {
+  background: #ffffff;
+  border-bottom: 1px solid #dcfce7;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.MachineHeaderContainer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.MachineHeaderContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.MachineTitleSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.MachineTitleIcon {
+  padding: 12px;
+  background: #15803d;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.MachineTitleIcon svg {
+  width: 32px;
+  height: 32px;
+  color: #ffffff;
+}
+
+.MachineTitle {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.MachineSubtitle {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #6b7280;
+  margin: 4px 0 0 0;
+}
+
+.MachineStatsCard {
+  background: #15803d;
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.MachineStatsContent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.MachineStatsText {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.MachineStatsNumber {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Main Content */
+.MachineMainContent {
+  max-width: 1280px;
+  margin: 0 auto;
+  /* padding: 32px 16px; */
+}
+
+/* Action Bar */
+.MachineActionBar {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #dcfce7;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.MachineActionBarContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.MachineSearchContainer {
+  position: relative;
+  flex: 1;
+  max-width: 448px;
+}
+
+.MachineSearchIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  width: 20px;
+  height: 20px;
+}
+
+.MachineSearchInput {
+  width: 100%;
+  padding: 12px 16px 12px 48px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  font-family: "Source Sans Pro", sans-serif;
+  transition: all 0.2s ease;
+}
+
+.MachineSearchInput:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px #15803d;
+}
+
+.MachineActionButtons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.MachineButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.MachineButtonSecondary {
+  color: #6b7280;
+  background: #f9fafb;
+}
+
+.MachineButtonSecondary:hover {
+  background: #f3f4f6;
+}
+
+.MachineButtonPrimary {
+  color: #ffffff;
+  /* background: #15803d; */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
+  font-weight: 600;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.MachineButtonPrimary:hover {
+  background: #166534;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading State */
+.MachineLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.MachineLoadingContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.MachineSpinner {
+  width: 32px;
+  height: 32px;
+  border: 4px solid #dcfce7;
+  border-top: 4px solid #15803d;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.MachineLoadingText {
+  color: #6b7280;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+/* Desktop Table */
+.MachineTableContainer {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #dcfce7;
+  overflow: hidden;
+}
+
+.MachineTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.MachineTableHeader {
+  background: #f3f4f6;
+  border-bottom: 1px solid #dcfce7;
+}
+
+.MachineTableHeaderCell {
+  padding: 16px 24px;
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111827;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.MachineTableBody {
+  background: #ffffff;
+}
+
+.MachineTableRow {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.15s ease;
+}
+
+.MachineTableRow:hover {
+  background: #f8f8f8;
+}
+
+.MachineTableCell {
+  padding: 16px 16px;
+}
+
+.MachineCellContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.MachineCellIcon {
+  padding: 8px;
+  /* background: #dcfce7; */
+  background: linear-gradient(135deg, #0d5787 0%, #69aed2 100%);
+  border-radius: 8px;
+}
+
+.MachineCellIcon svg {
+  width: 20px;
+  height: 20px;
+  color: #ffffff;
+}
+
+.MachineCellTitle {
+  font-weight: 600;
+  color: #111827;
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0;
+}
+
+.MachineCellSubtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0;
+}
+
+.MachineLocationContent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.MachineLocationIcon {
+  width: 16px;
+  height: 16px;
+  color: #9ca3af;
+}
+
+.MachineLocationText {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.MachineActionCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.MachineActionButton {
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.MachineActionButtonView {
+  color: #2563eb;
+  background: #dbeafe;
+}
+
+.MachineActionButtonView:hover {
+  background: #bfdbfe;
+}
+
+.MachineActionButtonEdit {
+  color: #d97706;
+  background: #fef3c7;
+}
+
+.MachineActionButtonEdit:hover {
+  background: #fde68a;
+}
+
+.MachineActionButtonDelete {
+  color: #dc2626;
+  background: #fee2e2;
+}
+
+.MachineActionButtonDelete:hover {
+  background: #fecaca;
+}
+
+/* Mobile Cards */
+.MachineMobileContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.MachineMobileCard {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #dcfce7;
+  padding: 24px;
+}
+
+.MachineMobileCardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.MachineMobileCardTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.MachineMobileCardActions {
+  display: flex;
+  gap: 8px;
+}
+
+.MachineMobileCardGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  font-size: 0.875rem;
+}
+
+.MachineMobileCardField {
+  display: flex;
+  flex-direction: column;
+}
+
+.MachineMobileCardLabel {
+  color: #6b7280;
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0 0 4px 0;
+}
+
+.MachineMobileCardValue {
+  font-weight: 500;
+  color: #111827;
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0;
+}
+
+/* Empty State */
+.MachineEmptyState {
+  text-align: center;
+  padding: 48px 0;
+}
+
+.MachineEmptyIcon {
+  padding: 16px;
+  background: #f3f4f6;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+}
+
+.MachineEmptyIcon svg {
+  width: 32px;
+  height: 32px;
+  color: #9ca3af;
+  margin: auto;
+  margin-top: 8px;
+}
+
+.MachineEmptyTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  font-family: "Playfair Display", serif;
+  margin: 0 0 8px 0;
+}
+
+.MachineEmptyDescription {
+  color: #6b7280;
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0 0 24px 0;
+}
+
+/* Modal Overlay */
+.MachineModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 16px;
+}
+
+.MachineModal {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 896px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.MachineModalHeader {
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 16px 24px;
+  border-radius: 16px 16px 0 0;
+}
+
+.MachineModalHeaderContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.MachineModalTitle {
+  font-size: 1.5rem;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.MachineModalClose {
+  padding: 8px;
+  color: #9ca3af;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.MachineModalClose:hover {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+
+.MachineModalContent {
+  padding: 24px;
+}
+
+/* Form Styles */
+.MachineForm {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.MachineFormGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.MachineFormField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.MachineFormLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.MachineFormLabel svg {
+  width: 16px;
+  height: 16px;
+  color: #15803d;
+}
+
+.MachineFormInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  font-family: "Source Sans Pro", sans-serif;
+  transition: all 0.2s ease;
+}
+
+.MachineFormInput:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px #15803d;
+}
+
+.MachineFormTextarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  font-family: "Source Sans Pro", sans-serif;
+  resize: none;
+  transition: all 0.2s ease;
+}
+
+.MachineFormTextarea:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px #15803d;
+}
+
+.MachineFormActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.MachineFormCancel {
+  padding: 12px 24px;
+  color: #6b7280;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 12px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.MachineFormCancel:hover {
+  background: #e5e7eb;
+}
+
+.MachineFormSubmit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #15803d;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.MachineFormSubmit:hover {
+  background: #166534;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.MachineFormSubmit:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* View Modal Styles */
+.MachineViewHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.MachineViewIcon {
+  padding: 8px;
+  background: #dcfce7;
+  border-radius: 8px;
+}
+
+.MachineViewIcon svg {
+  width: 24px;
+  height: 24px;
+  color: #15803d;
+}
+
+.MachineViewGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.MachineViewSection {
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.MachineViewSectionGreen {
+  background: #f0fdf4;
+}
+
+.MachineViewSectionBlue {
+  background: #eff6ff;
+}
+
+.MachineViewSectionAmber {
+  background: #fffbeb;
+}
+
+.MachineViewSectionPurple {
+  background: #faf5ff;
+}
+
+.MachineViewSectionGray {
+  background: #f9fafb;
+}
+
+.MachineViewSectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.MachineViewSectionTitle {
+  font-weight: 600;
+  color: #111827;
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0;
+}
+
+.MachineViewSectionContent {
+  /* display: flex; */
+  /* flex-direction: column; */
+  gap: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.MachineViewField {
+  display: flex;
+  flex-direction: column;
+}
+
+.MachineViewFieldLabel {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0 0 2px 0;
+}
+
+.MachineViewFieldValue {
+  font-weight: 500;
+  color: #111827;
+  font-family: "Source Sans Pro", sans-serif;
+  margin: 0;
+}
+
+.MachineViewDescription {
+  color: #374151;
+  font-family: "Source Sans Pro", sans-serif;
+  line-height: 1.6;
+  margin: 0;
+}
+@media (max-width: 425px) {
+  .MachineActionButton {
+    padding: 0px;
+    /* border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s ease; */
+  }
+  .MachineActionButtonView {
+    color: #2563eb;
+    background: none;
+  }
+  .MachineActionButtonEdit {
+    color: #d97706;
+    background: none;
+  }
+  .MachineActionButtonDelete {
+    color: #dc2626;
+    background: none;
+  }
+}
+/* Responsive Design */
+@media (min-width: 640px) {
+  .MachineActionBarContent {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 768px) {
+  .MachineFormGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .MachineViewGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .MachineHeaderContent {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .MachineTitle {
+    font-size: 2.25rem;
+  }
+
+  .MachineMobileContainer {
+    display: none;
+  }
+
+  .MachineTableContainer {
+    display: block;
+  }
+}
+
+@media (max-width: 1023px) {
+  .MachineTableContainer {
+    display: none;
+  }
+
+  .MachineMobileContainer {
+    display: flex;
+  }
+}
+
+/* Full width for description field */
+.MachineFormFieldFull {
+  grid-column: 1 / -1;
+}

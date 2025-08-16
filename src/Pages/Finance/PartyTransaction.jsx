@@ -228,7 +228,7 @@ function PartyTransaction() {
                   <th>Amount</th>
                   <th>Type</th>
                   <th>Mode</th>
-                  <th>Check No</th>
+                  <th>Cheque No</th>
                   <th>Online ID</th>
                   <th>Description</th>
                   <th>Remark</th>

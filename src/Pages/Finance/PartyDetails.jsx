@@ -209,7 +209,7 @@ function PartyDetails() {
                   </option>
                   <option value="BANK">Bank</option>
                   <option value="CASH">Cash</option>
-                  <option value="CHECK">Check</option>
+                  <option value="CHECK">Cheque</option>
                   <option value="DD">Demand Draft</option>
                   <option value="ONLINE">Online</option>
                   <option value="OTHER">Other</option>
@@ -219,14 +219,14 @@ function PartyDetails() {
               {transactionMode === "CHECK" && (
                 <div className="PartyDetails-form-group">
                   <label className="PartyDetails-form-label">
-                    Check Number
+                    Cheque Number
                   </label>
                   <input
                     type="text"
                     className="PartyDetails-form-input"
                     value={checkNo}
                     onChange={(e) => setCheckNo(e.target.value)}
-                    placeholder="Enter check number"
+                    placeholder="Enter cheque number"
                     required
                   />
                 </div>

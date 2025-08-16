@@ -1,8 +1,5 @@
 import "./App.css";
-
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Lead from "./Pages/Lead/Lead";
@@ -59,6 +56,8 @@ import Engineer from "./Pages/Registration/Engineer";
 import Vendor from "./Pages/Registration/Vendor";
 import Accountant from "./Pages/Registration/Accountant";
 import MaterialRegistration from "./Pages/Registration/MaterialRegistration";
+import Maintainance from "./Pages/Machine/Maintainance";
+import DriverRegistration from "./Pages/Registration/DriverRegistration";
 function App() {
   useEffect(() => {
     const initFCM = async () => {
@@ -182,6 +181,11 @@ function App() {
                 <Route
                   element={<MaterialRegistration />}
                   path="/materialRegistration"
+                />
+                <Route element={<Maintainance />} path="/maintainance" />
+                <Route
+                  element={<DriverRegistration />}
+                  path="/DriverRegistration"
                 />
               </Route>
             </Route>

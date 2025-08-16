@@ -1030,7 +1030,11 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           icon: <Package size={18} />,
           path: "/machine",
         },
-        // { name: "Attendance", icon: <FileText size={18} /> },
+        {
+          name: "Maintainance",
+          icon: <FileText size={18} />,
+          path: "/maintainance",
+        },
         // { name: "Add Holiday", icon: <Hammer size={18} /> },
       ],
     },

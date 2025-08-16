@@ -30,8 +30,13 @@ function Registration() {
         className="registration_button"
         onClick={() => navigate("/materialRegistration")}
       >
-        {" "}
         Matrial Registration
+      </button>
+      <button
+        onClick={() => navigate("/DriverRegistration")}
+        className="registration_button"
+      >
+        Driver Registration
       </button>
     </>
   );

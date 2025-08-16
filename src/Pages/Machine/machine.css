@@ -326,16 +326,20 @@
 }
 
 .MachineActionButton {
-  padding: 8px;
+  background: none;
   border: none;
+  padding: 8px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .MachineActionButtonView {
-  color: #2563eb;
-  background: #dbeafe;
+  color: #3b82f6;
+  stroke-width: 2;
 }
 
 .MachineActionButtonView:hover {
@@ -343,21 +347,22 @@
 }
 
 .MachineActionButtonEdit {
-  color: #d97706;
-  background: #fef3c7;
+  color: #3b82f6;
+  stroke-width: 2;
 }
 
 .MachineActionButtonEdit:hover {
-  background: #fde68a;
+  background-color: #dbeafe;
 }
 
 .MachineActionButtonDelete {
-  color: #dc2626;
-  background: #fee2e2;
+  color: #ef4444;
+  stroke-width: 2;
 }
 
 .MachineActionButtonDelete:hover {
-  background: #fecaca;
+  background-color: #fee2e2;
+  transform: scale(1.1);
 }
 
 /* Mobile Cards */
